@@ -12,7 +12,7 @@ body {
   background-color: #1b1b32;
   color: #f5f6f7;
   font-size: 16px;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
 }
 
@@ -21,7 +21,7 @@ body {
 }
 
 .sig {
-  margin-top: 90px;
+  margin-top: 30px;
   max-width: 200px;
   height: 138px;
   margin-left: auto;
@@ -69,25 +69,27 @@ li
 }
 
 .gallery-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 50px;
-  padding: 30px;
-  justify-content: center;
-  margin-left: 5%;
-  margin-right: 5%;
+	display: flex;
+	justify-content: center;
+	padding: 30px;
+	margin-bottom: -50px;
+}
+
+.gallery-container:last-of-type {
+	display: flex;
+	justify-content: center;
+	padding: 30px;
+	margin-bottom: 25px;
 }
 
 .project-tile {
-  border: 1px solid #fff;
-  height: 200px;
-  text-align: center;
-  vertical-align: middle;
-  line-height: 180px;
-  font-size: 1.1rem;
-  text-wrap: nowrap;
-  min-width: 180px;
-  margin-bottom: 20px;
+	border: 1px solid #fff;
+	text-align: center;
+	line-height: 47px;
+	font-size: 1.1rem;
+	margin-bottom: 20px;
+	width: 150px;
+	height: 50px;
 }
 
 .project-tile:hover {
@@ -144,50 +146,10 @@ h2 {
   margin-right: 5px;
 }
 
-.survey {
-  background-image: url(https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/tile_survey.png);
-  background-color: rgba(0,0,0,70%);
+.freecodecamp {
+  background-color: rgba(255,255,255,20%);
   background-blend-mode: multiply;
-   background-repeat: no-repeat;
+  background-repeat: no-repeat;
   background-size: cover;
-}
-
-.tribute {
-  background-image: url(https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/tile_tribute.png);
-  background-color: rgba(0,0,0,70%);
-  background-blend-mode: multiply;
-   background-repeat: no-repeat;
-  background-size: cover;
-}
-
-.techdoc {
-  background-image: url(https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/tile_techdoc.png);
-  background-color: rgba(0,0,0,70%);
-  background-blend-mode: multiply;
-   background-repeat: no-repeat;
-  background-size: cover;
-}
-
-.product {
-  background-image: url(https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/tile_product.png);
-  background-color: rgba(0,0,0,70%);
-  background-blend-mode: multiply;
-   background-repeat: no-repeat;
-  background-size: cover;
-}
-
-.plane {
-  background-image: url(https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/tile_plane.png);
-  background-color: rgba(0,0,0,70%);
-  background-blend-mode: multiply;
-   background-repeat: no-repeat;
-  background-size: cover;
-}
-
-.vehicle {
-  background-image: url(https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/tile_vehicle.png);
-  background-color: rgba(0,0,0,70%);
-  background-blend-mode: multiply;
-   background-repeat: no-repeat;
-  background-size: cover;
+  font-family: monospace;
 }
