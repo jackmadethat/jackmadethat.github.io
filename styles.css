@@ -119,27 +119,28 @@ h2 {
   font-family: monospace;
 }
 
+.box-container {
+  width: 100%;
+  display: grid;
+  text-wrap: nowrap;
+  margin-right: 20%;
+  margin-left: 20%;
+  grid-template-columns: 1fr 1fr 1fr;
+  color: #fff;
+}
+
 .box {
+  height: 200px;
   display: flex;
   flex-direction: column;
   width: calc(100% / 3);
-  height: 200px;
   margin: 10px;
   border: 1px solid #FFF;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
 }
 
-.support-text {
-  margin-right: 20%;
-  margin-left: 20%;
-  margin-top: 20px;
+.flex-contents {
   display: flex;
-  flex-direction: row;
-  color: #fff;
-}
-
-li 
-{
-  list-style-type: none;
-  padding: 0px 10px;
+  align-items: center;
+  justify-content: center;
 }
