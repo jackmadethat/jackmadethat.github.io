@@ -142,7 +142,7 @@ h2 {
   align-items: center;
   justify-content: center;
   margin-top: 15px;
-  margin-right: 15px;
+  margin-right: 20%;
   word-wrap: normal;
   text-wrap: wrap;
 }
@@ -151,15 +151,20 @@ h2 {
   justify-content: center;
   text-align: left;  
   list-style-type: circle;
-  font-size: 1.5vw;
+  font-size: clamp(0.5rem, 1vw, 0.75rem);
+  margin-left: 5%;
+}
+
+ul {
+
 }
 
 li {
   padding-top: 2px;
-  padding-bottom: 2px;
+  margin-left: auto;
 }
 
 h2 { 
   margin-right: -15px;
-  font-size: 2vw;
+  font-size: clamp(0.75rem, 2vw, 1.25rem);
 }
