@@ -78,10 +78,13 @@ body {
 a.tile {
   text-decoration: none;
   color: #fff;
+  transition: all 0.3s ease;
 }
 
 a.tile:hover {
   color: #000;
+  transform: matrix(1.05, 0, 0, 1.05, 0, -6); 
+  transition: all 0.3s ease;
 }
 
 h2 {
