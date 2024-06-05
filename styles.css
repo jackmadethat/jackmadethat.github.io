@@ -126,10 +126,11 @@ h2 {
 .box-container-container {
   display: grid;
   grid-template-columns: 1fr 8fr 1fr;
+  margin-bottom: 100px;
 }
 
 .box {
-  min-height: 220px;
+  max-height: 220px;
   height: 100%;
   margin: 10px;
   border: 1px solid #FFF;
@@ -143,6 +144,7 @@ h2 {
   justify-content: center;
   margin-top: 15px;
   margin-right: 20%;
+  margin-left: 20%;
   word-wrap: normal;
   text-wrap: wrap;
 }
@@ -155,16 +157,6 @@ h2 {
   margin-left: 5%;
 }
 
-ul {
-
-}
-
-li {
-  padding-top: 2px;
-  margin-left: auto;
-}
-
 h2 { 
-  margin-right: -15px;
   font-size: clamp(0.75rem, 2vw, 1.25rem);
 }
