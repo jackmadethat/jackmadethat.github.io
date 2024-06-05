@@ -1,5 +1,6 @@
 :root {
   --main-blue: #1b1b32;
+  --middle-blue: #49495b;
 }
 
 html {
@@ -12,6 +13,8 @@ body {
   font-size: 16px;
   overflow-y: auto;
   overflow-x: hidden;
+  background-image: url("https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/HexGrid.png");
+  background-size: 256px;
 }
 
 .center {
@@ -45,7 +48,7 @@ body {
   margin-bottom: 20px;
   width: 250px;
   height: 50px;
-  background-color: rgba(255,255,255,20%);
+  background-color: var(--middle-blue);
   background-blend-mode: multiply;
   background-repeat: no-repeat;
   background-size: cover;
@@ -98,6 +101,7 @@ h2 {
   border-top: 1px solid #f5f6f7;
   border-bottom: 1px solid #f5f6f7;
   margin-top: -30px;
+  margin-bottom: 30px;
 }
 
 .socmed-container {
@@ -134,7 +138,7 @@ h2 {
   height: 100%;
   margin: 10px;
   border: 1px solid #FFF;
-  background-color: rgba(255,255,255,20%);
+  background-color: var(--middle-blue);
   box-shadow: rgba(50, 50, 93, 0.2) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
   min-width: 100px;
 }
