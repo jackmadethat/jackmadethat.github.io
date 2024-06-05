@@ -166,16 +166,16 @@ h2 {
 }
 
 @keyframes scroll {
-	0% { transform: translateX(1800px); }
-	100% { transform: translateX(calc(-260px * 8))}
+	0% { transform: translateX(2000px); }
+	100% { transform: translateX(-200px)}
 }
 
 .img-container {
-  animation: scroll 35s linear infinite;
+  animation: scroll 15s linear infinite;
   display: flex;
   justify-content: center;
   align-content: center;
-  width: 100%;
+  max-width: 500px;
 }
 
 .scrollbox {
@@ -183,16 +183,14 @@ h2 {
 	margin: auto;
 	overflow:hidden;
 	position: relative;
-	width: 500px;
+	max-width: 500px;
   z-index: 1;
   top: -100px;
 }
 
 .img-slide {
   height: 100px;
-  width: 100px;
-  margin-left: 60px;
-  margin-right: 60px;
+  min-width: 200px;
   justify-content: center;
   align-content: center;
   z-index: 1;
@@ -203,8 +201,7 @@ h2 {
 	margin: auto;
 	overflow:hidden;
 	position: relative;
-
-	width: 500px;
+	max-width: 500px;
   box-shadow: rgb(0, 0, 0, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.45) 0px 18px 36px -18px inset;
   background: linear-gradient(to right,  rgba(0, 0, 0, 60%) 0%, rgba(255,255,255,0) 25%, rgba(255,255,255,0) 75%, rgba(0, 0, 0, 60%) 100%);
   z-index: 3;
