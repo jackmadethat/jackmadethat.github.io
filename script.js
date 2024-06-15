@@ -10,5 +10,5 @@ const dice = [
 intervalId = setInterval(() => {
     currentIndex = Math.floor(Math.random() * dice.length);
     document.getElementById("diceimage").src = dice[currentIndex];
-  }, 100);
+  }, 60);
  

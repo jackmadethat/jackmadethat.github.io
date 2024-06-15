@@ -220,7 +220,7 @@ h2 {
 .dicebox {
   margin-top: 20px;
   max-width: 200px;
-  height: 138px;
+  max-height: 200px;
   margin-left: auto;
   margin-right: auto;
 }
