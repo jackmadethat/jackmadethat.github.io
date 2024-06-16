@@ -82,7 +82,7 @@ const nudgeImage = () => {
     nudge(directions[Math.floor(Math.random() * directions.length)], dice02);
 }
 
-// Three-stage animation starting at fast and slowing to a stop
+// Three-stage animation starting fast and slowing to a stop
 const startCycle = () => {
     const cycle = setInterval(animateDice, 50); // Green number sets pace of animation
     const nextCycle = () => {
