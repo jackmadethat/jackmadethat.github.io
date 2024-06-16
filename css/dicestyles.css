@@ -19,6 +19,9 @@ body {
 
 .center {
   text-align: center;
+  display: grid; 
+  grid-template-columns: 1fr 1fr 1fr 0.25fr 1fr 1fr 1fr; 
+  grid-template-rows: 1fr 0.25fr; 
 }
 
 .dicebox {
@@ -34,4 +37,18 @@ body {
 
 #rollButton {
   margin-top: 40px;
+  grid-column-start: 4;
+  grid-row-start: 2;
+}
+
+#diceimage_01 {
+  margin-right: 0px;
+  grid-column-start: 3;
+  grid-row-start: 1;
+}
+
+#diceimage_02 {
+  margin-left: 0px;
+  grid-column-start: 5;
+  grid-row-start: 1;
 }

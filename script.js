@@ -1,3 +1,10 @@
+/*
+
+JackMadeThat Dice Roller Script
+Rolls 2 D6 dice
+
+*/
+
 const dice = [
     "https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/dice/Dice_1.png", 
     "https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/dice/Dice_2.png", 
@@ -8,16 +15,20 @@ const dice = [
 ];
 
 const rollBtn = document.getElementById("rollButton");
-const diceImage = document.getElementById("diceimage_01");
+const diceImage01 = document.getElementById("diceimage_01");
+const diceImage02 = document.getElementById("diceimage_02");
 
 let currentIndex = 0;
+let currentIndex2 = 0;
 let intervalId = null;
 
-const angles = [0, -5, 10, -15, 20, -25, 30, -35, 40, -45];
+const angles = [0, -5, 10, -15, 20, -25, 30, -35, 40, -45, 60, -75, 90, -90];
 let randomAngle = 0;
+let randomAngle2 = 0;
 
 const directions = ['up', 'down', 'left', 'right'];
-const nudgeAmount = Math.floor(Math.random() * 10) + 1;
+const nudgeAmount = Math.floor(Math.random() * 5) + 1;
+const nudgeAmount2 = Math.floor(Math.random() * 5) + 1;
 
 const rapidCycle = () => {
     intervalId = setInterval(() => {
@@ -32,8 +43,8 @@ const rapidCycle = () => {
 const slowDown = () => {
     clearInterval(intervalId);
     let slowIntervalId = setInterval(() => {
-        const remainingTime = 2500 - (new Date() - startTime); // Calculate remaining time
-        const delay = (Math.max(1, remainingTime / 20) / 100);
+        const remainingTime = 1500 - (new Date() - startTime); // Calculate remaining time
+        const delay = (Math.max(1, remainingTime / 20) / 100); // Calculate delay (WIP)
 
         // console.log(`Remaining time: ${remainingTime}, Delay: ${delay}`); 
         currentIndex = Math.floor(Math.random() * dice.length);
@@ -56,35 +67,57 @@ const roll = () => {
     startTime = Date.now();
     rapidCycle();
     setTimeout(slowDown, 0);
-    diceImage.style.top = `0px`;
-    diceImage.style.left = `0px`;
+    diceImage01.style.top = `0px`;
+    diceImage01.style.left = `0px`;
+    diceImage02.style.top = `0px`;
+    diceImage02.style.left = `0px`;
 }
 
 const switchImage = () => {
     currentIndex = Math.floor(Math.random() * dice.length);
-    diceImage.src = dice[currentIndex];
+    currentIndex2 = Math.floor(Math.random() * dice.length);
+    diceImage01.src = dice[currentIndex];
+    diceImage02.src = dice[currentIndex2];
 }
 
 const rotateImage = () => {
     randomAngle = angles[Math.floor(Math.random() * angles.length)];
-    diceImage.style.transform = `rotate(${randomAngle}deg)`;
+    randomAngle2 = angles[Math.floor(Math.random() * angles.length)];
+    diceImage01.style.transform = `rotate(${randomAngle}deg)`;
+    diceImage02.style.transform = `rotate(${randomAngle2}deg)`;
 }
 
 const nudgeImage = () => {
-  const randomDirection = directions[Math.floor(Math.random() * directions.length)];;
+  const randomDirection1 = directions[Math.floor(Math.random() * directions.length)];
+  const randomDirection2 = directions[Math.floor(Math.random() * directions.length)];
 
-  switch (randomDirection) {
+  switch (randomDirection1) {
     case 'up':
-      diceImage.style.top = `${-nudgeAmount}px`;
+        diceImage01.style.top = `${-nudgeAmount}px`;
       break;
     case 'down':
-      diceImage.style.top = `${nudgeAmount}px`;
+        diceImage01.style.top = `${nudgeAmount}px`;
       break;
     case 'left':
-      diceImage.style.left = `${-nudgeAmount}px`;
+        diceImage01.style.left = `${-nudgeAmount}px`;
       break;
     case 'right':
-      diceImage.style.left = `${nudgeAmount}px`;
+        diceImage01.style.left = `${nudgeAmount}px`;
+      break;
+  }
+
+  switch (randomDirection2) {
+    case 'up':
+        diceImage02.style.top = `${-nudgeAmount}px`;
+      break;
+    case 'down':
+        diceImage02.style.top = `${nudgeAmount}px`;
+      break;
+    case 'left':
+        diceImage02.style.left = `${-nudgeAmount}px`;
+      break;
+    case 'right':
+        diceImage02.style.left = `${nudgeAmount}px`;
       break;
   }
 }
