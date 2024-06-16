@@ -67,6 +67,7 @@ const roll = () => {
     startTime = Date.now();
     rapidCycle();
     setTimeout(slowDown, 0);
+    
     diceImage01.style.top = `0px`;
     diceImage01.style.left = `0px`;
     diceImage02.style.top = `0px`;
@@ -76,6 +77,7 @@ const roll = () => {
 const switchImage = () => {
     currentIndex = Math.floor(Math.random() * dice.length);
     currentIndex2 = Math.floor(Math.random() * dice.length);
+
     diceImage01.src = dice[currentIndex];
     diceImage02.src = dice[currentIndex2];
 }
@@ -83,43 +85,34 @@ const switchImage = () => {
 const rotateImage = () => {
     randomAngle = angles[Math.floor(Math.random() * angles.length)];
     randomAngle2 = angles[Math.floor(Math.random() * angles.length)];
+
     diceImage01.style.transform = `rotate(${randomAngle}deg)`;
     diceImage02.style.transform = `rotate(${randomAngle2}deg)`;
 }
 
 const nudgeImage = () => {
-  const randomDirection1 = directions[Math.floor(Math.random() * directions.length)];
-  const randomDirection2 = directions[Math.floor(Math.random() * directions.length)];
+    const randomDirection1 = directions[Math.floor(Math.random() * directions.length)];
+    const randomDirection2 = directions[Math.floor(Math.random() * directions.length)];
 
-  switch (randomDirection1) {
-    case 'up':
-        diceImage01.style.top = `${-nudgeAmount}px`;
-      break;
-    case 'down':
-        diceImage01.style.top = `${nudgeAmount}px`;
-      break;
-    case 'left':
-        diceImage01.style.left = `${-nudgeAmount}px`;
-      break;
-    case 'right':
-        diceImage01.style.left = `${nudgeAmount}px`;
-      break;
-  }
+    const nudge = (direction, dice) => {
+        switch (direction) {
+            case 'up':
+                dice.style.top = `${-nudgeAmount}px`;
+            break;
+            case 'down':
+                dice.style.top = `${nudgeAmount}px`;
+            break;
+            case 'left':
+                dice.style.left = `${-nudgeAmount}px`;
+            break;
+            case 'right':
+                dice.style.left = `${nudgeAmount}px`;
+            break;
+        }
+    }
 
-  switch (randomDirection2) {
-    case 'up':
-        diceImage02.style.top = `${-nudgeAmount}px`;
-      break;
-    case 'down':
-        diceImage02.style.top = `${nudgeAmount}px`;
-      break;
-    case 'left':
-        diceImage02.style.left = `${-nudgeAmount}px`;
-      break;
-    case 'right':
-        diceImage02.style.left = `${nudgeAmount}px`;
-      break;
-  }
+    nudge(randomDirection1, diceImage01);
+    nudge(randomDirection2, diceImage02);
 }
 
 switchImage();
