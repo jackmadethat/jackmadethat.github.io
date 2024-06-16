@@ -1,0 +1,3 @@
+/*
+JackMadeThat Home Page Javascript
+*/
