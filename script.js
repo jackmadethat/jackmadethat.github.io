@@ -123,22 +123,22 @@ const setReadout = () => {
     console.log(sumDice());
 
     readout.textContent = sumDice()[0]; // Display sum equation
-    if (sumDice()[2] == sumDice()[3]) { // Display fluff text for rolling doubles
-        fluff.textContent = "You rolled doubles!";
-    } else {
-        switch(sumDice()[1]) { // Display fluff text for winning values
-            case 2:
-                fluff.textContent = "Snake eyes!";
-            break;
-            case 7:
-                fluff.textContent = "Winner!";
-            break;
-            case 12:
-                fluff.textContent = "Double Sixes!";
-            break;
-            default: 
+    switch(sumDice()[1]) { // Display fluff text for winning values
+        case 2:
+            fluff.textContent = "Snake eyes!";
+        break;
+        case 7:
+            fluff.textContent = "Winner!";
+        break;
+        case 12:
+            fluff.textContent = "Double Sixes!";
+        break;
+        default: 
+            if (sumDice()[2] == sumDice()[3]) { // Display fluff text for rolling doubles
+                fluff.textContent = "You rolled doubles!";
+            } else {
                 fluff.textContent = " ";   
-        }
+            }
     }
 }
 
