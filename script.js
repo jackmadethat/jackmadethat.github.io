@@ -17,7 +17,7 @@ const angles = [0, -5, 10, -15, 20, -25, 30, -35, 40, -45];
 let randomAngle = 0;
 
 const directions = ['up', 'down', 'left', 'right'];
-const nudgeAmount = Math.floor(Math.random() * 5) + 1;
+const nudgeAmount = Math.floor(Math.random() * 10) + 1;
 
 const rapidCycle = () => {
     intervalId = setInterval(() => {
@@ -26,14 +26,14 @@ const rapidCycle = () => {
         rotateImage();
         nudgeImage();
 
-    }, 1000);
+    }, 10000);
   }
 
 const slowDown = () => {
     clearInterval(intervalId);
     let slowIntervalId = setInterval(() => {
         const remainingTime = 2500 - (new Date() - startTime); // Calculate remaining time
-        const delay = (Math.max(1, remainingTime / 10) / 100);
+        const delay = (Math.max(1, remainingTime / 20) / 100);
 
         // console.log(`Remaining time: ${remainingTime}, Delay: ${delay}`); 
         currentIndex = Math.floor(Math.random() * dice.length);
