@@ -9,15 +9,22 @@ html {
 
 body {
   background-color: var(--main-blue);
+  background-image: url("https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/HexGrid.png");
+  background-size: 256px;
   color: #f5f6f7;
   font-size: 16px;
   overflow-y: auto;
   overflow-x: hidden;
-  background-image: url("https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/HexGrid.png");
-  background-size: 256px;
 }
 
-.center {
+.title {
+  text-align: center;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.dicebox-container {
   text-align: center;
   display: grid; 
   grid-template-columns: 1fr 1fr 1fr 0.25fr 1fr 1fr 1fr; 
@@ -32,13 +39,19 @@ body {
   margin-right: auto;
   position: relative;
   background-color: rgba(255,255,255,15%);
-  box-shadow: rgba(0, 0, 0, 1) 0px 22px 70px 4px;
+  box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 30px 8px;
 }
 
 #rollButton {
-  margin-top: 40px;
+  margin-top: 60px;
+  margin-bottom: 30px;
   grid-column-start: 4;
   grid-row-start: 2;
+}
+
+#readout {
+  grid-column-start: 4;
+  grid-row-start: 3;
 }
 
 #diceimage_01 {
