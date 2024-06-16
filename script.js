@@ -27,8 +27,8 @@ let randomAngle = 0;
 let randomAngle2 = 0;
 
 const directions = ['up', 'down', 'left', 'right'];
-const nudgeAmount = Math.floor(Math.random() * 5) + 1;
-const nudgeAmount2 = Math.floor(Math.random() * 5) + 1;
+const nudgeAmount = Math.floor(Math.random() * 10) + 1;
+const nudgeAmount2 = Math.floor(Math.random() * 10) + 1;
 
 const rapidCycle = () => {
     intervalId = setInterval(() => {
@@ -59,8 +59,8 @@ const slowDown = () => {
             setTimeout(() => {
               slowDown();
             }, delay);
-          }
-        }, 25);
+        }
+    }, 25);
 }
   
 const roll = () => {
