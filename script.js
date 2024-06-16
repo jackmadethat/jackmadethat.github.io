@@ -121,5 +121,7 @@ const nudgeImage = () => {
       break;
   }
 }
-  
+
+switchImage();
+
 rollBtn.addEventListener("click", roll);
