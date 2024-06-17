@@ -19,18 +19,38 @@ document.addEventListener("touchmove", (event) => {
 let mouseX, mouseY, imageX, imageY, isDragging = false;
 
 function startDrag(event) {
+    if (event.touches) {
+      mouseX = event.touches[0].clientX;
+      mouseY = event.touches[0].clientY;
+    } else {
+      mouseX = event.clientX;
+      mouseY = event.clientY;
+    }
+    imageX = image.offsetLeft;
+    imageY = image.offsetTop;
+    isDragging = true;
+  }
+
+/*
+function startDrag(event) {
   mouseX = event.clientX;
   mouseY = event.clientY;
   imageX = image.offsetLeft;
   imageY = image.offsetTop;
   isDragging = true;
-  console.log("test");
 }
+  */
 
 function stopDrag() {
   isDragging = false;
-  console.log("test");
 }
+
+function moveImage(clientX, clientY) {
+    const newX = imageX + (clientX - mouseX);
+    const newY = imageY + (clientY - mouseY);
+    image.style.top = `${newY}px`;
+    image.style.left = `${newX}px`;
+  }
 
 document.addEventListener("mousemove", (event) => {
   if (isDragging) {
