@@ -17,6 +17,14 @@ body {
   overflow-x: hidden;
 }
 
+img{
+  -khtml-user-select: none;
+  -o-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
 .title {
   text-align: center;
   margin-top: 20px;
@@ -24,20 +32,47 @@ body {
   margin-right: auto;
 }
 
+.cardbox {
+
+}
+
 .cardholder {
 	position: absolute;
 	width: 150px;
   margin-left: 50%;
-  margin-top: 150px;
-  left: -75px;
+  margin-top: 120px;
   text-align: center;
+  left: -75px;
 }
 
-#card {
-  max-width: 150px;
+.card {
   position: absolute;
-  left: 0;
-	top: 0;
   background-color: rgba(255,255,255,20%);
   box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 30px 8px;
+  max-width: 150px;
+  top: 0;
 }
+
+.card01 {
+
+  left: -210px;
+}
+
+.card02 {
+
+  left: 210px;
+}
+
+.card03 {
+
+  left: 0px;
+}
+
+.draggable {
+  transition: transform 0.3s;
+}
+
+.dragging {
+  /* transform: rotate(5deg) skewX(2deg); */
+}
+

@@ -3,60 +3,104 @@ JackMadeThat Tarot Deck
 Handle a digital arcana
 */
 
-const image = document.getElementById("card");
+// Components
+const cards = document.querySelectorAll(".draggable");
 
-image.addEventListener("mousedown", startDrag);
-image.addEventListener("mouseup", stopDrag);
-image.addEventListener("touchstart", startDrag);
-image.addEventListener("touchend", stopDrag);
-document.addEventListener("touchmove", (event) => {
-  if (isDragging) {
-    event.preventDefault();
-    moveImage(event.touches[0].clientX, event.touches[0].clientY);
+// Variables
+let currentlyDraggedCard = null;
+let mouseX, mouseY, cardX, cardY, isDragging = false;
+let backfaceImage = "https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/tarot/00_BackFace.png";
+
+const doubleClick = (event) => {
+  // Select card
+  const card = event.currentTarget;
+
+  // Pre-load card face
+  const randomTarot = tarot[Math.floor(Math.random() * 77)];
+  const newImage = randomTarot.image;
+  const img = new Image();
+  img.src = newImage;
+
+  if (card.classList.contains("flipped")) {
+    card.style.transition = "transform 0.4s";
+    card.style.transform = `scaleX(0.01)`;
+    setTimeout(() => {
+      card.src = backfaceImage;
+      card.style.transform = `scaleX(1)`;
+    }, 400); // adjust the timeout duration to match the transition duration
+    card.classList.remove("flipped");
+  } else {
+    card.style.transition = "transform 0.4s"; 
+    card.style.transform = `scaleX(0.01)`;
+
+    setTimeout(() => {
+      console.log(card);
+      card.src = img.src;
+
+      card.style.transform = `scaleX(1)`;
+      card.classList.add("flipped");
+    }, 400);
   }
-});
+}
 
-let mouseX, mouseY, imageX, imageY, isDragging = false;
-
-function startDrag(event) {
-    if (event.touches) {
-      mouseX = event.touches[0].clientX;
-      mouseY = event.touches[0].clientY;
-    } else {
-      mouseX = event.clientX;
-      mouseY = event.clientY;
-    }
-    imageX = image.offsetLeft;
-    imageY = image.offsetTop;
-    isDragging = true;
+const startDrag = (event) => {
+  currentlyDraggedCard = event.currentTarget;
+  currentlyDraggedCard.classList.add("dragging");
+  if (event.touches) {
+    mouseX = event.touches[0].clientX;
+    mouseY = event.touches[0].clientY;
+  } else {
+    mouseX = event.clientX;
+    mouseY = event.clientY;
   }
-
-/*
-function startDrag(event) {
-  mouseX = event.clientX;
-  mouseY = event.clientY;
-  imageX = image.offsetLeft;
-  imageY = image.offsetTop;
+  cardX = currentlyDraggedCard.offsetLeft;
+  cardY = currentlyDraggedCard.offsetTop;
   isDragging = true;
 }
-  */
 
-function stopDrag() {
+const stopDrag = () => {
+  // Deselect card
+  currentlyDraggedCard.classList.remove("dragging");
+  currentlyDraggedCard = null;
   isDragging = false;
 }
 
-function moveImage(clientX, clientY) {
-    const newX = imageX + (clientX - mouseX);
-    const newY = imageY + (clientY - mouseY);
-    image.style.top = `${newY}px`;
-    image.style.left = `${newX}px`;
+const moveCard = (clientX, clientY) => {
+  if (currentlyDraggedCard) {
+    const newX = cardX + (clientX - mouseX);
+    const newY = cardY + (clientY - mouseY);
+    currentlyDraggedCard.style.top = `${newY}px`;
+    currentlyDraggedCard.style.left = `${newX}px`;
   }
+}
+
+// Setup
+
+cards.forEach((card) => {
+  card.addEventListener("mousedown", startDrag);
+  card.addEventListener("mouseup", stopDrag);
+  card.addEventListener("touchstart", startDrag);
+  card.addEventListener("touchend", stopDrag);
+  card.addEventListener("dblclick", doubleClick);
+  card.addEventListener("dblclick", doubleClick); // for desktop
+  card.addEventListener("touchstart", (event) => {
+    if (event.touches.length === 2) {
+      doubleClick(event);
+    }
+  }); // for mobile
+});
+console.log(cards);
 
 document.addEventListener("mousemove", (event) => {
   if (isDragging) {
-    const newX = imageX + (event.clientX - mouseX);
-    const newY = imageY + (event.clientY - mouseY);
-    image.style.top = `${newY}px`;
-    image.style.left = `${newX}px`;
+    moveCard(event.clientX, event.clientY);
   }
 });
+
+document.addEventListener("touchmove", (event) => {
+  if (isDragging) {
+    event.preventDefault();
+    moveCard(event.touches[0].clientX, event.touches[0].clientY);
+  }
+});
+
