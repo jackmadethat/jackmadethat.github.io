@@ -9,7 +9,7 @@ Card Face Concept Inspiration: https://www.instagram.com/minimalisttarotdeck/?hl
 
 tarot = [
     {
-        "image": "https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/tarot/0_TheFool.png",
+        "image": "https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/tarot/00_TheFool.png",
         "name": "The Fool",
         "text": "New beginnings, taking a leap of faith, new possibilities lie ahead, a new journey is about to begin.",
         "number": 0,
