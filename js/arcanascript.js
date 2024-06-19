@@ -12,7 +12,7 @@ let mouseX, mouseY, cardX, cardY, isDragging = false;
 let backfaceImage = "https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/tarot/00_BackFace.png";
 
 const doubleClick = (event) => {
-  // Select card
+  // Flip card
   const card = event.currentTarget;
 
   // Pre-load card face
@@ -44,6 +44,7 @@ const doubleClick = (event) => {
 }
 
 const startDrag = (event) => {
+  // Select card
   currentlyDraggedCard = event.currentTarget;
   currentlyDraggedCard.classList.add("dragging");
   if (event.touches) {
@@ -61,12 +62,14 @@ const startDrag = (event) => {
 const stopDrag = () => {
   // Deselect card
   currentlyDraggedCard.classList.remove("dragging");
+  currentlyDraggedCard.style.transition = 'transform 0.4s';
+  currentlyDraggedCard.style.transform = 'none';
   currentlyDraggedCard = null;
   isDragging = false;
 }
 
 const moveCard = (clientX, clientY) => {
-  if (currentlyDraggedCard) {
+  if (isDragging && currentlyDraggedCard) {
     const newX = cardX + (clientX - mouseX);
     const newY = cardY + (clientY - mouseY);
     currentlyDraggedCard.style.top = `${newY}px`;
@@ -91,16 +94,51 @@ cards.forEach((card) => {
 });
 console.log(cards);
 
-document.addEventListener("mousemove", (event) => {
-  if (isDragging) {
-    moveCard(event.clientX, event.clientY);
-  }
-});
+// 3D Effect
 
-document.addEventListener("touchmove", (event) => {
-  if (isDragging) {
-    event.preventDefault();
-    moveCard(event.touches[0].clientX, event.touches[0].clientY);
-  }
-});
+function updateAnim() {
+  
+  let pos = {x: 0, y: 0};
+  let delta = {x: 0, y: 0};
+  let prevPos = {x: 0, y: 0};
+  let rotateY, rotateX, top, left, transform;
 
+  const setCardRotation = function() {
+    if (isDragging && currentlyDraggedCard) {
+    delta.x = pos.x - prevPos.x;
+    delta.y = pos.y - prevPos.y;
+    prevPos = pos;
+    rotateY = 'rotateY(' + Math.max(Math.min(delta.x * 1.4, 35), -35) + 'deg)';
+    rotateX = 'rotateX(' + (Math.max(Math.min(delta.y * 1.4, 35), -35) * -1) + 'deg)';
+    transform = [rotateY, rotateX];
+    currentlyDraggedCard.style.transform = transform.join(' ')
+    }
+  }
+
+  document.addEventListener("mousemove", (event) => {
+    pos = {x: event.pageX, y: event.pageY};
+    top = pos.y + 'px';
+    left = pos.x + 'px';
+    if (isDragging) {
+      moveCard(event.clientX, event.clientY);
+    }
+  });
+
+  document.addEventListener("touchmove", (event) => {
+    if (isDragging) {
+      event.preventDefault();
+      pos = {x: event.touches[0].pageX, y: event.touches[0].pageY};
+      top = pos.y + 'px';
+      left = pos.x + 'px';
+      moveCard(event.touches[0].clientX, event.touches[0].clientY);
+    }
+  });
+  
+  function step() {
+    setCardRotation();
+    window.requestAnimationFrame(step);
+  }
+  window.requestAnimationFrame(step);
+}
+
+updateAnim();

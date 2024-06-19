@@ -43,6 +43,7 @@ img{
   margin-top: 120px;
   text-align: center;
   left: -75px;
+  perspective: 300px;
 }
 
 .card {
@@ -51,15 +52,15 @@ img{
   box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 30px 8px;
   max-width: 150px;
   top: 0;
+  transform-style: preserve-3d;
+  transform-origin: 50% 50%;
 }
 
 .card01 {
-
   left: -210px;
 }
 
 .card02 {
-
   left: 210px;
 }
 
