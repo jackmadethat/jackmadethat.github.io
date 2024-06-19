@@ -89,7 +89,6 @@ const moveCard = (clientX, clientY) => {
 
 const updateAnim = () => {
   
-  // These variables get a better result if they're here, unsure why
   let pos = {x: 0, y: 0};
   let delta = {x: 0, y: 0};
   let prevPos = {x: 0, y: 0};
