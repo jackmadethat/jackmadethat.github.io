@@ -4,15 +4,20 @@ Handle a digital arcana
 */
 
 // Components
+
 const cards = document.querySelectorAll(".draggable");
+const backfaceImage = "https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/tarot/00_BackFace.png";
 
 // Variables
+
 let currentlyDraggedCard = null;
-let mouseX, mouseY, cardX, cardY, isDragging = false;
-let backfaceImage = "https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/tarot/00_BackFace.png";
+let mouseX, mouseY; 
+let cardX, cardY; 
+let isDragging = false;
+
+// Flip card
 
 const doubleClick = (event) => {
-  // Flip card
   const card = event.currentTarget;
 
   // Pre-load card face
@@ -43,6 +48,8 @@ const doubleClick = (event) => {
   }
 }
 
+// Move card around screen
+
 const startDrag = (event) => {
   // Select card
   currentlyDraggedCard = event.currentTarget;
@@ -69,6 +76,7 @@ const stopDrag = () => {
 }
 
 const moveCard = (clientX, clientY) => {
+  // Move card
   if (isDragging && currentlyDraggedCard) {
     const newX = cardX + (clientX - mouseX);
     const newY = cardY + (clientY - mouseY);
@@ -77,31 +85,15 @@ const moveCard = (clientX, clientY) => {
   }
 }
 
-// Setup
+// Animate card motion
 
-cards.forEach((card) => {
-  card.addEventListener("mousedown", startDrag);
-  card.addEventListener("mouseup", stopDrag);
-  card.addEventListener("touchstart", startDrag);
-  card.addEventListener("touchend", stopDrag);
-  card.addEventListener("dblclick", doubleClick);
-  card.addEventListener("dblclick", doubleClick); // for desktop
-  card.addEventListener("touchstart", (event) => {
-    if (event.touches.length === 2) {
-      doubleClick(event);
-    }
-  }); // for mobile
-});
-console.log(cards);
-
-// 3D Effect
-
-function updateAnim() {
+const updateAnim = () => {
   
+  // These variables get a better result if they're here, unsure why
   let pos = {x: 0, y: 0};
   let delta = {x: 0, y: 0};
   let prevPos = {x: 0, y: 0};
-  let rotateY, rotateX, top, left, transform;
+  let rotateY, rotateX, transform;
 
   const setCardRotation = function() {
     if (isDragging && currentlyDraggedCard) {
@@ -135,10 +127,33 @@ function updateAnim() {
   });
   
   function step() {
+    // Use requestAnimationFrame for buttery smooth animations
     setCardRotation();
     window.requestAnimationFrame(step);
   }
   window.requestAnimationFrame(step);
 }
+
+// Setup mouse/touch events
+
+cards.forEach((card) => {
+  card.addEventListener("mousedown", startDrag);
+  card.addEventListener("mouseup", stopDrag);
+  card.addEventListener("touchstart", startDrag);
+  card.addEventListener("touchend", stopDrag);
+  card.addEventListener("dblclick", doubleClick);
+  card.addEventListener("dblclick", doubleClick); // Mouse double-click
+  card.addEventListener("touchstart", (event) => {
+    if (event.touches.length === 2) {
+      doubleClick(event);
+    }
+  }); // Touchscreen double-tap
+});
+
+// Log cards on screen
+
+console.log(cards);
+
+// Call function to initialize
 
 updateAnim();
