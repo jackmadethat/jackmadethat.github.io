@@ -70,10 +70,5 @@ img{
 }
 
 .draggable {
-  transition: transform 0.3s;
+  transition: transform 0.4s;
 }
-
-.dragging {
-  /* transform: rotate(5deg) skewX(2deg); */
-}
-
