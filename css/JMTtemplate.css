@@ -6,11 +6,11 @@
     --hexBG: url("https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/HexGrid.png");
 }
   
-  html {
+html {
     font-family: arial;
 }
   
-  body {
+body {
     background-color: var(--main-blue);
     background-image: var(--hexBG);
     background-size: 256px;
