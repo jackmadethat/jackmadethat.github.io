@@ -1,2 +1,10 @@
 @import "JMTtemplate.css";
 
+.ball {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  background-color: var(--semi-white);
+  border: 3px solid var(--white);
+  border-radius: 50%:
+}
