@@ -1,4 +1,4 @@
-@import "_JMTtemplate.css";
+@import "./css/_JMTtemplate.css";
 
 img{
   -khtml-user-select: none;
