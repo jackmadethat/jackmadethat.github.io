@@ -1,23 +1,4 @@
-:root {
-  --main-blue: #1b1b32;
-  --middle-blue: #49495b;
-  --semi-white: rgba(255,255,255,20%);
-  --hexBG: url("https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/HexGrid.png");
-}
-
-html {
-  font-family: arial;
-}
-
-body {
-  background-color: var(--main-blue);
-  color: #f5f6f7;
-  font-size: 16px;
-  overflow-y: auto;
-  overflow-x: hidden;
-  background-image: var(--hexBG);
-  background-size: 256px;
-}
+@import "_JMTtemplate.scss";
 
 .center {
   text-align: center;

@@ -1,22 +1,4 @@
-:root {
-  --main-blue: #1b1b32;
-  --middle-blue: #49495b;
-  --semi-white: rgba(255,255,255,20%);
-  --hexBG: url("https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/HexGrid.png");
-}
-
-html {
-  font-family: arial;
-}
-
-body {
-  background-color: var(--main-blue);
-  background-image: var(--hexBG);
-  background-size: 256px;
-  color: #f5f6f7;
-  font-size: 16px;
-  overflow: hidden;
-}
+@import "_JMTtemplate.scss";
 
 img{
   -khtml-user-select: none;
@@ -46,8 +28,8 @@ img{
 }
 
 .cardholder {
-	position: absolute;
-	width: 150px;
+  position: absolute;
+  width: 150px;
   margin-left: 50%;
 
   text-align: center;
