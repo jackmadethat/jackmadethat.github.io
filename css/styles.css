@@ -1,6 +1,8 @@
 :root {
   --main-blue: #1b1b32;
   --middle-blue: #49495b;
+  --semi-white: rgba(255,255,255,20%);
+  --hexBG: url("https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/HexGrid.png");
 }
 
 html {
@@ -13,7 +15,7 @@ body {
   font-size: 16px;
   overflow-y: auto;
   overflow-x: hidden;
-  background-image: url("https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/HexGrid.png");
+  background-image: var(--hexBG);
   background-size: 256px;
 }
 
@@ -97,7 +99,7 @@ h2 {
 
 .contact {
   display: block;
-  background-color: rgba(255,255,255,20%);
+  background-color: var(--semi-white);
   color: var(--main-blue);
   border-top: 1px solid #f5f6f7;
   border-bottom: 1px solid #f5f6f7;
