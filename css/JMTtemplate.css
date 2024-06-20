@@ -4,11 +4,11 @@
     --white: #f5f6f7;
     --semi-white: rgba(255,255,255,20%);
     --hexBG: url("https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/HexGrid.png");
-  }
+}
   
   html {
     font-family: arial;
-  }
+}
   
   body {
     background-color: var(--main-blue);
@@ -17,7 +17,7 @@
     color: var(--white);
     font-size: 16px;
     overflow: hidden;
-  }
+}
 
 .title {
   text-align: center;
