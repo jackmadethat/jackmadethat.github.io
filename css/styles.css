@@ -13,10 +13,6 @@
   background-image: url("https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/sig.png");
 }
 
-@media (width: 100%) {
-  background-color: var(--main-blue);
-}
-
 .projects {
   display: grid;
   justify-content: center;
