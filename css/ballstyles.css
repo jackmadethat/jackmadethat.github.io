@@ -1,6 +1,6 @@
 @import "JMTtemplate.css";
 
-.ball {
+#ball {
   position: absolute;
   width: 100px;
   height: 100px;
