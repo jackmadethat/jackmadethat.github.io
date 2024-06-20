@@ -5,8 +5,11 @@ Handle a digital arcana
 
 // Components
 
-const cards = document.querySelectorAll(".draggable");
+let cards = document.querySelectorAll(".draggable");
 const backfaceImage = "https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/tarot/00_BackFace.png";
+const addButton = document.getElementById('add');
+const removeButton = document.getElementById('remove');
+const cardContainer = document.getElementById('cardbox');
 
 // Variables
 
@@ -14,6 +17,52 @@ let currentlyDraggedCard = null;
 let mouseX, mouseY; 
 let cardX, cardY; 
 let isDragging = false;
+let numCards = 3;
+
+// Buttons
+
+addButton.addEventListener("click", () => {
+  if (numCards <= 4) {
+    numCards++;
+    // Construct new card
+    const newCard = document.createElement('img');
+    newCard.setAttribute('draggable', 'false');
+    newCard.src = "https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/tarot/00_BackFace.png"
+    newCard.classList.add('card', `card0${numCards}`, 'draggable');
+    // Add new card to cardbox
+    const cardholder = document.createElement('div');
+    cardholder.classList.add('cardholder');
+    cardholder.appendChild(newCard);
+    document.getElementById('cardbox').appendChild(cardholder);
+    // Assign touch and click events
+    newCard.addEventListener("mousedown", startDrag);
+    newCard.addEventListener("mouseup", stopDrag);
+    newCard.addEventListener("touchstart", startDrag);
+    newCard.addEventListener("touchend", stopDrag);
+    newCard.addEventListener("dblclick", doubleClick); // Mouse double-click
+    newCard.addEventListener("touchstart", (event) => {
+      if (event.touches.length === 2) {
+        doubleClick(event);
+      } // Touchscreen double-tap
+});
+    // Update card list
+    cards = document.querySelectorAll(".draggable");
+    console.log(numCards, cards);
+  }
+});
+
+removeButton.addEventListener("click", () => {
+  if (numCards > 0) {
+    numCards--;
+    // Find card to remove
+    const cardholderToRemove = document.querySelectorAll(".cardholder")[numCards];
+    // Remove card
+    document.getElementById('cardbox').removeChild(cardholderToRemove);
+    // Update card list
+    cards = document.querySelectorAll(".draggable");
+    console.log(numCards, cards);
+  }
+});
 
 // Flip card
 
@@ -39,9 +88,7 @@ const doubleClick = (event) => {
     card.style.transform = `scaleX(0.01)`;
 
     setTimeout(() => {
-      console.log(card);
       card.src = img.src;
-
       card.style.transform = `scaleX(1)`;
       card.classList.add("flipped");
     }, 400);

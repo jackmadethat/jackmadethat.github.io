@@ -13,8 +13,7 @@ body {
   background-size: 256px;
   color: #f5f6f7;
   font-size: 16px;
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 img{
@@ -32,15 +31,23 @@ img{
   margin-right: auto;
 }
 
-.cardbox {
+.button-box {
+  text-align: center;
+}
 
+.button {
+  width: 120px;
+}
+
+.cardbox {
+  margin-top: 50px;
 }
 
 .cardholder {
 	position: absolute;
 	width: 150px;
   margin-left: 50%;
-  margin-top: 120px;
+
   text-align: center;
   left: -75px;
   perspective: 300px;
@@ -57,7 +64,7 @@ img{
 }
 
 .card01 {
-  left: -210px;
+  left: 0px;
 }
 
 .card02 {
@@ -65,8 +72,17 @@ img{
 }
 
 .card03 {
+  left: -210px;
+}
 
-  left: 0px;
+.card04 {
+  left: -105px;
+  top: 300px;
+}
+
+.card05 {
+  left: 105px;
+  top: 300px;
 }
 
 .draggable {
