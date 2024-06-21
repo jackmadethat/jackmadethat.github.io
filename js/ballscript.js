@@ -13,8 +13,8 @@ let vy = Math.random() * 4 - 2; // vertical velocity (-2 to 2)
 function animate() {
   // Get the ball's current position
   const rect = ball.getBoundingClientRect();
-  const x = rect.left;
-  const y = rect.top;
+  let x = rect.left;
+  let y = rect.top;
 
   // Update the position
   x += vx;
