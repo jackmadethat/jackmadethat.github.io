@@ -30,6 +30,8 @@ if (y + ball.offsetHeight > court.offsetHeight || y < 0) {
   // Update the div position
   ball.style.transform = `translate(${x}px, ${y}px)`;
 
+  console.log(ball.style.transform);
+  
   // Request the next animation frame
   requestAnimationFrame(animate);
 }
