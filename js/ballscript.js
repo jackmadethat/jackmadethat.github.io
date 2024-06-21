@@ -30,6 +30,7 @@ function animate() {
 
   // Update the ball's position
   ball.style.transform = `translate(${x}px, ${y}px)`;
+  console.log(ball.style.transform);
 
   // Request the next animation frame
   window.requestAnimationFrame(animate);
