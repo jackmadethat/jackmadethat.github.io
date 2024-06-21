@@ -2,7 +2,7 @@
 JackMadeThat Ball Clicker Script
 Click the ball to score points
 */
-
+const container = document.getElementById('court');
 const ball = document.getElementById('ball');
 
 // Set the initial velocity with a random direction
@@ -20,23 +20,20 @@ function animate() {
   x += vx;
   y += vy;
 
-  // Bounce off edges
-  if (x + ball.offsetWidth >= window.innerWidth || x <= 0) {
+  // Check if the ball has hit the container edges
+  if (x <= 0 || x + ball.offsetWidth >= container.offsetWidth) {
     vx = -vx; // reverse horizontal direction
-    x = x + vx; // update x position after bounce
   }
-  if (y + ball.offsetHeight >= window.innerHeight || y <= 0) {
+  if (y <= 0 || y + ball.offsetHeight >= container.offsetHeight) {
     vy = -vy; // reverse vertical direction
-    y = y + vy; // update y position after bounce
   }
 
-  // Update the ball's position
+  // Update the ball's position within the container
   ball.style.transform = `translate(${x}px, ${y}px)`;
-  console.log(ball.style.transform);
 
   // Request the next animation frame
-  window.requestAnimationFrame(animate);
+  requestAnimationFrame(animate);
 }
 
 // Start the animation
-window.requestAnimationFrame(animate);
+requestAnimationFrame(animate);
