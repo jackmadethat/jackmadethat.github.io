@@ -11,6 +11,8 @@ let y = 0;
 let vx = 2;
 let vy = 2;
 
+console.log(court.innerWidth, court.innerHeight);
+
 // Define the animation
 function animate() {
   // Update the position
