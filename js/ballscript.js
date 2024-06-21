@@ -23,8 +23,8 @@ function animate() {
   let y = rect.top;
 
   // Update the position
-  x += vx * 0.05;
-  y += vy * 0.05;
+  x += vx;
+  y += vy;
 
 // Check if the ball has hit the container edges
 if (ballLeft <= 0 || ballRight >= container.offsetWidth) {
