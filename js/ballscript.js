@@ -20,13 +20,15 @@ function animate() {
   x += vx;
   y += vy;
 
-  // Check if the ball has hit the container edges
-  if (x <= 0 || x + ball.offsetWidth >= container.offsetWidth) {
-    vx = -vx; // reverse horizontal direction
-  }
-  if (y <= 0 || y + ball.offsetHeight >= container.offsetHeight) {
-    vy = -vy; // reverse vertical direction
-  }
+// Check if the ball has hit the container edges
+if (x <= 0 || x + ball.offsetWidth >= container.offsetWidth - 2) {
+  vx = -vx; // reverse horizontal direction
+  x = x + vx; // update x position after bounce
+}
+if (y <= 0 || y + ball.offsetHeight >= container.offsetHeight - 2) {
+  vy = -vy; // reverse vertical direction
+  y = y + vy; // update y position after bounce
+}
 
   // Update the ball's position within the container
   ball.style.transform = `translate(${x}px, ${y}px)`;
