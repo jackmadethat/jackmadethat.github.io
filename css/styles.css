@@ -66,6 +66,7 @@ a.tile {
 
 h2 {
   color: #f5f6f7;
+  font-size: clamp(0.75rem, 2vw, 1.25rem);
 }
 
 .horizontal-line {
@@ -145,10 +146,6 @@ h2 {
   list-style-type: circle;
   font-size: clamp(0.5rem, 1vw, 0.75rem);
   margin-left: 5%;
-}
-
-h2 { 
-  font-size: clamp(0.75rem, 2vw, 1.25rem);
 }
 
 @keyframes scroll {
