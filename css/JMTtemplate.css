@@ -3,7 +3,7 @@
     --middle-blue: #49495b;
     --white: #f5f6f7;
     --semi-white: rgba(255,255,255,20%);
-    --hexBG: url("./img/HexGrid.png");
+    --hexBG: url("https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/HexGrid.png");
 }
   
 html {
