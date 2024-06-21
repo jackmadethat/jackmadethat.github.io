@@ -11,7 +11,7 @@ let y = 0;
 let vx = 2;
 let vy = 2;
 
-console.log(court.innerWidth, court.innerHeight);
+console.log(court.offsetWidth, court.offsetHeight);
 
 // Define the animation
 function animate() {
@@ -20,12 +20,12 @@ function animate() {
   y += vy;
 
   // Check for collisions with the screen edges
-  if (x + ball.offsetWidth > court.innerWidth || x < 0) {
-    vx = -vx;
-  }
-  if (y + ball.offsetHeight > court.innerHeight || y < 0) {
-    vy = -vy;
-  }
+if (x + ball.offsetWidth > court.offsetWidth || x < 0) {
+  vx = -vx;
+}
+if (y + ball.offsetHeight > court.offsetHeight || y < 0) {
+  vy = -vy;
+}
 
   // Update the div position
   ball.style.transform = `translate(${x}px, ${y}px)`;
