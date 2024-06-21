@@ -6,8 +6,8 @@ const container = document.getElementById('court');
 const ball = document.getElementById('ball');
 
 // Set the initial velocity with a random direction
-let vx = Math.random(); // horizontal velocity (-2 to 2)
-let vy = Math.random(); // vertical velocity (-2 to 2)
+let vx = Math.random() * 0.1 - 0.05; // horizontal velocity (-2 to 2)
+let vy = Math.random() * 0.1 - 0.05; // vertical velocity (-2 to 2)
 
 // Calculate the ball's position relative to the container
 let ballLeft = ball.offsetLeft;
