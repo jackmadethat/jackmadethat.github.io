@@ -23,9 +23,11 @@ function animate() {
   // Bounce off edges
   if (x + ball.offsetWidth >= window.innerWidth || x <= 0) {
     vx = -vx; // reverse horizontal direction
+    x = x + vx; // update x position after bounce
   }
   if (y + ball.offsetHeight >= window.innerHeight || y <= 0) {
     vy = -vy; // reverse vertical direction
+    y = y + vy; // update y position after bounce
   }
 
   // Update the ball's position
