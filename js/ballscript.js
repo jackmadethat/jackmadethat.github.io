@@ -9,6 +9,12 @@ const ball = document.getElementById('ball');
 let vx = Math.random() * 4 - 2; // horizontal velocity (-2 to 2)
 let vy = Math.random() * 4 - 2; // vertical velocity (-2 to 2)
 
+// Calculate the ball's position relative to the container
+let ballLeft = ball.offsetLeft;
+let ballTop = ball.offsetTop;
+let ballRight = ballLeft + ball.offsetWidth;
+let ballBottom = ballTop + ball.offsetHeight;
+
 // Define the animation
 function animate() {
   // Get the ball's current position
@@ -21,13 +27,11 @@ function animate() {
   y += vy;
 
 // Check if the ball has hit the container edges
-if (x <= 0 || x + ball.offsetWidth >= container.offsetWidth - 2) {
+if (ballLeft <= 0 || ballRight >= container.offsetWidth) {
   vx = -vx; // reverse horizontal direction
-  x = x + vx; // update x position after bounce
 }
-if (y <= 0 || y + ball.offsetHeight >= container.offsetHeight - 2) {
+if (ballTop <= 0 || ballBottom >= container.offsetHeight) {
   vy = -vy; // reverse vertical direction
-  y = y + vy; // update y position after bounce
 }
 
   // Update the ball's position within the container
