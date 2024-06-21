@@ -32,8 +32,8 @@ function animate() {
   ball.style.transform = `translate(${x}px, ${y}px)`;
 
   // Request the next animation frame
-  requestAnimationFrame(animate);
+  window.requestAnimationFrame(animate);
 }
 
 // Start the animation
-animate();
+window.requestAnimationFrame(animate);
