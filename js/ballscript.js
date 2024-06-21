@@ -1,24 +1,17 @@
+/*
+JackMadeThat Ball Clicker Script
+Click the ball to score points
+*/
 const court = document.getElementById('court');
 const ball = document.getElementById('ball');
 
-// Get the ball's radius
-const ballRadius = ball.offsetWidth / 2;
-
-// Get the court's dimensions
-const courtWidth = court.offsetWidth;
-const courtHeight = court.offsetHeight;
-
-// Calculate the maximum x and y positions
-const maxX = courtWidth - ballRadius;
-const maxY = courtHeight - ballRadius;
-
-// Set the initial position at the center of the screen
-let x = courtWidth / 2;
-let y = courtHeight / 2;
-
-// Set the initial velocity
+// Set the initial velocity with a random direction
+let x = 0;
+let y = 0;
 let vx = 2;
 let vy = 2;
+
+console.log(court.offsetWidth, court.offsetHeight);
 
 // Define the animation
 function animate() {
@@ -27,19 +20,24 @@ function animate() {
   y += vy;
 
   // Check for collisions with the screen edges
-  if (x + ballRadius > maxX || x - ballRadius < 0) {
-    vx = -vx;
-  }
-  if (y + ballRadius > maxY || y - ballRadius < 0) {
-    vy = -vy;
-  }
+if (x + ball.offsetWidth > court.offsetWidth || x < 0) {
+  vx = -vx;
+}
+if (y + ball.offsetHeight > court.offsetHeight || y < 0) {
+  vy = -vy;
+}
 
   // Update the div position
   ball.style.transform = `translate(${x}px, ${y}px)`;
 
+  console.log(ball.style.transform);
+  
   // Request the next animation frame
   requestAnimationFrame(animate);
 }
+
+// Start the animation
+requestAnimationFrame(animate);
 
 // Start the animation
 requestAnimationFrame(animate);
