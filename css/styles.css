@@ -108,10 +108,13 @@ h2 {
   margin-right: auto;
   background-color: var(--semi-white);
   box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 30px 8px;
+  transition: all 0.3s ease;
 }
 
 .jsButton:hover {
   background-color: #fff;
+  transform: matrix(1.2, 0, 0, 1.2, 0, -6); 
+  transition: all 0.3s ease;
 }
 
 .jsButton-container {
@@ -127,14 +130,8 @@ h2 {
   margin-right: 10px;
 }
 
-.button-tile-js:hover {
-  color: #000;
-  transform: matrix(1.2, 0, 0, 1.2, 0, -6); 
-  transition: all 0.3s ease;
-}
-
-.button-tile-js:active {
-  color: #000;
+.jsButton:active {
+  background-color: #fff;
   transform: matrix(0.9, 0, 0, 0.9, 0, 0); 
   transition: all 0.1s ease;
 }
