@@ -21,8 +21,62 @@ body {
 }
 
 .title {
-  text-align: center;
-  margin-top: 20px;
-  margin-left: auto;
-  margin-right: auto;
+    text-align: center;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
 }
+
+.button-tile {
+    border: 1px solid #fff;
+    text-align: center;
+    line-height: 47px;
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    width: 250px;
+    height: 50px;
+    background-color: var(--semi-white);
+    background-blend-mode: multiply;
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: monospace;
+    box-shadow: 0px 23px 73px 10px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+}
+
+.button-tile:hover {
+    background-color: #fff;
+    color: #000;
+    transform: matrix(1.05, 0, 0, 1.05, 0, -6); 
+    transition: all 0.3s ease;
+}
+
+.button-tile:active {
+    background-color: #fff;
+    color: #000;
+    transform: matrix(0.95, 0, 0, 0.95, 0, 0); 
+    transition: all 0.1s ease;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    padding: 30px;
+    margin-bottom: -50px;
+}
+
+.tile {
+    text-decoration: none;
+    color: #fff;
+    transition: all 0.3s ease;
+    user-select: none;
+}
+
+/* Button Syntax */
+/*
+<div class="button-container">
+    <a class="tile" href="" target="_blank">
+    <div class="button-tile">Button Text</div>
+    </a>
+</div>
+*/

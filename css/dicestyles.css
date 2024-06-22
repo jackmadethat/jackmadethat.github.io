@@ -19,10 +19,11 @@
 }
 
 #rollButton {
-  margin-top: 60px;
+  margin-top: -20px;
   margin-bottom: 30px;
   grid-column-start: 4;
   grid-row-start: 2;
+  width: 150px;
 }
 
 #readout {

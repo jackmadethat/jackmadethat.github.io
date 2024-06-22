@@ -13,55 +13,10 @@
   background-image: url("https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/sig.png");
 }
 
-.projects {
+#projects {
   display: grid;
   justify-content: center;
   grid-template-columns: 1fr 1fr 1fr;
-}
-
-.project-tile {
-  border: 1px solid #fff;
-  text-align: center;
-  line-height: 47px;
-  font-size: 1.1rem;
-  margin-bottom: 20px;
-  width: 250px;
-  height: 50px;
-  background-color: var(--middle-blue);
-  background-blend-mode: multiply;
-  background-repeat: no-repeat;
-  background-size: cover;
-  font-family: monospace;
-  box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
-  transition: all 0.3s ease;
-}
-
-.project-tile:hover {
-  background-color: #fff;
-  color: #000;
-  transform: matrix(1.05, 0, 0, 1.05, 0, -6); 
-  transition: all 0.3s ease;
-}
-
-.project-container {
-  display: flex;
-  justify-content: center;
-  padding: 30px;
-  margin-bottom: -50px;
-}
-
-.project-container:first-of-type {
-  margin-top: 10px;
-}
-
-.project-container:last-of-type {
-  margin-bottom: 35px;
-}
-
-a.tile {
-  text-decoration: none;
-  color: #fff;
-  transition: all 0.3s ease;
 }
 
 h2 {
@@ -191,4 +146,14 @@ h2 {
   box-shadow: rgb(0, 0, 0, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.45) 0px 18px 36px -18px inset;
   background: linear-gradient(to right,  rgba(0, 0, 0, 70%) 0%, rgba(0, 0, 0, 0%) 15%, rgba(0, 0, 0, 0%) 85%, rgba(0, 0, 0, 70%) 100%);
   z-index: 3;
+}
+
+/* Template overrides */
+
+.button-container:first-of-type {
+  margin-top: 10px;
+}
+
+.button-container:last-of-type {
+  margin-bottom: 20px;
 }

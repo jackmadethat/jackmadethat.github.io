@@ -9,15 +9,19 @@ img{
 }
 
 p {
-    margin-top: -10px;
+  margin-top: -10px;
+}
+
+p:last-of-type {
+  margin-bottom: 30px;
 }
 
 .button-box {
-  text-align: center;
-}
-
-.button {
-  width: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 500px;
+  margin: 0 auto;
 }
 
 .cardbox {
@@ -28,7 +32,6 @@ p {
   position: absolute;
   width: 150px;
   margin-left: 50%;
-
   text-align: center;
   left: -75px;
   perspective: 300px;
@@ -68,4 +71,11 @@ p {
 
 .draggable {
   transition: transform 0.4s;
+}
+
+/* Template overrides */
+
+.button-tile {
+  width: 130px;
+  margin-top: -25px;
 }
