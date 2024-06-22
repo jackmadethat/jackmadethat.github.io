@@ -60,14 +60,14 @@ const animate = (timestamp) => {
   ball.style.transform = `translate(${x}px, ${y}px)`;
 
   // Request the next animation frame
-  requestAnimationFrame(animate);
+  window.requestAnimationFrame(animate);
 }
 
 // -----
 // Start animation
 // -----
 
-requestAnimationFrame(animate);
+window.requestAnimationFrame(animate);
 
 // -----
 // Click the ball
