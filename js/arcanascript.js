@@ -156,7 +156,6 @@ const moveCard = (clientX, clientY) => {
 // -----
 
 const updateAnim = () => {
-  
   let pos = {x: 0, y: 0};
   let delta = {x: 0, y: 0};
   let prevPos = {x: 0, y: 0};
@@ -174,6 +173,7 @@ const updateAnim = () => {
     }
   }
 
+  // Not sure if having listeners here is ideal, but it works
   document.addEventListener("mousemove", (event) => {
     pos = {x: event.pageX, y: event.pageY};
     top = pos.y + 'px';
