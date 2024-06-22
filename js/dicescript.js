@@ -3,7 +3,10 @@ JackMadeThat Dice Roller Script
 Rolls 2 D6 dice
 */
 
+// -----
 // Array of dice images
+// -----
+
 const dice = [
     "https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/dice/Dice_1.png", 
     "https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/dice/Dice_2.png", 
@@ -13,19 +16,28 @@ const dice = [
     "https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/dice/Dice_6.png",
 ];
 
+// -----
 // Components
+// -----
+
 const rollBtn = document.getElementById("rollButton");
 const dice01 = document.getElementById("diceimage_01");
 const dice02 = document.getElementById("diceimage_02");
 const readout = document.getElementById("readout");
 const fluff = document.getElementById("flufftext");
 
+// -----
 // Variables
+// -----
+
 const directions = ['up', 'down', 'left', 'right'];
 const nudgeAmount = 12;
 let canRoll = true;
 
-// Function called by on-screen button
+// -----
+// Roll function
+// -----
+
 const roll = () => {
     if (canRoll) {
         dice01.style.top = `0px`;
@@ -41,7 +53,10 @@ const roll = () => {
     canRoll = false;
 }
 
-// Functions to animate dice movement
+// -----
+// Animate dice
+// -----
+
 const animateDice = () => {
         setImage();
         rotateImage();
@@ -82,7 +97,10 @@ const nudgeImage = () => {
     nudge(directions[Math.floor(Math.random() * directions.length)], dice02);
 }
 
+// -----
 // Three-stage animation starting fast and slowing to a stop
+// -----
+
 const startCycle = () => {
     const cycle = setInterval(animateDice, 50); // Green number sets pace of animation
     const nextCycle = () => {
@@ -109,6 +127,10 @@ const stage_03 = () => {
     }
     setTimeout(endCycle, 1000);
 }
+
+// -----
+// Set the value readout and fluff text
+// -----
 
 const setReadout = () => {
     canRoll = true;
@@ -142,8 +164,14 @@ const setReadout = () => {
     }
 }
 
+// -----
 // Set random dice on page load
+// -----
+
 setImage();
 
-// Assign action to button in window
+// -----
+// Set up button event
+// -----
+
 rollBtn.addEventListener("click", roll);

@@ -4,19 +4,12 @@
   text-align: center;
   width: 100%;
   min-height: 90vh;
-
   box-shadow: rgba(0, 0, 0, 0.4) 20px 20px 120px 120px inset;
+  z-index: 3;
 }
 
 #ball {
-  /* Positioning */
   position: absolute;
-  /*
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  */
-  /* Visuals */
   width: 100px;
   height: 100px;
   background-color: var(--semi-white);
@@ -24,6 +17,31 @@
   border-radius: 50%;
 }
 
-.center {
-  text-align: center;
+#ball-target {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+#score {
+  margin-top: -20px;
+  margin-bottom: 5px;
+}
+
+@keyframes scorePoint {
+	0% { background-color: rgba(0, 255, 0, 0.2); }
+	100% { background-color: rgba(0, 255, 0, 0); }
+}
+
+.scorePointAnim {
+  animation: scorePoint 0.3s linear;
+}
+
+@keyframes losePoint {
+	0% { background-color: rgba(255, 0, 0, 0.2); }
+	100% { background-color: rgba(255, 0, 0, 0); }
+}
+
+.losePointAnim {
+  animation: losePoint 0.3s linear;
 }

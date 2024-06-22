@@ -3,7 +3,9 @@ JackMadeThat Tarot Deck
 Handle a digital arcana
 */
 
+// -----
 // Components
+// -----
 
 let cards = document.querySelectorAll(".draggable");
 const backfaceImage = "https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/tarot/00_BackFace.png";
@@ -11,7 +13,9 @@ const addButton = document.getElementById('add');
 const removeButton = document.getElementById('remove');
 const cardContainer = document.getElementById('cardbox');
 
+// -----
 // Variables
+// -----
 
 let currentlyDraggedCard = null;
 let mouseX, mouseY; 
@@ -19,7 +23,27 @@ let cardX, cardY;
 let isDragging = false;
 let numCards = 3;
 
+// -----
+// Setup mouse/touch events
+// -----
+
+const setupInteractions = (card) => {
+  card.addEventListener("mousedown", startDrag);
+  card.addEventListener("mouseup", stopDrag);
+  card.addEventListener("touchstart", startDrag);
+  card.addEventListener("touchend", stopDrag);
+  card.addEventListener("dblclick", doubleClick);
+  card.addEventListener("dblclick", doubleClick); // Mouse double-click
+  card.addEventListener("touchstart", (event) => {
+    if (event.touches.length === 2) {
+      doubleClick(event);
+    }
+  }); // Touchscreen double-tap
+}
+
+// -----
 // Buttons
+// -----
 
 addButton.addEventListener("click", () => {
   if (numCards <= 4) {
@@ -35,16 +59,7 @@ addButton.addEventListener("click", () => {
     cardholder.appendChild(newCard);
     document.getElementById('cardbox').appendChild(cardholder);
     // Assign touch and click events
-    newCard.addEventListener("mousedown", startDrag);
-    newCard.addEventListener("mouseup", stopDrag);
-    newCard.addEventListener("touchstart", startDrag);
-    newCard.addEventListener("touchend", stopDrag);
-    newCard.addEventListener("dblclick", doubleClick); // Mouse double-click
-    newCard.addEventListener("touchstart", (event) => {
-      if (event.touches.length === 2) {
-        doubleClick(event);
-      } // Touchscreen double-tap
-});
+    setupInteractions(newCard);
     // Update card list
     cards = document.querySelectorAll(".draggable");
     console.log(numCards, cards);
@@ -64,7 +79,9 @@ removeButton.addEventListener("click", () => {
   }
 });
 
+// -----
 // Flip card
+// -----
 
 const doubleClick = (event) => {
   const card = event.currentTarget;
@@ -95,7 +112,9 @@ const doubleClick = (event) => {
   }
 }
 
+// -----
 // Move card around screen
+// -----
 
 const startDrag = (event) => {
   // Select card
@@ -132,7 +151,9 @@ const moveCard = (clientX, clientY) => {
   }
 }
 
+// -----
 // Animate card motion
+// -----
 
 const updateAnim = () => {
   
@@ -172,34 +193,31 @@ const updateAnim = () => {
     }
   });
   
-  function step() {
+  const step = () => {
     // Use requestAnimationFrame for buttery smooth animations
     setCardRotation();
     window.requestAnimationFrame(step);
   }
+
   window.requestAnimationFrame(step);
 }
 
-// Setup mouse/touch events
+// -----
+// Setup initial interactions
+// -----
 
 cards.forEach((card) => {
-  card.addEventListener("mousedown", startDrag);
-  card.addEventListener("mouseup", stopDrag);
-  card.addEventListener("touchstart", startDrag);
-  card.addEventListener("touchend", stopDrag);
-  card.addEventListener("dblclick", doubleClick);
-  card.addEventListener("dblclick", doubleClick); // Mouse double-click
-  card.addEventListener("touchstart", (event) => {
-    if (event.touches.length === 2) {
-      doubleClick(event);
-    }
-  }); // Touchscreen double-tap
+  setupInteractions(card);
 });
 
-// Log cards on screen
-
-console.log(cards);
-
+// -----
 // Call function to initialize
+// -----
 
 updateAnim();
+
+// -----
+// Log cards on screen
+// -----
+
+console.log(cards);

@@ -3,8 +3,8 @@ JackMadeThat Array of Major and Minor Arcana
 
 Credits:
 
-Text: https://www.glamour.com/story/tarot-card-meaning
-Card Face Concept Inspiration: https://www.instagram.com/minimalisttarotdeck/?hl=en
+Text Inspiration: https://www.glamour.com/story/tarot-card-meaning
+Card Face Inspiration: https://www.instagram.com/minimalisttarotdeck/?hl=en
 */
 
 tarot = [
