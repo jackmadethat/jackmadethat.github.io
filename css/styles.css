@@ -30,7 +30,7 @@ h2 {
   color: var(--main-blue);
   border-top: 1px solid #f5f6f7;
   border-bottom: 1px solid #f5f6f7;
-  margin-top: -30px;
+  margin-top: 30px;
   margin-bottom: 30px;
 }
 
@@ -100,6 +100,45 @@ h2 {
   z-index: 3;
 }
 
+.jsButton {
+  max-width: 50px;
+  max-height: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: var(--semi-white);
+  box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 30px 8px;
+}
+
+.jsButton:hover {
+  background-color: #fff;
+}
+
+.jsButton-container {
+  display: flex;
+  justify-content: center;
+  padding: 30px;
+  margin-bottom: -35px;
+}
+
+.button-tile-js {
+  width: 50px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.button-tile-js:hover {
+  color: #000;
+  transform: matrix(1.2, 0, 0, 1.2, 0, -6); 
+  transition: all 0.3s ease;
+}
+
+.button-tile-js:active {
+  background-color: #fff;
+  color: #000;
+  transform: matrix(0.9, 0, 0, 0.9, 0, 0); 
+  transition: all 0.1s ease;
+}
+
 /* Template overrides */
 
 .button-container:first-of-type {
@@ -107,5 +146,9 @@ h2 {
 }
 
 .button-container:last-of-type {
-  margin-bottom: 20px;
+  margin-bottom: -20px;
+}
+
+body {
+  overflow: auto;
 }
