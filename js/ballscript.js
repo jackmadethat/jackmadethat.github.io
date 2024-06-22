@@ -25,7 +25,7 @@ let interpFactor = 5;
 const growFactor = 4;
 const speedFactor = 0.2;
 let score = 0;
-let ballSize = 100;
+let ballSize = 150;
 if (Math.random() < 0.5) vy = -vy; // Random start position
 
 // -----
@@ -126,7 +126,7 @@ const ballClicked = () => {
 
 const collide = () => {
   // Grow ball
-  if (ballSize <= 100) {
+  if (ballSize <= 150) {
     ballSize += growFactor;
     ball.style.width = `${ballSize}px`;
     ball.style.height = `${ballSize}px`;
