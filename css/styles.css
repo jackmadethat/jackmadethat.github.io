@@ -24,12 +24,6 @@ h2 {
   font-size: clamp(0.75rem, 2vw, 1.25rem);
 }
 
-.horizontal-line {
-  background-color: #f5f6f7;
-  width: 100%;
-  height: 1px;
-}
-
 .contact {
   display: block;
   background-color: var(--semi-white);
@@ -59,48 +53,6 @@ h2 {
 .socmed-box:hover {
   transform: scale(1.2); 
   transition: all 0.2s ease;
-}
-
-.box-container {
-  display: grid;
-  text-wrap: nowrap;
-  grid-template-columns: 1fr 1fr 1fr;
-  color: #fff;
-  margin-top: 15px;
-}
-
-.box-container-container {
-  display: grid;
-  grid-template-columns: 1fr 8fr 1fr;
-  margin-bottom: 100px;
-}
-
-.box {
-  max-height: 220px;
-  height: 100%;
-  margin: 10px;
-  border: 1px solid #FFF;
-  background-color: var(--middle-blue);
-  box-shadow: rgba(50, 50, 93, 0.2) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
-  min-width: 100px;
-}
-
-.box-contents {
-  align-items: center;
-  justify-content: center;
-  margin-top: 15px;
-  margin-right: 20%;
-  margin-left: 20%;
-  word-wrap: normal;
-  text-wrap: wrap;
-}
-
-.box-text {
-  justify-content: center;
-  text-align: left;  
-  list-style-type: circle;
-  font-size: clamp(0.5rem, 1vw, 0.75rem);
-  margin-left: 5%;
 }
 
 @keyframes scroll {
