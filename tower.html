@@ -18,13 +18,13 @@
 
   <div class="play-area">
 
-    <div class="info">
+    <div class="info-box">
       <p id="level">Level: 0</p>
-      <p id="coins">Coins: 0</p>
+      <p id="coins"><img draggable="false" class="coinImg-top" src="./img/tower/coin.png"/>0</p>
     </div>
 
     <div id="court">
-      <div id="range"></div>
+      <div id="range-img"></div>
       <div id="tower-target">
         <div class="tower t1"></div>
         <div class="tower t2"></div>
@@ -33,7 +33,16 @@
       </div>
     </div>
 
-    <div class="button-box">
+    <div class="stat-box">
+      <p id="damage" class="stat-box">DMG: 0</p>
+      <p id="range" class="stat-box">RNG: 0</p>
+      <p id="attack-speed" class="stat-box">SPD: 0</p>
+      <p id="crit-chance" class="stat-box">CRT: 0</p>
+      <p id="crit-dmg" class="stat-box">CRT%: 0</p>
+      <p id="coins-per-lvl" class="stat-box"><img draggable="false" class="coinImg-bottom" src="./img/tower/coin.png"/>/lvl: 0</p>
+    </div>
+
+    <div class="button-box top">
       <div class="button-container">
         <div class="button-tile tile" id="dmgBtn">Damage +</div></a>
       </div>
@@ -55,6 +64,9 @@
         <div class="button-tile tile" id="coinBtn">Coin/lvl +</div></a>
       </div>
     </div>
+
+    <div id="cost"><img draggable="false" class="coinImg-float" src="./img/tower/coin.png"/><p id="upgrade-cost"> x 0</p></div>
+
   </div>
 
 <script type="text/javascript" src="./js/towerscript.js"></script>
