@@ -1,0 +1,55 @@
+@import "JMTtemplate.css";
+
+.play-area {
+  display: flex;
+  justify-content: center;
+}
+
+#court {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 500px;
+  height: 500px;
+  box-shadow: rgba(0, 0, 0, 0.4) 20px 20px 120px 120px inset;
+}
+
+#tower-target {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+}
+
+.tower {
+  background-color: var(--middle-blue);
+  position: absolute;
+  width: 18px;
+  height: 40px;
+  border-top: 3px solid var(--white);
+  border-bottom: 3px solid var(--white);
+}
+
+.t1 {
+
+}
+
+.t2 {
+  rotate: 45deg;
+}
+
+.t3 {
+  rotate: -45deg;
+}
+
+.t4 {
+  rotate: 90deg;
+}
+
+/* Template overrides */
+
+body {
+  overflow: auto;
+}
