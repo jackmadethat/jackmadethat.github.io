@@ -43,7 +43,7 @@ let coinsNum = 0;
 // Tower stats
 let dmg = 1;
 let rng = 250;
-let atkspd = 1;
+let atkspd = 500;
 let critdmg = 5;
 let critpercent = 1;
 let coinsperlvl = 10;
@@ -244,7 +244,7 @@ const updateProjectiles = () => {
     animateProjectiles();
 }
 
-setInterval(generateProjectile, 500);
+setInterval(generateProjectile, atkspd);
 
 // -----
 // Upgrade Damage
