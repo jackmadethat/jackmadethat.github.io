@@ -76,7 +76,7 @@
   background-color: var(--semi-white);
 }
 
-#projectile {
+.projectile {
   position: absolute;
   top: 100px;
   left: 200px;

@@ -56,82 +56,53 @@ let critDmgUpgrade = 10;
 let coinsPerLvlUpgrade = 10;
 // Game mechanics
 const levelTime = 5000;
+let lastTimestamp = 0;
 const enemySpawnDelay = 2500;
-let enemySpeed = 1.5;
+const enemySpeed = 1.5;
 const maxSpeed = 150;
 const centerOffset = -12;
+const projectileSpeed = 10;
 let basicToSpawn = 10;
 let strongToSpawn = 5;
 const basicEnemies = [];
 const strongEnemies = [];
-const allEnemies = [];
+let allEnemies = [];
+const projectiles = [];
 
 // -----
 // Spawn level
 // -----
 
-const spawnEnemies = () => {
-    for (let i = 0; i < basicToSpawn; i++) {
+const enemySpawner = (enemyArray, divString, toSpawn) => {
+    for (let i = 0; i < toSpawn; i++) {
         const delay = Math.random() * enemySpawnDelay;
         setTimeout(() => {
-        const enemyBasic = document.createElement("div");
-        enemyBasic.className = "enemyBasic";
-        field.appendChild(enemyBasic);
+        enemyType = document.createElement("div");
+        enemyType.className = divString;
+        field.appendChild(enemyType);
         let initialX, initialY;
         const edge = Math.floor(Math.random() * 4); // 0: top, 1: right, 2: bottom, 3: left
         if (edge === 0) { // top
             initialX = Math.random() * field.offsetWidth;
             initialY = 0;
         } else if (edge === 1) { // right
-            initialX = field.offsetWidth - enemyBasic.offsetWidth;
+            initialX = field.offsetWidth - enemyType.offsetWidth;
             initialY = Math.random() * field.offsetHeight;
         } else if (edge === 2) { // bottom
             initialX = Math.random() * field.offsetWidth;
-            initialY = field.offsetHeight - enemyBasic.offsetHeight;
+            initialY = field.offsetHeight - enemyType.offsetHeight;
         } else { // left
             initialX = 0;
             initialY = Math.random() * field.offsetHeight;
         }
-        enemyBasic.style.position = "absolute";
-        enemyBasic.style.left = `${initialX}px`;
-        enemyBasic.style.top = `${initialY}px`;
+        enemyType.style.position = "absolute";
+        enemyType.style.left = `${initialX}px`;
+        enemyType.style.top = `${initialY}px`;
         const velocity = {
             x: (field.offsetWidth / 2 - initialX) * enemySpeed,
             y: (field.offsetHeight / 2 - initialY) * enemySpeed
         };
-        basicEnemies.push({ enemy: enemyBasic, initialX, initialY, x: initialX, y: initialY, velocity: { x: velocity.x, y: velocity.y } });
-        }, delay);
-    }
-
-    for (let i = 0; i < strongToSpawn; i++) {
-        const delay = Math.random() * enemySpawnDelay;
-        setTimeout(() => {
-        const enemyStrong = document.createElement("div");
-        enemyStrong.className = "enemyStrong";
-        field.appendChild(enemyStrong);
-        let initialX, initialY;
-        const edge = Math.floor(Math.random() * 4); // 0: top, 1: right, 2: bottom, 3: left
-        if (edge === 0) { // top
-            initialX = Math.random() * field.offsetWidth;
-            initialY = 0;
-        } else if (edge === 1) { // right
-            initialX = field.offsetWidth - enemyStrong.offsetWidth;
-            initialY = Math.random() * field.offsetHeight;
-        } else if (edge === 2) { // bottom
-            initialX = Math.random() * field.offsetWidth;
-            initialY = field.offsetHeight - enemyStrong.offsetHeight;
-        } else { // left
-            initialX = 0;
-            initialY = Math.random() * field.offsetHeight;
-        }
-        enemyStrong.style.position = "absolute";
-        enemyStrong.style.left = `${initialX}px`;
-        enemyStrong.style.top = `${initialY}px`;
-        const velocity = {
-            x: (field.offsetWidth / 2 - initialX) * enemySpeed,
-            y: (field.offsetHeight / 2 - initialY) * enemySpeed
-        };
-        strongEnemies.push({ enemy: enemyStrong, initialX, initialY, x: initialX, y: initialY, velocity: { x: velocity.x, y: velocity.y } });
+        enemyArray.push({ enemy: enemyType, initialX, initialY, x: initialX, y: initialY, velocity: { x: velocity.x, y: velocity.y } });
         }, delay);
     }
 }
@@ -146,59 +117,45 @@ const checkCollision = (rect1, rect2) => {
     return false;
 }
 
+const animateEnemy = (enemyArray) => {
+    enemyArray.forEach((enemyData) => {
+        let { enemy, x, y, velocity } = enemyData;
+        const centerX = field.offsetWidth / 2 + centerOffset;
+        const centerY = field.offsetHeight / 2 + centerOffset;
+        velocity.x = (centerX - x) * 0.01;
+        velocity.y = (centerY - y) * 0.01;
+        x += velocity.x;
+        y += velocity.y;
+        enemy.style.left = `${x}px`;
+        enemy.style.top = `${y}px`;
+        enemyData.x = x;
+        enemyData.y = y;
+        // Check for collision with tower
+        const towerRect = tower.getBoundingClientRect();
+        const enemyRect = enemy.getBoundingClientRect();
+        const index = enemyArray.indexOf(enemyData);
+        if (checkCollision(towerRect, enemyRect)) {
+            enemyArray.splice(index, 1);
+            enemy.remove();
+            hitTower();
+        }
+    });
+}
+
+const spawnEnemies = () => {
+    enemySpawner(basicEnemies, "enemyBasic", basicToSpawn);
+    enemySpawner(strongEnemies, "enemyStrong", strongToSpawn);
+}
+
 const updateEnemies = () => {
-    basicEnemies.forEach((enemyData) => {
-        let { enemy, x, y, velocity } = enemyData;
-        const centerX = field.offsetWidth / 2 + centerOffset;
-        const centerY = field.offsetHeight / 2 + centerOffset;
-        velocity.x = (centerX - x) * 0.01;
-        velocity.y = (centerY - y) * 0.01;
-        x += velocity.x;
-        y += velocity.y;
-        enemy.style.left = `${x}px`;
-        enemy.style.top = `${y}px`;
-        enemyData.x = x;
-        enemyData.y = y;
-        // Check for collision with tower
-        const towerRect = tower.getBoundingClientRect();
-        const enemyRect = enemy.getBoundingClientRect();
-        const index = basicEnemies.indexOf(enemyData);
-        if (checkCollision(towerRect, enemyRect)) {
-            basicEnemies.splice(index, 1);
-            enemy.remove();
-            hitTower();
-        }
-    });
-    strongEnemies.forEach((enemyData) => {
-        let { enemy, x, y, velocity } = enemyData;
-        const centerX = field.offsetWidth / 2 + centerOffset;
-        const centerY = field.offsetHeight / 2 + centerOffset;
-        velocity.x = (centerX - x) * 0.01;
-        velocity.y = (centerY - y) * 0.01;
-        x += velocity.x;
-        y += velocity.y;
-        enemy.style.left = `${x}px`;
-        enemy.style.top = `${y}px`;
-        enemyData.x = x;
-        enemyData.y = y;
-        // Check for collision with tower
-        const towerRect = tower.getBoundingClientRect();
-        const enemyRect = enemy.getBoundingClientRect();
-        const index = strongEnemies.indexOf(enemyData);
-        if (checkCollision(towerRect, enemyRect)) {
-            strongEnemies.splice(index, 1);
-            enemy.remove();
-            hitTower();
-        }
-    });
+    animateEnemy(basicEnemies);
+    animateEnemy(strongEnemies);
+    allEnemies = basicEnemies.concat(strongEnemies);
+    // console.log(allEnemies.length);
   }
 
-const animate = () => {
-    updateEnemies();
-    requestAnimationFrame(animate);
-}
-animate();
 spawnEnemies();
+
 setInterval(spawnEnemies, levelTime);
 
 // -----
@@ -209,12 +166,54 @@ const hitTower = () => {
     if (healthNum > 0) {
         healthNum -= 1;
         health.textContent = `Health: ${healthNum}`;
-        console.log("Tower Hit!", healthNum);
+        // console.log("Tower Hit!", healthNum);
     } else {
         health.textContent = `Game Over!`;
-        console.log("Game Over!");
+        // console.log("Game Over!");
     }
 }
+
+// -----
+// Tower Shooting
+// -----
+
+const generateProjectile = () => {
+    const projectile = document.createElement('div');
+    projectile.className = 'projectile';
+    field.appendChild(projectile);
+    const centerX = 245;
+    const centerY = 246;
+    const velocity = { x: projectileSpeed, y: projectileSpeed };
+    projectile.style.left = `${centerX}px`;
+    projectile.style.top = `${centerY}px`;
+    projectiles.push({ projectile, x: centerX, y: centerY, velocity });
+    // console.log("Projectile generated!");
+}
+
+const animateProjectiles = () => {
+    projectiles.forEach((projectile, index) => {
+        projectile.x += projectile.velocity.x;
+        projectile.y += projectile.velocity.y;
+        projectile.projectile.style.left = `${projectile.x}px`;
+        projectile.projectile.style.top = `${projectile.y}px`;
+        if (
+            projectile.x + projectile.projectile.offsetWidth > field.offsetWidth ||
+            projectile.x < 0 ||
+            projectile.y + projectile.projectile.offsetHeight > field.offsetHeight ||
+            projectile.y < 0
+          ) {
+            // Remove the projectile from the array and DOM
+            projectiles.splice(index, 1);
+            field.removeChild(projectile.projectile);
+          }
+      });
+}
+
+const updateProjectiles = () => {
+    animateProjectiles();
+}
+
+setInterval(generateProjectile, 500);
 
 // -----
 // Upgrade Damage
@@ -274,3 +273,23 @@ attackBtn.addEventListener('mousedown', upgradeAttackSpeed);
 critBtn.addEventListener('mousedown', upgradeCriticalChance);
 critPercentBtn.addEventListener('mousedown', upgradeCriticalPercent);
 coinPerLvlBtn.addEventListener('mousedown', upgradeCoinsPerLvl);
+
+// -----
+// Render frame
+// -----
+
+const update = (timestamp) => {
+    const deltaTime = timestamp - lastTimestamp;
+    lastTimestamp = timestamp;
+
+    const render = () => {
+        updateEnemies();
+        updateProjectiles();
+    }
+
+render();
+requestAnimationFrame(update);
+}
+
+// Start the game loop
+requestAnimationFrame(update);
