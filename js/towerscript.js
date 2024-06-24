@@ -190,8 +190,8 @@ const getNearestEnemy = (x, y, enemies) => {
         const distance = Math.hypot(x - enemy.x, y - enemy.y);
         if (!enemy.isDead) 
         if (distance < minDistance) {
-          minDistance = distance;
-          nearestEnemy = enemy;
+            minDistance = distance;
+            nearestEnemy = enemy;
         }
         if ((Math.abs(x - enemy.x) < 2 || Math.abs(y - enemy.y) < 2)) {
             destroyEnemy(enemy);
@@ -244,7 +244,7 @@ const animateProjectiles = (projectiles) => {
         projectileData.projectile.style.left = `${projectileData.x}px`;
         projectileData.projectile.style.top = `${projectileData.y}px`;
         if (projectileData.x < 0 || projectileData.x > field.offsetWidth || projectileData.y < 0 || projectileData.y > field.offsetHeight) {
-          destroyProjectile(projectileData);
+            destroyProjectile(projectileData);
         }
         projectileHit(projectileData, projectileData.x, projectileData.y, allEnemies);
     });
