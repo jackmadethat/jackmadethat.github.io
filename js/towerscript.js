@@ -63,11 +63,11 @@ const maxSpeed = 150;
 const centerOffset = -12;
 const projectileSpeed = 10;
 let basicToSpawn = 10;
-let strongToSpawn = 5;
+let strongToSpawn = 3;
 const basicEnemies = [];
 const strongEnemies = [];
 let allEnemies = [];
-const projectiles = [];
+let projectiles = [];
 
 // -----
 // Spawn level
@@ -80,6 +80,7 @@ const enemySpawner = (enemyArray, divString, toSpawn) => {
         enemyType = document.createElement("div");
         enemyType.className = divString;
         field.appendChild(enemyType);
+        let enemyNum = i;
         let initialX, initialY;
         const edge = Math.floor(Math.random() * 4); // 0: top, 1: right, 2: bottom, 3: left
         if (edge === 0) { // top
@@ -102,7 +103,7 @@ const enemySpawner = (enemyArray, divString, toSpawn) => {
             x: (field.offsetWidth / 2 - initialX) * enemySpeed,
             y: (field.offsetHeight / 2 - initialY) * enemySpeed
         };
-        enemyArray.push({ enemy: enemyType, initialX, initialY, x: initialX, y: initialY, velocity: { x: velocity.x, y: velocity.y } });
+        enemyArray.push({ enemy: enemyType, index: enemyNum, width: 20, height: 20, initialX, initialY, x: initialX, y: initialY, velocity: { x: velocity.x, y: velocity.y } });
         }, delay);
     }
 }
@@ -177,36 +178,66 @@ const hitTower = () => {
 // Tower Shooting
 // -----
 
+const getNearestEnemy = (x, y, enemies) => {
+    let nearestEnemy = null;
+    let minDistance = Infinity;
+    enemies.forEach((enemy) => {
+      const distance = Math.hypot(x - enemy.x, y - enemy.y);
+      if (distance < minDistance) {
+        minDistance = distance;
+        nearestEnemy = enemy;
+      }
+    });
+    return nearestEnemy;
+  }
+
 const generateProjectile = () => {
+    const centerX = 245;
+    const centerY = 246;
+    const nearestEnemy = getNearestEnemy(centerX, centerY, allEnemies);
+    if (!nearestEnemy) return;
     const projectile = document.createElement('div');
     projectile.className = 'projectile';
     field.appendChild(projectile);
-    const centerX = 245;
-    const centerY = 246;
-    const velocity = { x: projectileSpeed, y: projectileSpeed };
+    const directionX = nearestEnemy.x + (nearestEnemy.height / 2) - centerX;
+    const directionY = nearestEnemy.y + (nearestEnemy.width / 2) - centerY;
+    const velocity = { x: directionX / Math.hypot(directionX, directionY) * projectileSpeed, y: directionY / Math.hypot(directionX, directionY) * projectileSpeed };
     projectile.style.left = `${centerX}px`;
     projectile.style.top = `${centerY}px`;
-    projectiles.push({ projectile, x: centerX, y: centerY, velocity });
-    // console.log("Projectile generated!");
+    projectiles.push({ projectile, x: centerX, y: centerY, velocity, target: nearestEnemy });
+    console.log(nearestEnemy);
 }
 
 const animateProjectiles = () => {
     projectiles.forEach((projectile, index) => {
-        projectile.x += projectile.velocity.x;
-        projectile.y += projectile.velocity.y;
+        const dx = projectile.velocity.x;
+        const dy = projectile.velocity.y;
+        projectile.x += dx;
+        projectile.y += dy;
         projectile.projectile.style.left = `${projectile.x}px`;
         projectile.projectile.style.top = `${projectile.y}px`;
-        if (
-            projectile.x + projectile.projectile.offsetWidth > field.offsetWidth ||
-            projectile.x < 0 ||
-            projectile.y + projectile.projectile.offsetHeight > field.offsetHeight ||
-            projectile.y < 0
-          ) {
-            // Remove the projectile from the array and DOM
+        
+        if (projectile.x < 0 || projectile.x > field.offsetWidth || projectile.y < 0 || projectile.y > field.offsetHeight) {
+          projectiles.splice(index, 1);
+          projectile.projectile.remove();
+        }
+
+        let enemyIndex;
+        const hasCollidedWithEnemy = allEnemies.some((enemy, index) => {
+            enemyIndex = index;
+            const dx = Math.abs(projectile.x - (enemy.x + enemy.width / 2));
+            const dy = Math.abs(projectile.y - (enemy.y + enemy.height / 2));
+            if (dx < 5 && dy < 5) {
+                return true;
+            }
+            return false;
+        });
+    
+        if (hasCollidedWithEnemy) {
             projectiles.splice(index, 1);
-            field.removeChild(projectile.projectile);
-          }
-      });
+            projectile.projectile.remove();
+        }
+    });
 }
 
 const updateProjectiles = () => {
