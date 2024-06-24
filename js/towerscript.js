@@ -62,8 +62,8 @@ const enemySpeed = 1.5;
 const maxSpeed = 150;
 const centerOffset = -12;
 const projectileSpeed = 10;
-let basicToSpawn = 4;
-let strongToSpawn = 0;
+let basicToSpawn = 10;
+let strongToSpawn = 3;
 const basicEnemies = [];
 const strongEnemies = [];
 let allEnemies = [];
@@ -73,40 +73,44 @@ let projectiles = [];
 // Spawn level
 // -----
 
-const enemySpawner = (enemyArray, divString, toSpawn) => {
-    for (let i = 0; i < toSpawn; i++) {
-        // const delay = Math.random() * enemySpawnDelay;
-        const delay = 1;
-        setTimeout(() => {
-        enemyType = document.createElement("div");
-        enemyType.className = divString;
-        field.appendChild(enemyType);
-        let initialX, initialY;
-        const edge = Math.floor(Math.random() * 4); // 0: top, 1: right, 2: bottom, 3: left
-        if (edge === 0) { // top
-            initialX = Math.random() * field.offsetWidth;
-            initialY = 0;
-        } else if (edge === 1) { // right
-            initialX = field.offsetWidth - enemyType.offsetWidth;
-            initialY = Math.random() * field.offsetHeight;
-        } else if (edge === 2) { // bottom
-            initialX = Math.random() * field.offsetWidth;
-            initialY = field.offsetHeight - enemyType.offsetHeight;
-        } else { // left
-            initialX = 0;
-            initialY = Math.random() * field.offsetHeight;
+const enemySpawner = (basicEnemyArray, strongEnemyArray, basicDivString, strongDivString, basicToSpawn, strongToSpawn) => {
+    const spawnEngine = (enemyArray, divString, toSpawn) => {
+        for (let i = 0; i < toSpawn; i++) {
+            const delay = Math.random() * enemySpawnDelay;
+            setTimeout(() => {
+                enemyType = document.createElement("div");
+                enemyType.className = divString;
+                field.appendChild(enemyType);
+                let initialX, initialY;
+                const edge = Math.floor(Math.random() * 4); // 0: top, 1: right, 2: bottom, 3: left
+                if (edge === 0) { // top
+                    initialX = Math.random() * field.offsetWidth;
+                    initialY = 0;
+                } else if (edge === 1) { // right
+                    initialX = field.offsetWidth - enemyType.offsetWidth;
+                    initialY = Math.random() * field.offsetHeight;
+                } else if (edge === 2) { // bottom
+                    initialX = Math.random() * field.offsetWidth;
+                    initialY = field.offsetHeight - enemyType.offsetHeight;
+                } else { // left
+                    initialX = 0;
+                    initialY = Math.random() * field.offsetHeight;
+                }
+                enemyType.style.position = "absolute";
+                enemyType.style.left = `${initialX}px`;
+                enemyType.style.top = `${initialY}px`;
+                const velocity = {
+                    x: (field.offsetWidth / 2 - initialX) * enemySpeed,
+                    y: (field.offsetHeight / 2 - initialY) * enemySpeed
+                };
+                enemyArray.push({ enemy: enemyType, isDead: false, width: 20, height: 20, initialX, initialY, x: initialX, y: initialY, velocity: { x: velocity.x, y: velocity.y } });
+                allEnemies.push(enemyArray[enemyArray.length - 1]); // Push the latest enemy to allEnemies
+            }, delay);
         }
-        enemyType.style.position = "absolute";
-        enemyType.style.left = `${initialX}px`;
-        enemyType.style.top = `${initialY}px`;
-        const velocity = {
-            x: (field.offsetWidth / 2 - initialX) * enemySpeed,
-            y: (field.offsetHeight / 2 - initialY) * enemySpeed
-        };
-        enemyArray.push({ enemy: enemyType, isDead: false, width: 20, height: 20, initialX, initialY, x: initialX, y: initialY, velocity: { x: velocity.x, y: velocity.y } });
-        }, delay);
     }
-}
+    spawnEngine(basicEnemyArray, basicDivString, basicToSpawn);
+    spawnEngine(strongEnemyArray, strongDivString, strongToSpawn);
+  }
     
 const checkCollision = (rect1, rect2) => {
     if (rect1.x <= rect2.x + rect2.width &&
@@ -118,50 +122,47 @@ const checkCollision = (rect1, rect2) => {
     return false;
 }
 
+const destroyEnemy = (enemyData) => {
+    enemyData.enemy.isDead = true;
+    allEnemies = allEnemies.filter(enemyData => !enemyData.enemy.isDead);
+    enemyData.enemy.remove();
+}
+
 const animateEnemy = (enemyArray) => {
     enemyArray.forEach((enemyData) => {
         if (!enemyData || !enemyData.enemy) return;
-        let { enemy, x, y, velocity } = enemyData;
         const centerX = field.offsetWidth / 2 + centerOffset;
         const centerY = field.offsetHeight / 2 + centerOffset;
-        velocity.x = (centerX - x) * 0.01;
-        velocity.y = (centerY - y) * 0.01;
-        x += velocity.x;
-        y += velocity.y;
-        enemy.style.left = `${x}px`;
-        enemy.style.top = `${y}px`;
-        enemyData.x = x;
-        enemyData.y = y;
+        enemyData.velocity.x = (centerX - enemyData.x) * 0.01;
+        enemyData.velocity.y = (centerY - enemyData.y) * 0.01;
+        enemyData.x += enemyData.velocity.x;
+        enemyData.y += enemyData.velocity.y;
+        enemyData.enemy.style.left = `${enemyData.x}px`;
+        enemyData.enemy.style.top = `${enemyData.y}px`;
+        enemyData.x = enemyData.x;
+        enemyData.y = enemyData.y;
         // Check for collision with tower
         const towerRect = tower.getBoundingClientRect();
-        const enemyRect = enemy.getBoundingClientRect();
+        const enemyRect = enemyData.enemy.getBoundingClientRect();
         const index = enemyArray.indexOf(enemyData);
         if (checkCollision(towerRect, enemyRect)) {
-            enemy.isDead = true;
-            console.log(enemy.isDead);
-            console.log(allEnemies);
-            allEnemies = allEnemies.filter(enemy => !enemy.isDead);
-            console.log(allEnemies);
-            enemyArray.splice(index, 1);
-            enemy.remove();
+            destroyEnemy(enemyData, index);
             hitTower();
         }
     });
 }
 
 const spawnEnemies = () => {
-    enemySpawner(basicEnemies, "enemyBasic", basicToSpawn);
-    //enemySpawner(strongEnemies, "enemyStrong", strongToSpawn);
+    enemySpawner(basicEnemies, strongEnemies, "enemyBasic", "enemyStrong", basicToSpawn, strongToSpawn);
 }
 
 const updateEnemies = () => {
-    allEnemies = basicEnemies.concat(strongEnemies);
     animateEnemy(allEnemies);
-  }
+}
 
 spawnEnemies();
 
-// setInterval(spawnEnemies, levelTime);
+setInterval(spawnEnemies, levelTime);
 
 // -----
 // Damage Tower
@@ -171,10 +172,10 @@ const hitTower = () => {
     if (healthNum > 0) {
         healthNum -= 1;
         health.textContent = `Health: ${healthNum}`;
-        // console.log("Tower Hit!", healthNum);
+        console.log("Tower Hit!", healthNum);
     } else {
         health.textContent = `Game Over!`;
-        // console.log("Game Over!");
+        console.log("Game Over!");
     }
 }
 
@@ -186,18 +187,39 @@ const getNearestEnemy = (x, y, enemies) => {
     let nearestEnemy = null;
     let minDistance = Infinity;
     enemies.forEach((enemy) => {
-      const distance = Math.hypot(x - enemy.x, y - enemy.y);
-      if (!enemy.isDead) 
-      if (distance < minDistance) {
-        minDistance = distance;
-        nearestEnemy = enemy;
-      }
+        const distance = Math.hypot(x - enemy.x, y - enemy.y);
+        if (!enemy.isDead) 
+        if (distance < minDistance) {
+          minDistance = distance;
+          nearestEnemy = enemy;
+        }
+        if ((Math.abs(x - enemy.x) < 2 || Math.abs(y - enemy.y) < 2)) {
+            destroyEnemy(enemy);
+            console.log("Enemy Destroyed!");
+        }
     });
-    // console.log(nearestEnemy);
     return nearestEnemy;
 }
 
+const destroyProjectile = (projectileData) => {
+    projectileData.projectile.isHit = true;
+    projectiles = projectiles.filter(projectileData => !projectileData.projectile.isHit);
+    projectileData.projectile.remove();
+}
+
+const projectileHit = (projectile, x, y, enemies) => {
+    enemies.forEach((enemy) => {
+        const distance = Math.hypot(x - enemy.x, y - enemy.y)
+        if (distance <  15) {
+            destroyEnemy(enemy);
+            destroyProjectile(projectile);
+            console.log("Enemy Destroyed!");
+        }
+    })
+}
+
 const generateProjectile = () => {
+    if (allEnemies.length == 0) return;
     const centerX = 245;
     const centerY = 246;
     const nearestEnemy = getNearestEnemy(centerX, centerY, allEnemies);
@@ -208,28 +230,28 @@ const generateProjectile = () => {
     const directionX = nearestEnemy.x + (nearestEnemy.height / 2) - centerX;
     const directionY = nearestEnemy.y + (nearestEnemy.width / 2) - centerY;
     const velocity = { x: directionX / Math.hypot(directionX, directionY) * projectileSpeed, y: directionY / Math.hypot(directionX, directionY) * projectileSpeed };
-    projectile.style.left = `${centerX}px`;
-    projectile.style.top = `${centerY}px`;
-    projectiles.push({ projectile, x: centerX, y: centerY, velocity, target: nearestEnemy });
+    projectile.style.left = `${projectile.x}px`;
+    projectile.style.top = `${projectile.y}px`;
+    projectiles.push({ projectile, isHit: false, x: centerX, y: centerY, velocity });
 }
 
-const animateProjectiles = () => {
-    projectiles.forEach((projectile, index) => {
-        const dx = projectile.velocity.x;
-        const dy = projectile.velocity.y;
-        projectile.x += dx;
-        projectile.y += dy;
-        projectile.projectile.style.left = `${projectile.x}px`;
-        projectile.projectile.style.top = `${projectile.y}px`;
-        if (projectile.x < 0 || projectile.x > field.offsetWidth || projectile.y < 0 || projectile.y > field.offsetHeight) {
-          projectiles.splice(index, 1);
-          projectile.projectile.remove();
+const animateProjectiles = (projectiles) => {
+    projectiles.forEach((projectileData) => {
+        const dx = projectileData.velocity.x;
+        const dy = projectileData.velocity.y;
+        projectileData.x += dx;
+        projectileData.y += dy;
+        projectileData.projectile.style.left = `${projectileData.x}px`;
+        projectileData.projectile.style.top = `${projectileData.y}px`;
+        if (projectileData.x < 0 || projectileData.x > field.offsetWidth || projectileData.y < 0 || projectileData.y > field.offsetHeight) {
+          destroyProjectile(projectileData);
         }
+        projectileHit(projectileData, projectileData.x, projectileData.y, allEnemies);
     });
 }
 
 const updateProjectiles = () => {
-    animateProjectiles();
+    animateProjectiles(projectiles);
 }
 
 setInterval(generateProjectile, atkspd);
@@ -297,37 +319,14 @@ coinPerLvlBtn.addEventListener('click', upgradeCoinsPerLvl);
 // Render frame
 // -----
 
-const checkCollisions = () => {
-    // console.log(projectiles);
-    // console.log(allEnemies);
-    projectiles.forEach((projectile, projectileIndex) => {
-      allEnemies.forEach((enemy, enemyIndex) => {
-        if (!enemy) return; // Skip if enemy doesn't exist
-        const distance = Math.hypot(projectile.x - enemy.x, projectile.y - enemy.y);
-        if (distance < 10) {
-          projectile.projectile.remove();
-          enemy.enemy.remove();
-          enemy.isDead = true;
-          console.log("Enemy Destroyed!");
-          console.log(allEnemies);
-          projectiles = projectiles.filter(projectile => projectile !== null);
-        }
-      });
-    });
-}
-
 const update = (timestamp) => {
-    const deltaTime = timestamp - lastTimestamp;
     lastTimestamp = timestamp;
-
     const render = () => {
-        //checkCollisions();
         updateEnemies();
         updateProjectiles();
     }
-
-render();
-requestAnimationFrame(update);
+    render();
+    requestAnimationFrame(update);
 }
 
 // Start the game loop
