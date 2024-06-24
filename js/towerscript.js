@@ -62,8 +62,8 @@ const enemySpeed = 1.5;
 const maxSpeed = 150;
 const centerOffset = -12;
 const projectileSpeed = 10;
-let basicToSpawn = 10;
-let strongToSpawn = 3;
+let basicToSpawn = 4;
+let strongToSpawn = 0;
 const basicEnemies = [];
 const strongEnemies = [];
 let allEnemies = [];
@@ -75,12 +75,12 @@ let projectiles = [];
 
 const enemySpawner = (enemyArray, divString, toSpawn) => {
     for (let i = 0; i < toSpawn; i++) {
-        const delay = Math.random() * enemySpawnDelay;
+        // const delay = Math.random() * enemySpawnDelay;
+        const delay = 1;
         setTimeout(() => {
         enemyType = document.createElement("div");
         enemyType.className = divString;
         field.appendChild(enemyType);
-        let enemyNum = i;
         let initialX, initialY;
         const edge = Math.floor(Math.random() * 4); // 0: top, 1: right, 2: bottom, 3: left
         if (edge === 0) { // top
@@ -103,7 +103,7 @@ const enemySpawner = (enemyArray, divString, toSpawn) => {
             x: (field.offsetWidth / 2 - initialX) * enemySpeed,
             y: (field.offsetHeight / 2 - initialY) * enemySpeed
         };
-        enemyArray.push({ enemy: enemyType, index: enemyNum, width: 20, height: 20, initialX, initialY, x: initialX, y: initialY, velocity: { x: velocity.x, y: velocity.y } });
+        enemyArray.push({ enemy: enemyType, isDead: false, width: 20, height: 20, initialX, initialY, x: initialX, y: initialY, velocity: { x: velocity.x, y: velocity.y } });
         }, delay);
     }
 }
@@ -120,6 +120,7 @@ const checkCollision = (rect1, rect2) => {
 
 const animateEnemy = (enemyArray) => {
     enemyArray.forEach((enemyData) => {
+        if (!enemyData || !enemyData.enemy) return;
         let { enemy, x, y, velocity } = enemyData;
         const centerX = field.offsetWidth / 2 + centerOffset;
         const centerY = field.offsetHeight / 2 + centerOffset;
@@ -136,6 +137,11 @@ const animateEnemy = (enemyArray) => {
         const enemyRect = enemy.getBoundingClientRect();
         const index = enemyArray.indexOf(enemyData);
         if (checkCollision(towerRect, enemyRect)) {
+            enemy.isDead = true;
+            console.log(enemy.isDead);
+            console.log(allEnemies);
+            allEnemies = allEnemies.filter(enemy => !enemy.isDead);
+            console.log(allEnemies);
             enemyArray.splice(index, 1);
             enemy.remove();
             hitTower();
@@ -145,19 +151,17 @@ const animateEnemy = (enemyArray) => {
 
 const spawnEnemies = () => {
     enemySpawner(basicEnemies, "enemyBasic", basicToSpawn);
-    enemySpawner(strongEnemies, "enemyStrong", strongToSpawn);
+    //enemySpawner(strongEnemies, "enemyStrong", strongToSpawn);
 }
 
 const updateEnemies = () => {
-    animateEnemy(basicEnemies);
-    animateEnemy(strongEnemies);
     allEnemies = basicEnemies.concat(strongEnemies);
-    // console.log(allEnemies.length);
+    animateEnemy(allEnemies);
   }
 
 spawnEnemies();
 
-setInterval(spawnEnemies, levelTime);
+// setInterval(spawnEnemies, levelTime);
 
 // -----
 // Damage Tower
@@ -183,13 +187,15 @@ const getNearestEnemy = (x, y, enemies) => {
     let minDistance = Infinity;
     enemies.forEach((enemy) => {
       const distance = Math.hypot(x - enemy.x, y - enemy.y);
+      if (!enemy.isDead) 
       if (distance < minDistance) {
         minDistance = distance;
         nearestEnemy = enemy;
       }
     });
+    // console.log(nearestEnemy);
     return nearestEnemy;
-  }
+}
 
 const generateProjectile = () => {
     const centerX = 245;
@@ -205,7 +211,6 @@ const generateProjectile = () => {
     projectile.style.left = `${centerX}px`;
     projectile.style.top = `${centerY}px`;
     projectiles.push({ projectile, x: centerX, y: centerY, velocity, target: nearestEnemy });
-    console.log(nearestEnemy);
 }
 
 const animateProjectiles = () => {
@@ -216,26 +221,9 @@ const animateProjectiles = () => {
         projectile.y += dy;
         projectile.projectile.style.left = `${projectile.x}px`;
         projectile.projectile.style.top = `${projectile.y}px`;
-        
         if (projectile.x < 0 || projectile.x > field.offsetWidth || projectile.y < 0 || projectile.y > field.offsetHeight) {
           projectiles.splice(index, 1);
           projectile.projectile.remove();
-        }
-
-        let enemyIndex;
-        const hasCollidedWithEnemy = allEnemies.some((enemy, index) => {
-            enemyIndex = index;
-            const dx = Math.abs(projectile.x - (enemy.x + enemy.width / 2));
-            const dy = Math.abs(projectile.y - (enemy.y + enemy.height / 2));
-            if (dx < 5 && dy < 5) {
-                return true;
-            }
-            return false;
-        });
-    
-        if (hasCollidedWithEnemy) {
-            projectiles.splice(index, 1);
-            projectile.projectile.remove();
         }
     });
 }
@@ -298,22 +286,42 @@ const upgradeCoinsPerLvl = () => {
 // Setup button events
 // -----
 
-damageBtn.addEventListener('mousedown', upgradeDamage);
-rangeBtn.addEventListener('mousedown', upgradeRange);
-attackBtn.addEventListener('mousedown', upgradeAttackSpeed);
-critBtn.addEventListener('mousedown', upgradeCriticalChance);
-critPercentBtn.addEventListener('mousedown', upgradeCriticalPercent);
-coinPerLvlBtn.addEventListener('mousedown', upgradeCoinsPerLvl);
+damageBtn.addEventListener('click', upgradeDamage);
+rangeBtn.addEventListener('click', upgradeRange);
+attackBtn.addEventListener('click', upgradeAttackSpeed);
+critBtn.addEventListener('click', upgradeCriticalChance);
+critPercentBtn.addEventListener('click', upgradeCriticalPercent);
+coinPerLvlBtn.addEventListener('click', upgradeCoinsPerLvl);
 
 // -----
 // Render frame
 // -----
+
+const checkCollisions = () => {
+    // console.log(projectiles);
+    // console.log(allEnemies);
+    projectiles.forEach((projectile, projectileIndex) => {
+      allEnemies.forEach((enemy, enemyIndex) => {
+        if (!enemy) return; // Skip if enemy doesn't exist
+        const distance = Math.hypot(projectile.x - enemy.x, projectile.y - enemy.y);
+        if (distance < 10) {
+          projectile.projectile.remove();
+          enemy.enemy.remove();
+          enemy.isDead = true;
+          console.log("Enemy Destroyed!");
+          console.log(allEnemies);
+          projectiles = projectiles.filter(projectile => projectile !== null);
+        }
+      });
+    });
+}
 
 const update = (timestamp) => {
     const deltaTime = timestamp - lastTimestamp;
     lastTimestamp = timestamp;
 
     const render = () => {
+        //checkCollisions();
         updateEnemies();
         updateProjectiles();
     }
