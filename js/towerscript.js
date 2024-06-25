@@ -227,7 +227,6 @@ const animateEnemy = (enemyArray) => {
         // Check for collision with tower
         const towerRect = tower.getBoundingClientRect();
         const enemyRect = enemyData.enemy.getBoundingClientRect();
-        const index = enemyArray.indexOf(enemyData);
         if (checkCollision(towerRect, enemyRect)) {
             hitEnemy(enemyData, 50);
             hitTower(enemyData.damage, enemyData);
@@ -236,13 +235,14 @@ const animateEnemy = (enemyArray) => {
 }
 
 const spawnEnemies = () => {
-    if (game)
-    enemySpawner(basicEnemies, strongEnemies, "enemyBasic", "enemyStrong", basicToSpawn, strongToSpawn, basicHealth, strongHealth, basicDamage, strongDamage);
-    levelNum++;
-    level.textContent = `Level: ${levelNum}`;
-    basicToSpawn++;
-    strongToSpawn++;
-    setCoins(coinsperlvl);
+    if (game) {
+        enemySpawner(basicEnemies, strongEnemies, "enemyBasic", "enemyStrong", basicToSpawn, strongToSpawn, basicHealth, strongHealth, basicDamage, strongDamage);
+        levelNum++;
+        level.textContent = `Level: ${levelNum}`;
+        basicToSpawn++;
+        strongToSpawn++;
+        setCoins(coinsperlvl);
+    }
 }
 
 const updateEnemies = () => {
