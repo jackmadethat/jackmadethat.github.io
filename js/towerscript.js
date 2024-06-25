@@ -61,6 +61,8 @@ const enemySpeed = 1.5;
 const projectileSpeed = 10;
 const basicEnemies = [];
 const strongEnemies = [];
+const basicHealth = 2;
+const strongHealth = 5;
 let game = true;
 let basicToSpawn = 5;
 let strongToSpawn = 2;
@@ -80,13 +82,14 @@ const setCoins = (num) => {
 // Spawn level
 // -----
 
-const enemySpawner = (basicEnemyArray, strongEnemyArray, basicDivString, strongDivString, basicToSpawn, strongToSpawn) => {
-    const spawnEngine = (enemyArray, divString, toSpawn) => {
+const enemySpawner = (basicEnemyArray, strongEnemyArray, basicDivString, strongDivString, basicToSpawn, strongToSpawn, basicHealth, strongHealth) => {
+    const spawnEngine = (enemyArray, divString, toSpawn, enemyHealth) => {
         for (let i = 0; i < toSpawn; i++) {
             const delay = Math.random() * enemySpawnDelay;
             setTimeout(() => {
                 enemyType = document.createElement("div");
                 enemyType.className = divString;
+                enemyArray.health = enemyHealth;
                 field.appendChild(enemyType);
                 let initialX, initialY;
                 const edge = Math.floor(Math.random() * 4); // 0: top, 1: right, 2: bottom, 3: left
@@ -109,13 +112,14 @@ const enemySpawner = (basicEnemyArray, strongEnemyArray, basicDivString, strongD
                     x: (field.offsetWidth / 2 - initialX) * enemySpeed,
                     y: (field.offsetHeight / 2 - initialY) * enemySpeed
                 };
-                enemyArray.push({ enemy: enemyType, isDead: false, width: 20, height: 20, x: initialX, y: initialY, velocity: { x: velocity.x, y: velocity.y } });
+                enemyArray.push({ enemy: enemyType, isDead: false, health: enemyHealth, width: 20, height: 20, x: initialX, y: initialY, velocity: { x: velocity.x, y: velocity.y } });
                 allEnemies.push(enemyArray[enemyArray.length - 1]); // Push the latest enemy to allEnemies
+                console.log(enemyArray.health);
             }, delay);
         }
     }
-    spawnEngine(basicEnemyArray, basicDivString, basicToSpawn);
-    spawnEngine(strongEnemyArray, strongDivString, strongToSpawn);
+    spawnEngine(basicEnemyArray, basicDivString, basicToSpawn, basicHealth);
+    spawnEngine(strongEnemyArray, strongDivString, strongToSpawn, strongHealth);
 }
     
 const checkCollision = (rect1, rect2) => {
@@ -160,7 +164,7 @@ const animateEnemy = (enemyArray) => {
 }
 
 const spawnEnemies = () => {
-    enemySpawner(basicEnemies, strongEnemies, "enemyBasic", "enemyStrong", basicToSpawn, strongToSpawn);
+    enemySpawner(basicEnemies, strongEnemies, "enemyBasic", "enemyStrong", basicToSpawn, strongToSpawn, basicHealth, strongHealth);
     levelNum++;
     level.textContent = `Level: ${levelNum}`;
     basicToSpawn++;
