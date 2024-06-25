@@ -61,6 +61,7 @@ const enemySpeed = 1.5;
 const projectileSpeed = 10;
 const basicEnemies = [];
 const strongEnemies = [];
+let game = true;
 let basicToSpawn = 5;
 let strongToSpawn = 2;
 let allEnemies = [];
@@ -164,7 +165,7 @@ const spawnEnemies = () => {
     level.textContent = `Level: ${levelNum}`;
     basicToSpawn++;
     strongToSpawn++;
-    setCoins(10);
+    setCoins(coinsperlvl);
 }
 
 const updateEnemies = () => {
