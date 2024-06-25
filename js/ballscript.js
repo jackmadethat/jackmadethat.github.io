@@ -11,6 +11,7 @@ const court = document.getElementById('court');
 const ball = document.getElementById('ball');
 const ballTarget = document.getElementById('ball-target');
 const scoreBox = document.getElementById('score');
+const highScoreBox = document.getElementById('highest-score');
 
 // -----
 // Variables
@@ -25,6 +26,7 @@ let interpFactor = 5;
 const growFactor = 4;
 const speedFactor = 0.2;
 let score = 0;
+let highestScore = 0;
 let ballSize = 150;
 if (Math.random() < 0.5) vy = -vy; // Random start position
 
@@ -153,7 +155,24 @@ const collide = () => {
 
 const setScore = () => {
   scoreBox.textContent = `Score: ${score}`;
+  if (score >= highestScore) {
+    highestScore = score;
+    highScoreBox.textContent = `Highest: ${highestScore}`;
+    localStorage.setItem('highScore', highestScore);
+  }
 }
+
+// -----
+// Load high score
+// -----
+
+window.addEventListener('load', () => {
+  const storedCount = localStorage.getItem('highScore');
+  if (storedCount) {
+    highestScore = parseInt(storedCount);
+    highScoreBox.textContent = `Highest: ${highestScore}`;
+  }
+});
 
 // -----
 // Reset court animation

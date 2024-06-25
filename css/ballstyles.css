@@ -3,7 +3,7 @@
 #court {
   text-align: center;
   width: 100%;
-  min-height: 90vh;
+  min-height: 88vh;
   box-shadow: rgba(0, 0, 0, 0.4) 20px 20px 120px 120px inset;
   z-index: 3;
 }
@@ -23,9 +23,12 @@
   height: 100%;
 }
 
-#score {
+.top-text {
   margin-top: -20px;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
+  margin-left: 30px;
+  margin-right: 30px;
+  display: inline-block;
 }
 
 @keyframes scorePoint {
@@ -44,4 +47,10 @@
 
 .losePointAnim {
   animation: losePoint 0.3s linear;
+}
+
+/* Template overrides */
+
+h1 {
+  margin-bottom: 10px;
 }

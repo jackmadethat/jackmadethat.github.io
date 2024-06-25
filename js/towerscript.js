@@ -13,7 +13,7 @@ const field = document.getElementById('field');
 // Game status
 const level = document.getElementById('level');
 const health = document.getElementById('health');
-const coins = document.getElementById('coins');
+const coins = document.getElementById('coins-p');
 // Tower stats
 const damageTxt = document.getElementById('damage');
 const rangeTxt = document.getElementById('range');
@@ -45,15 +45,22 @@ let dmg = 1;
 let rng = 200;
 let atkspd = 750;
 let critdmg = 5;
-let critpercent = 1;
+let critpercent = 0.02;
 let coinsperlvl = 10;
 // Stat upgrades
-let dmgUpgrade = 10;
-let rngUpgrade = 10;
-let atkspdUpgrade = 10;
-let critChanceUpgrade = 10;
-let critDmgUpgrade = 10;
-let coinsPerLvlUpgrade = 10;
+let dmgUpgrade = 1;
+let rngUpgrade = 2;
+let atkspdUpgrade = 3;
+let critChanceUpgrade = 4;
+let critDmgUpgrade = 5;
+let coinsPerLvlUpgrade = 6;
+// Upgrade costs
+let dmgUpgradeCost = 10;
+let rngUpgradeCost = 10;
+let atkspdUpgradeCost = 10;
+let critChanceUpgradeCost = 10;
+let critDmgUpgradeCost = 10;
+let coinsPerLvlUpgradeCost = 10;
 // Game mechanics
 const levelTime = 7500;
 const enemySpawnDelay = 4500;
@@ -63,9 +70,11 @@ const basicEnemies = [];
 const strongEnemies = [];
 const basicHealth = 2;
 const strongHealth = 5;
+const basicDamage = 1;
+const strongDamage = 2;
 let game = true;
 let basicToSpawn = 5;
-let strongToSpawn = 2;
+let strongToSpawn = 1;
 let allEnemies = [];
 let projectiles = [];
 
@@ -79,17 +88,86 @@ const setCoins = (num) => {
 }
 
 // -----
+// Handle Stats
+// -----
+
+damageTxt.textContent = `DMG: ${dmg}`;
+rangeTxt.textContent = `RNG: ${rng}`;
+attackSpeedTxt.textContent = `SPD: ${atkspd / 1000}`;
+critChanceTxt.textContent = `CRT: ${critdmg}`;
+critDmgTxt.textContent = `CRT: ${critpercent}`;
+coinsPerLvlTxt.innerHTML = `<img draggable="false" class="coinImg-bottom" src="./img/tower/coin.png"/>/lvl: ${coinsperlvl}`;
+
+// -----
+// Handle Cost Box
+// -----
+
+document.addEventListener('mousemove', (e) => {
+    const x = e.clientX;
+    const y = e.clientY;
+    costBox.style.left = `${x + 15}px`;
+    costBox.style.top = `${y + 15}px`;
+});
+
+const hideCostBox = () => {
+    costBox.style.display = 'none';
+}
+
+damageBtn.addEventListener('mouseover', () => {
+    costBox.style.display = 'block';
+    costText.textContent = `x ${dmgUpgradeCost}`;
+});
+
+damageBtn.addEventListener('mouseout', hideCostBox);
+
+rangeBtn.addEventListener('mouseover', () => {
+    costBox.style.display = 'block';
+    costText.textContent = `x ${rngUpgradeCost}`;
+});
+
+rangeBtn.addEventListener('mouseout', hideCostBox);
+
+attackBtn.addEventListener('mouseover', () => {
+    costBox.style.display = 'block';
+    costText.textContent = `x ${atkspdUpgradeCost}`;
+});
+
+attackBtn.addEventListener('mouseout', hideCostBox);
+
+critBtn.addEventListener('mouseover', () => {
+    costBox.style.display = 'block';
+    costText.textContent = `x ${critDmgUpgradeCost}`;
+});
+
+critBtn.addEventListener('mouseout', hideCostBox);
+
+critPercentBtn.addEventListener('mouseover', () => {
+    costBox.style.display = 'block';
+    costText.textContent = `x ${critChanceUpgradeCost}`;
+});
+
+critPercentBtn.addEventListener('mouseout', hideCostBox);
+
+coinPerLvlBtn.addEventListener('mouseover', () => {
+    costBox.style.display = 'block';
+    costText.textContent = `x ${coinsPerLvlUpgradeCost}`;
+});
+
+coinPerLvlBtn.addEventListener('mouseout', hideCostBox);
+
+// -----
 // Spawn level
 // -----
 
-const enemySpawner = (basicEnemyArray, strongEnemyArray, basicDivString, strongDivString, basicToSpawn, strongToSpawn, basicHealth, strongHealth) => {
-    const spawnEngine = (enemyArray, divString, toSpawn, enemyHealth) => {
+const enemySpawner = (basicEnemyArray, strongEnemyArray, basicDivString, strongDivString, basicToSpawn, strongToSpawn, basicHealth, strongHealth, basicDamage, strongDamage) => {
+    const spawnEngine = (enemyArray, divString, toSpawn, enemyHealth, enemyDamage) => {
         for (let i = 0; i < toSpawn; i++) {
             const delay = Math.random() * enemySpawnDelay;
             setTimeout(() => {
                 enemyType = document.createElement("div");
                 enemyType.className = divString;
                 enemyArray.health = enemyHealth;
+                enemyArray.damage = enemyDamage;
                 field.appendChild(enemyType);
                 let initialX, initialY;
                 const edge = Math.floor(Math.random() * 4); // 0: top, 1: right, 2: bottom, 3: left
@@ -112,14 +190,14 @@ const enemySpawner = (basicEnemyArray, strongEnemyArray, basicDivString, strongD
                     x: (field.offsetWidth / 2 - initialX) * enemySpeed,
                     y: (field.offsetHeight / 2 - initialY) * enemySpeed
                 };
-                enemyArray.push({ enemy: enemyType, isDead: false, health: enemyHealth, width: 20, height: 20, x: initialX, y: initialY, velocity: { x: velocity.x, y: velocity.y } });
+                enemyArray.push({ enemy: enemyType, isDead: false, health: enemyHealth, damage: enemyDamage, width: 20, height: 20, x: initialX, y: initialY, velocity: { x: velocity.x, y: velocity.y } });
                 allEnemies.push(enemyArray[enemyArray.length - 1]); // Push the latest enemy to allEnemies
                 console.log(enemyArray.health);
             }, delay);
         }
     }
-    spawnEngine(basicEnemyArray, basicDivString, basicToSpawn, basicHealth);
-    spawnEngine(strongEnemyArray, strongDivString, strongToSpawn, strongHealth);
+    spawnEngine(basicEnemyArray, basicDivString, basicToSpawn, basicHealth, basicDamage);
+    spawnEngine(strongEnemyArray, strongDivString, strongToSpawn, strongHealth, strongDamage);
 }
     
 const checkCollision = (rect1, rect2) => {
@@ -130,12 +208,6 @@ const checkCollision = (rect1, rect2) => {
     return true;
     }
     return false;
-}
-
-const destroyEnemy = (enemyData) => {
-    enemyData.enemy.isDead = true;
-    allEnemies = allEnemies.filter(enemyData => !enemyData.enemy.isDead);
-    enemyData.enemy.remove();
 }
 
 const animateEnemy = (enemyArray) => {
@@ -157,14 +229,15 @@ const animateEnemy = (enemyArray) => {
         const enemyRect = enemyData.enemy.getBoundingClientRect();
         const index = enemyArray.indexOf(enemyData);
         if (checkCollision(towerRect, enemyRect)) {
-            destroyEnemy(enemyData, index);
-            hitTower();
+            hitEnemy(enemyData, 50);
+            hitTower(enemyData.damage, enemyData);
         }
     });
 }
 
 const spawnEnemies = () => {
-    enemySpawner(basicEnemies, strongEnemies, "enemyBasic", "enemyStrong", basicToSpawn, strongToSpawn, basicHealth, strongHealth);
+    if (game)
+    enemySpawner(basicEnemies, strongEnemies, "enemyBasic", "enemyStrong", basicToSpawn, strongToSpawn, basicHealth, strongHealth, basicDamage, strongDamage);
     levelNum++;
     level.textContent = `Level: ${levelNum}`;
     basicToSpawn++;
@@ -181,18 +254,53 @@ spawnEnemies();
 setInterval(spawnEnemies, levelTime);
 
 // -----
-// Damage Tower
+// Damage
 // -----
 
-const hitTower = () => {
+const hitTower = (enemyDmg, enemyData) => {
     if (healthNum > 0) {
-        healthNum -= 1;
+        healthNum -= enemyDmg;
+        hitEnemy(enemyData, 50);
         health.textContent = `Health: ${healthNum}`;
-        console.log("Tower Hit!", healthNum);
+        console.log("Tower Hit!", healthNum, "Damage Dealt: ", enemyDmg);
     } else {
+        game = false;
         health.textContent = `Game Over!`;
         console.log("Game Over!");
     }
+}
+
+const hitEnemy = (enemyData, dmg) => {
+    if (Math.random() < critpercent) {
+        dmg *= critdmg;
+        enemyData.health -= dmg;
+        console.log("Critical Hit!! Damage: ", dmg);
+    } else {
+        enemyData.health -= dmg;
+        console.log("Enemy Health: ", enemyData.health);
+    }
+    if (enemyData.health <= 0) {
+        enemyData.enemy.isDead = true;
+        allEnemies = allEnemies.filter(enemyData => !enemyData.enemy.isDead);
+        enemyData.enemy.remove();
+        setCoins(1);
+    }
+}
+
+const destroyProjectile = (projectileData) => {
+    projectileData.projectile.isHit = true;
+    projectiles = projectiles.filter(projectileData => !projectileData.projectile.isHit);
+    projectileData.projectile.remove();
+}
+
+const projectileHit = (projectile, x, y, enemies) => {
+    enemies.forEach((enemy) => {
+        const distance = Math.hypot(x - enemy.x, y - enemy.y)
+        if (distance <  15) {
+            hitEnemy(enemy, dmg);
+            destroyProjectile(projectile);
+        }
+    });
 }
 
 // -----
@@ -210,29 +318,11 @@ const getNearestEnemy = (x, y, enemies) => {
             nearestEnemy = enemy;
         }
         if ((Math.abs(x - enemy.x) < 2 || Math.abs(y - enemy.y) < 2)) {
-            destroyEnemy(enemy);
+            hitEnemy(enemy, dmg);
             console.log("Enemy Destroyed!");
         }
     });
     return nearestEnemy;
-}
-
-const destroyProjectile = (projectileData) => {
-    projectileData.projectile.isHit = true;
-    projectiles = projectiles.filter(projectileData => !projectileData.projectile.isHit);
-    projectileData.projectile.remove();
-}
-
-const projectileHit = (projectile, x, y, enemies) => {
-    enemies.forEach((enemy) => {
-        const distance = Math.hypot(x - enemy.x, y - enemy.y)
-        if (distance <  15) {
-            destroyEnemy(enemy);
-            destroyProjectile(projectile);
-            setCoins(1);
-            console.log("Enemy Destroyed!");
-        }
-    });
 }
 
 const generateProjectile = () => {

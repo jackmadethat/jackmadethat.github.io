@@ -32,7 +32,7 @@
   margin-top: -15px;
 }
 
-#coins {
+#coins-p {
   display: flex;
   justify-content: right;
   text-align: right;
@@ -73,7 +73,7 @@
   height: 25px;
   padding: 3px 7px 3px 3px;
   border: 1px solid var(--white);
-  background-color: var(--semi-white);
+  background-color: var(--middle-blue);
 }
 
 .projectile {
