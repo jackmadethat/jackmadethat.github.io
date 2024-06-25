@@ -67,6 +67,15 @@ let allEnemies = [];
 let projectiles = [];
 
 // -----
+// Handle Coins
+// -----
+
+const setCoins = (num) => {
+    coinsNum += num;
+    coins.innerHTML = `<img draggable="false" class="coinImg-top" src="./img/tower/coin.png"/>${coinsNum}`;
+}
+
+// -----
 // Spawn level
 // -----
 
@@ -155,6 +164,7 @@ const spawnEnemies = () => {
     level.textContent = `Level: ${levelNum}`;
     basicToSpawn++;
     strongToSpawn++;
+    setCoins(10);
 }
 
 const updateEnemies = () => {
@@ -257,15 +267,6 @@ const updateProjectiles = () => {
 }
 
 setInterval(generateProjectile, atkspd);
-
-// -----
-// Handle Coins
-// -----
-
-const setCoins = (num) => {
-    coinsNum += num;
-    coins.innerHTML = `<img draggable="false" class="coinImg-top" src="./img/tower/coin.png"/>${coinsNum}`;
-}
 
 // -----
 // Upgrade Damage
