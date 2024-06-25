@@ -38,12 +38,12 @@ const costText = document.getElementById('upgrade-cost');
 
 // Game status
 let healthNum = 10;
-let levelNum = 1;
+let levelNum = 0;
 let coinsNum = 0;
 // Tower stats
 let dmg = 1;
-let rng = 250;
-let atkspd = 500;
+let rng = 200;
+let atkspd = 750;
 let critdmg = 5;
 let critpercent = 1;
 let coinsperlvl = 10;
@@ -55,17 +55,14 @@ let critChanceUpgrade = 10;
 let critDmgUpgrade = 10;
 let coinsPerLvlUpgrade = 10;
 // Game mechanics
-const levelTime = 5000;
-let lastTimestamp = 0;
-const enemySpawnDelay = 2500;
+const levelTime = 7500;
+const enemySpawnDelay = 4500;
 const enemySpeed = 1.5;
-const maxSpeed = 150;
-const centerOffset = -12;
 const projectileSpeed = 10;
-let basicToSpawn = 10;
-let strongToSpawn = 3;
 const basicEnemies = [];
 const strongEnemies = [];
+let basicToSpawn = 5;
+let strongToSpawn = 2;
 let allEnemies = [];
 let projectiles = [];
 
@@ -96,21 +93,20 @@ const enemySpawner = (basicEnemyArray, strongEnemyArray, basicDivString, strongD
                     initialX = 0;
                     initialY = Math.random() * field.offsetHeight;
                 }
-                enemyType.style.position = "absolute";
                 enemyType.style.left = `${initialX}px`;
                 enemyType.style.top = `${initialY}px`;
                 const velocity = {
                     x: (field.offsetWidth / 2 - initialX) * enemySpeed,
                     y: (field.offsetHeight / 2 - initialY) * enemySpeed
                 };
-                enemyArray.push({ enemy: enemyType, isDead: false, width: 20, height: 20, initialX, initialY, x: initialX, y: initialY, velocity: { x: velocity.x, y: velocity.y } });
+                enemyArray.push({ enemy: enemyType, isDead: false, width: 20, height: 20, x: initialX, y: initialY, velocity: { x: velocity.x, y: velocity.y } });
                 allEnemies.push(enemyArray[enemyArray.length - 1]); // Push the latest enemy to allEnemies
             }, delay);
         }
     }
     spawnEngine(basicEnemyArray, basicDivString, basicToSpawn);
     spawnEngine(strongEnemyArray, strongDivString, strongToSpawn);
-  }
+}
     
 const checkCollision = (rect1, rect2) => {
     if (rect1.x <= rect2.x + rect2.width &&
@@ -131,16 +127,17 @@ const destroyEnemy = (enemyData) => {
 const animateEnemy = (enemyArray) => {
     enemyArray.forEach((enemyData) => {
         if (!enemyData || !enemyData.enemy) return;
-        const centerX = field.offsetWidth / 2 + centerOffset;
-        const centerY = field.offsetHeight / 2 + centerOffset;
-        enemyData.velocity.x = (centerX - enemyData.x) * 0.01;
-        enemyData.velocity.y = (centerY - enemyData.y) * 0.01;
-        enemyData.x += enemyData.velocity.x;
-        enemyData.y += enemyData.velocity.y;
+        const centerX = field.offsetWidth / 2 + -12;
+        const centerY = field.offsetHeight / 2 + -12;
+        const dx = centerX - enemyData.x;
+        const dy = centerY - enemyData.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const velocityX = (dx / dist) * enemySpeed;
+        const velocityY = (dy / dist) * enemySpeed;
+        enemyData.x += velocityX;
+        enemyData.y += velocityY;
         enemyData.enemy.style.left = `${enemyData.x}px`;
         enemyData.enemy.style.top = `${enemyData.y}px`;
-        enemyData.x = enemyData.x;
-        enemyData.y = enemyData.y;
         // Check for collision with tower
         const towerRect = tower.getBoundingClientRect();
         const enemyRect = enemyData.enemy.getBoundingClientRect();
@@ -154,6 +151,10 @@ const animateEnemy = (enemyArray) => {
 
 const spawnEnemies = () => {
     enemySpawner(basicEnemies, strongEnemies, "enemyBasic", "enemyStrong", basicToSpawn, strongToSpawn);
+    levelNum++;
+    level.textContent = `Level: ${levelNum}`;
+    basicToSpawn++;
+    strongToSpawn++;
 }
 
 const updateEnemies = () => {
@@ -185,7 +186,7 @@ const hitTower = () => {
 
 const getNearestEnemy = (x, y, enemies) => {
     let nearestEnemy = null;
-    let minDistance = Infinity;
+    let minDistance = rng;
     enemies.forEach((enemy) => {
         const distance = Math.hypot(x - enemy.x, y - enemy.y);
         if (!enemy.isDead) 
@@ -213,9 +214,10 @@ const projectileHit = (projectile, x, y, enemies) => {
         if (distance <  15) {
             destroyEnemy(enemy);
             destroyProjectile(projectile);
+            setCoins(1);
             console.log("Enemy Destroyed!");
         }
-    })
+    });
 }
 
 const generateProjectile = () => {
@@ -255,6 +257,15 @@ const updateProjectiles = () => {
 }
 
 setInterval(generateProjectile, atkspd);
+
+// -----
+// Handle Coins
+// -----
+
+const setCoins = (num) => {
+    coinsNum += num;
+    coins.innerHTML = `<img draggable="false" class="coinImg-top" src="./img/tower/coin.png"/>${coinsNum}`;
+}
 
 // -----
 // Upgrade Damage
@@ -319,8 +330,7 @@ coinPerLvlBtn.addEventListener('click', upgradeCoinsPerLvl);
 // Render frame
 // -----
 
-const update = (timestamp) => {
-    lastTimestamp = timestamp;
+const update = () => {
     const render = () => {
         updateEnemies();
         updateProjectiles();
