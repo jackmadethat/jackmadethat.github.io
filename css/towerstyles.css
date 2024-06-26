@@ -179,6 +179,26 @@
   margin-top: -6px;
 }
 
+/* Including color animations from the ball game */
+
+@keyframes clearLevel {
+	0% { background-color: rgba(0, 255, 0, 0.2); }
+	100% { background-color: rgba(0, 255, 0, 0); }
+}
+
+.clearLevelAnim {
+  animation: clearLevel 0.3s linear;
+}
+
+@keyframes loseGame {
+	0% { background-color: rgba(255, 0, 0, 0.2); }
+	100% { background-color: rgba(255, 0, 0, 0); }
+}
+
+.loseGameAnim {
+  animation: loseGame 0.3s linear;
+}
+
 /* Template overrides */
 
 body {

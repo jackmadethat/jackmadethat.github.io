@@ -10,6 +10,7 @@ Upgrade the tower to survive
 // Play area
 const tower = document.getElementById('tower-target');
 const field = document.getElementById('field');
+const rangeImg = document.getElementById('range-img'); 
 // Game status
 const level = document.getElementById('level');
 const health = document.getElementById('health');
@@ -44,7 +45,7 @@ let coinsNum = 0;
 let dmg = 1;
 let rng = 200;
 let atkspd = 750;
-let critdmg = 5;
+let critdmg = 2;
 let critpercent = 0.02;
 let coinsperlvl = 10;
 // Stat upgrades
@@ -65,13 +66,15 @@ let coinsPerLvlUpgradeCost = 10;
 const levelTime = 7500;
 const enemySpawnDelay = 4500;
 const enemySpeed = 1.5;
-const projectileSpeed = 10;
 const basicEnemies = [];
 const strongEnemies = [];
-const basicHealth = 2;
-const strongHealth = 5;
+const bossEnemies = [];
 const basicDamage = 1;
 const strongDamage = 2;
+const bossDamage = 10;
+let basicHealth = 2;
+let strongHealth = 5;
+let bossHealth = 10;
 let game = true;
 let basicToSpawn = 5;
 let strongToSpawn = 1;
@@ -93,9 +96,9 @@ const setCoins = (num) => {
 
 damageTxt.textContent = `DMG: ${dmg}`;
 rangeTxt.textContent = `RNG: ${rng}`;
-attackSpeedTxt.textContent = `SPD: ${atkspd / 1000}`;
-critChanceTxt.textContent = `CRT: ${critdmg}`;
-critDmgTxt.textContent = `CRT: ${critpercent}`;
+attackSpeedTxt.textContent = `SPD: ${(1000 / atkspd).toFixed(1)}`;
+critChanceTxt.textContent = `CRT%: ${critpercent * 100}%`;
+critDmgTxt.textContent = `CRT: ${(critdmg / dmg).toFixed(1)}x`;
 coinsPerLvlTxt.innerHTML = `<img draggable="false" class="coinImg-bottom" src="./img/tower/coin.png"/>/lvl: ${coinsperlvl}`;
 
 // -----
@@ -166,8 +169,6 @@ const enemySpawner = (basicEnemyArray, strongEnemyArray, basicDivString, strongD
             setTimeout(() => {
                 enemyType = document.createElement("div");
                 enemyType.className = divString;
-                enemyArray.health = enemyHealth;
-                enemyArray.damage = enemyDamage;
                 field.appendChild(enemyType);
                 let initialX, initialY;
                 const edge = Math.floor(Math.random() * 4); // 0: top, 1: right, 2: bottom, 3: left
@@ -190,9 +191,18 @@ const enemySpawner = (basicEnemyArray, strongEnemyArray, basicDivString, strongD
                     x: (field.offsetWidth / 2 - initialX) * enemySpeed,
                     y: (field.offsetHeight / 2 - initialY) * enemySpeed
                 };
-                enemyArray.push({ enemy: enemyType, isDead: false, health: enemyHealth, damage: enemyDamage, width: 20, height: 20, x: initialX, y: initialY, velocity: { x: velocity.x, y: velocity.y } });
+                enemyArray.push({ 
+                    enemy: enemyType, 
+                    isDead: false, 
+                    health: enemyHealth, 
+                    damage: enemyDamage, 
+                    width: 20, 
+                    height: 20, 
+                    x: initialX, 
+                    y: initialY, 
+                    velocity: { x: velocity.x, y: velocity.y } 
+                });
                 allEnemies.push(enemyArray[enemyArray.length - 1]); // Push the latest enemy to allEnemies
-                console.log(enemyArray.health);
             }, delay);
         }
     }
@@ -205,7 +215,7 @@ const checkCollision = (rect1, rect2) => {
         rect1.x + rect1.width >= rect2.x &&
         rect1.y <= rect2.y + rect2.height &&
         rect1.y + rect1.height >= rect2.y) {
-    return true;
+        return true;
     }
     return false;
 }
@@ -228,20 +238,30 @@ const animateEnemy = (enemyArray) => {
         const towerRect = tower.getBoundingClientRect();
         const enemyRect = enemyData.enemy.getBoundingClientRect();
         if (checkCollision(towerRect, enemyRect)) {
-            hitEnemy(enemyData, 50);
+            hitEnemy(enemyData, 50, 0);
             hitTower(enemyData.damage, enemyData);
         }
     });
 }
 
-const spawnEnemies = () => {
+const spawnWave = () => {
     if (game) {
+        // Spawn enemies
         enemySpawner(basicEnemies, strongEnemies, "enemyBasic", "enemyStrong", basicToSpawn, strongToSpawn, basicHealth, strongHealth, basicDamage, strongDamage);
+        // Iterate level number
         levelNum++;
         level.textContent = `Level: ${levelNum}`;
+        // Increase number of basic enemies to spawn each wave
         basicToSpawn++;
-        strongToSpawn++;
+        // Increase number of strong enemies to spawn every second wave
+        if (levelNum % 2 === 0) {
+            strongToSpawn++;
+        }
         setCoins(coinsperlvl);
+
+        if (levelNum >= 2) {
+        // field.classList.add('clearLevelAnim');
+        } 
     }
 }
 
@@ -249,9 +269,9 @@ const updateEnemies = () => {
     animateEnemy(allEnemies);
 }
 
-spawnEnemies();
+spawnWave();
 
-setInterval(spawnEnemies, levelTime);
+setInterval(spawnWave, levelTime);
 
 // -----
 // Damage
@@ -260,17 +280,18 @@ setInterval(spawnEnemies, levelTime);
 const hitTower = (enemyDmg, enemyData) => {
     if (healthNum > 0) {
         healthNum -= enemyDmg;
-        hitEnemy(enemyData, 50);
+        hitEnemy(enemyData, 50, 0);
         health.textContent = `Health: ${healthNum}`;
         console.log("Tower Hit!", healthNum, "Damage Dealt: ", enemyDmg);
     } else {
         game = false;
         health.textContent = `Game Over!`;
         console.log("Game Over!");
+        field.classList.add('loseGameAnim');
     }
 }
 
-const hitEnemy = (enemyData, dmg) => {
+const hitEnemy = (enemyData, dmg, prize) => {
     if (Math.random() < critpercent) {
         dmg *= critdmg;
         enemyData.health -= dmg;
@@ -283,7 +304,15 @@ const hitEnemy = (enemyData, dmg) => {
         enemyData.enemy.isDead = true;
         allEnemies = allEnemies.filter(enemyData => !enemyData.enemy.isDead);
         enemyData.enemy.remove();
-        setCoins(1);
+        setCoins(prize);
+    }
+}
+
+const checkTower = () => {
+    if (!game) {
+        allEnemies.forEach((enemyData) => {
+            hitEnemy(enemyData, 50, 0);
+        });
     }
 }
 
@@ -297,7 +326,7 @@ const projectileHit = (projectile, x, y, enemies) => {
     enemies.forEach((enemy) => {
         const distance = Math.hypot(x - enemy.x, y - enemy.y)
         if (distance <  15) {
-            hitEnemy(enemy, dmg);
+            hitEnemy(enemy, dmg, 1);
             destroyProjectile(projectile);
         }
     });
@@ -318,7 +347,7 @@ const getNearestEnemy = (x, y, enemies) => {
             nearestEnemy = enemy;
         }
         if ((Math.abs(x - enemy.x) < 2 || Math.abs(y - enemy.y) < 2)) {
-            hitEnemy(enemy, dmg);
+            hitEnemy(enemy, dmg, 1);
             console.log("Enemy Destroyed!");
         }
     });
@@ -336,10 +365,16 @@ const generateProjectile = () => {
     field.appendChild(projectile);
     const directionX = nearestEnemy.x + (nearestEnemy.height / 2) - centerX;
     const directionY = nearestEnemy.y + (nearestEnemy.width / 2) - centerY;
-    const velocity = { x: directionX / Math.hypot(directionX, directionY) * projectileSpeed, y: directionY / Math.hypot(directionX, directionY) * projectileSpeed };
+    const velocity = { x: directionX / Math.hypot(directionX, directionY) * 10, y: directionY / Math.hypot(directionX, directionY) * 10 };
     projectile.style.left = `${projectile.x}px`;
     projectile.style.top = `${projectile.y}px`;
-    projectiles.push({ projectile, isHit: false, x: centerX, y: centerY, velocity });
+    projectiles.push({ 
+        projectile, 
+        isHit: false, 
+        x: centerX, 
+        y: centerY, 
+        velocity 
+    });
 }
 
 const animateProjectiles = (projectiles) => {
@@ -368,7 +403,15 @@ setInterval(generateProjectile, atkspd);
 // -----
 
 const upgradeDamage = () => {
-    console.log("Upgraded Tower Damage!");
+    if (coinsNum - dmgUpgradeCost >= 0 && game) {
+        coinsNum -= dmgUpgradeCost;
+        dmgUpgradeCost += dmgUpgradeCost * 1.2;
+        dmg += dmgUpgrade;
+        dmgUpgradeCost == Math.floor(dmgUpgrade * 1.2);
+        damageTxt.textContent = `DMG: ${dmg}`;
+        costText.textContent = `x ${Math.floor(dmgUpgradeCost)}`;
+        console.log("Upgraded Tower Damage!");
+    }
 }
 
 // -----
@@ -377,6 +420,8 @@ const upgradeDamage = () => {
 
 const upgradeRange = () => {
     console.log("Upgraded Tower Range!");
+    rangeImg.style.width = `${rng + 50}px`;
+    rangeImg.style.height = `${rng + 50}px`;
 }
 
 // -----
@@ -423,11 +468,22 @@ critPercentBtn.addEventListener('click', upgradeCriticalPercent);
 coinPerLvlBtn.addEventListener('click', upgradeCoinsPerLvl);
 
 // -----
+// Field animations
+// -----
+
+field.addEventListener('animationend', () => {
+    field.classList.remove('clearLevelAnim');
+    // field.style.backgroundColor = 'rgba(255, 0, 0, 0.2';
+    // field.classList.remove('loseGameAnim');
+});
+
+// -----
 // Render frame
 // -----
 
 const update = () => {
     const render = () => {
+        checkTower();
         updateEnemies();
         updateProjectiles();
     }
