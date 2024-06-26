@@ -265,7 +265,7 @@ const spawnWave = () => {
             level.textContent = `Level: ${levelNum}`;
             basicToSpawn++;
             // Increase number of strong enemies to spawn every second wave
-            if (levelNum % 2 === 0) {
+            if (levelNum % 3 === 0) {
                 strongToSpawn++;
             }
             setCoins(coinsperlvl);
