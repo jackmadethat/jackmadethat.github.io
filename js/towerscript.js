@@ -40,21 +40,21 @@ const costText = document.getElementById('upgrade-cost');
 // Game status
 let healthNum = 10;
 let levelNum = 0;
-let coinsNum = 0;
+let coinsNum = 10;
 // Tower stats
 let dmg = 1;
 let rng = 200;
 let atkspd = 750;
 let critdmg = 2;
 let critpercent = 0.02;
-let coinsperlvl = 10;
+let coinsperlvl = 5;
 // Stat upgrades
 let dmgUpgrade = 1;
-let rngUpgrade = 2;
-let atkspdUpgrade = 3;
-let critChanceUpgrade = 4;
-let critDmgUpgrade = 5;
-let coinsPerLvlUpgrade = 6;
+let rngUpgrade = 5;
+let atkspdUpgrade = 25;
+let critChanceUpgrade = 0.02;
+let critDmgUpgrade = 0.2;
+let coinsPerLvlUpgrade = 1;
 // Upgrade costs
 let dmgUpgradeCost = 10;
 let rngUpgradeCost = 10;
@@ -71,10 +71,10 @@ const strongEnemies = [];
 const bossEnemies = [];
 const basicDamage = 1;
 const strongDamage = 2;
-const bossDamage = 10;
+const bossDamage = 11;
 let basicHealth = 2;
 let strongHealth = 5;
-let bossHealth = 10;
+let bossHealth = 11;
 let game = true;
 let basicToSpawn = 5;
 let strongToSpawn = 1;
@@ -96,7 +96,7 @@ const setCoins = (num) => {
 
 damageTxt.textContent = `DMG: ${dmg}`;
 rangeTxt.textContent = `RNG: ${rng}`;
-attackSpeedTxt.textContent = `SPD: ${(1000 / atkspd).toFixed(1)}`;
+attackSpeedTxt.textContent = `SPD: ${(1000 / atkspd).toFixed(2)}`;
 critChanceTxt.textContent = `CRT%: ${critpercent * 100}%`;
 critDmgTxt.textContent = `CRT: ${(critdmg / dmg).toFixed(1)}x`;
 coinsPerLvlTxt.innerHTML = `<img draggable="false" class="coinImg-bottom" src="./img/tower/coin.png"/>/lvl: ${coinsperlvl}`;
@@ -139,14 +139,14 @@ attackBtn.addEventListener('mouseout', hideCostBox);
 
 critBtn.addEventListener('mouseover', () => {
     costBox.style.display = 'block';
-    costText.textContent = `x ${critDmgUpgradeCost}`;
+    costText.textContent = `x ${critChanceUpgradeCost}`;
 });
 
 critBtn.addEventListener('mouseout', hideCostBox);
 
 critPercentBtn.addEventListener('mouseover', () => {
     costBox.style.display = 'block';
-    costText.textContent = `x ${critChanceUpgradeCost}`;
+    costText.textContent = `x ${critDmgUpgradeCost}`;
 });
 
 critPercentBtn.addEventListener('mouseout', hideCostBox);
@@ -162,7 +162,7 @@ coinPerLvlBtn.addEventListener('mouseout', hideCostBox);
 // Spawn level
 // -----
 
-const enemySpawner = (basicEnemyArray, strongEnemyArray, basicDivString, strongDivString, basicToSpawn, strongToSpawn, basicHealth, strongHealth, basicDamage, strongDamage) => {
+const enemySpawner = (basicToSpawn, strongToSpawn) => {
     const spawnEngine = (enemyArray, divString, toSpawn, enemyHealth, enemyDamage) => {
         for (let i = 0; i < toSpawn; i++) {
             const delay = Math.random() * enemySpawnDelay;
@@ -206,8 +206,13 @@ const enemySpawner = (basicEnemyArray, strongEnemyArray, basicDivString, strongD
             }, delay);
         }
     }
-    spawnEngine(basicEnemyArray, basicDivString, basicToSpawn, basicHealth, basicDamage);
-    spawnEngine(strongEnemyArray, strongDivString, strongToSpawn, strongHealth, strongDamage);
+    if (levelNum % 10 === 0 && levelNum != 0) {
+        // Spawn a boss enemy
+        spawnEngine([], "enemyBoss", 1, bossHealth, bossDamage);
+    } else {
+        spawnEngine([], "enemyBasic", basicToSpawn, basicHealth, basicDamage);
+        spawnEngine([], "enemyStrong", strongToSpawn, strongHealth, strongDamage);
+    }
 }
     
 const checkCollision = (rect1, rect2) => {
@@ -246,22 +251,26 @@ const animateEnemy = (enemyArray) => {
 
 const spawnWave = () => {
     if (game) {
-        // Spawn enemies
-        enemySpawner(basicEnemies, strongEnemies, "enemyBasic", "enemyStrong", basicToSpawn, strongToSpawn, basicHealth, strongHealth, basicDamage, strongDamage);
-        // Iterate level number
-        levelNum++;
-        level.textContent = `Level: ${levelNum}`;
-        // Increase number of basic enemies to spawn each wave
-        basicToSpawn++;
-        // Increase number of strong enemies to spawn every second wave
-        if (levelNum % 2 === 0) {
-            strongToSpawn++;
+        if (levelNum % 10 === 0 && levelNum != 0) {
+            enemySpawner(basicToSpawn, strongToSpawn);
+            levelNum++;
+            basicHealth += 2;
+            strongHealth += 4;
+            bossHealth += 10;
+            level.textContent = `Level: ${levelNum}`;
+        } else {
+            // Spawn enemies
+            enemySpawner(basicToSpawn, strongToSpawn);
+            levelNum++;
+            level.textContent = `Level: ${levelNum}`;
+            basicToSpawn++;
+            // Increase number of strong enemies to spawn every second wave
+            if (levelNum % 2 === 0) {
+                strongToSpawn++;
+            }
+            setCoins(coinsperlvl);
         }
-        setCoins(coinsperlvl);
-
-        if (levelNum >= 2) {
-        // field.classList.add('clearLevelAnim');
-        } 
+        console.log("Level ", levelNum);
     }
 }
 
@@ -404,10 +413,10 @@ setInterval(generateProjectile, atkspd);
 
 const upgradeDamage = () => {
     if (coinsNum - dmgUpgradeCost >= 0 && game) {
-        coinsNum -= dmgUpgradeCost;
-        dmgUpgradeCost += dmgUpgradeCost * 1.2;
+        setCoins(-dmgUpgradeCost);
+        dmgUpgradeCost += dmgUpgradeCost * 0.8;
         dmg += dmgUpgrade;
-        dmgUpgradeCost == Math.floor(dmgUpgrade * 1.2);
+        dmgUpgradeCost == Math.floor(dmgUpgrade * 0.8);
         damageTxt.textContent = `DMG: ${dmg}`;
         costText.textContent = `x ${Math.floor(dmgUpgradeCost)}`;
         console.log("Upgraded Tower Damage!");
@@ -419,9 +428,17 @@ const upgradeDamage = () => {
 // -----
 
 const upgradeRange = () => {
-    console.log("Upgraded Tower Range!");
-    rangeImg.style.width = `${rng + 50}px`;
-    rangeImg.style.height = `${rng + 50}px`;
+    if (coinsNum - rngUpgradeCost >= 0 && game) {
+        setCoins(-rngUpgradeCost);
+        rngUpgradeCost += rngUpgradeCost * 1.1;
+        rng += rngUpgrade;
+        rngUpgradeCost == Math.floor(rngUpgradeCost * 1.1);
+        rangeTxt.textContent = `RNG: ${rng}`;
+        costText.textContent = `x ${Math.floor(rngUpgradeCost)}`;
+        rangeImg.style.width = `${rng + 50}px`;
+        rangeImg.style.height = `${rng + 50}px`;
+        console.log("Upgraded Tower Range!");
+    }
 }
 
 // -----
@@ -429,7 +446,15 @@ const upgradeRange = () => {
 // -----
 
 const upgradeAttackSpeed = () => {
-    console.log("Upgraded Tower Attack Speed!");
+    if (coinsNum - atkspdUpgradeCost >= 0 && game) {
+        setCoins(-atkspdUpgradeCost);
+        atkspdUpgradeCost += atkspdUpgradeCost * 0.7;
+        atkspd -= atkspdUpgrade;
+        atkspdUpgradeCost == Math.floor(atkspdUpgradeCost * 0.7);
+        attackSpeedTxt.textContent = `SPD: ${(1000 / atkspd).toFixed(2)}`;
+        costText.textContent = `x ${Math.floor(atkspdUpgradeCost)}`;
+        console.log("Upgraded Tower Attack Speed!");
+    }
 }
 
 // -----
@@ -437,7 +462,15 @@ const upgradeAttackSpeed = () => {
 // -----
 
 const upgradeCriticalChance = () => {
-    console.log("Upgraded Tower Critical Chance!");
+    if (coinsNum - critChanceUpgradeCost >= 0 && game) {
+        setCoins(-critChanceUpgradeCost);
+        critChanceUpgradeCost += critChanceUpgradeCost * 0.7;
+        critpercent += critChanceUpgrade;
+        critChanceUpgradeCost == Math.floor(critChanceUpgradeCost * 0.7);
+        critChanceTxt.textContent = `CRT%: ${critpercent * 100}%`;
+        costText.textContent = `x ${Math.floor(critChanceUpgradeCost)}`;
+        console.log("Upgraded Tower Critical Chance!");
+    }
 }
 
 // -----
@@ -445,7 +478,15 @@ const upgradeCriticalChance = () => {
 // -----
 
 const upgradeCriticalPercent = () => {
-    console.log("Upgraded Tower Critical Damage!");
+    if (coinsNum - critDmgUpgradeCost >= 0 && game) {
+        setCoins(-critDmgUpgradeCost);
+        critDmgUpgradeCost += critDmgUpgradeCost * 1.2;
+        critdmg += critDmgUpgrade;
+        critDmgUpgradeCost == Math.floor(critDmgUpgradeCost * 0.7);
+        critDmgTxt.textContent = `CRT: ${(critdmg / dmg).toFixed(1)}x`;
+        costText.textContent = `x ${Math.floor(critDmgUpgradeCost)}`;
+        console.log("Upgraded Tower Critical Damage!");
+    }
 }
 
 // -----
@@ -453,7 +494,14 @@ const upgradeCriticalPercent = () => {
 // -----
 
 const upgradeCoinsPerLvl = () => {
-    console.log("Upgraded Coins Earned per Level!");
+    if (coinsNum - coinsPerLvlUpgradeCost >= 0 && game) {
+        setCoins(-coinsPerLvlUpgradeCost);
+        coinsperlvl += coinsPerLvlUpgrade;
+        coinsPerLvlUpgradeCost += coinsPerLvlUpgradeCost * 0.7;
+        coinsPerLvlUpgradeCost == Math.floor(coinsPerLvlUpgradeCost * 1.2);
+        costText.textContent = `x ${Math.floor(coinsPerLvlUpgradeCost)}`;
+        coinsPerLvlTxt.innerHTML = `<img draggable="false" class="coinImg-bottom" src="./img/tower/coin.png"/>/lvl: ${coinsperlvl}`;
+    }
 }
 
 // -----
