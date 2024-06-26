@@ -118,42 +118,42 @@ const hideCostBox = () => {
 
 damageBtn.addEventListener('mouseover', () => {
     costBox.style.display = 'block';
-    costText.textContent = `x ${dmgUpgradeCost}`;
+    costText.textContent = `x ${Math.floor(dmgUpgradeCost)}`;
 });
 
 damageBtn.addEventListener('mouseout', hideCostBox);
 
 rangeBtn.addEventListener('mouseover', () => {
     costBox.style.display = 'block';
-    costText.textContent = `x ${rngUpgradeCost}`;
+    costText.textContent = `x ${Math.floor(rngUpgradeCost)}`;
 });
 
 rangeBtn.addEventListener('mouseout', hideCostBox);
 
 attackBtn.addEventListener('mouseover', () => {
     costBox.style.display = 'block';
-    costText.textContent = `x ${atkspdUpgradeCost}`;
+    costText.textContent = `x ${Math.floor(atkspdUpgradeCost)}`;
 });
 
 attackBtn.addEventListener('mouseout', hideCostBox);
 
 critBtn.addEventListener('mouseover', () => {
     costBox.style.display = 'block';
-    costText.textContent = `x ${critChanceUpgradeCost}`;
+    costText.textContent = `x ${Math.floor(critChanceUpgradeCost)}`;
 });
 
 critBtn.addEventListener('mouseout', hideCostBox);
 
 critPercentBtn.addEventListener('mouseover', () => {
     costBox.style.display = 'block';
-    costText.textContent = `x ${critDmgUpgradeCost}`;
+    costText.textContent = `x ${Math.floor(critDmgUpgradeCost)}`;
 });
 
 critPercentBtn.addEventListener('mouseout', hideCostBox);
 
 coinPerLvlBtn.addEventListener('mouseover', () => {
     costBox.style.display = 'block';
-    costText.textContent = `x ${coinsPerLvlUpgradeCost}`;
+    costText.textContent = `x ${Math.floor(coinsPerLvlUpgradeCost)}`;
 });
 
 coinPerLvlBtn.addEventListener('mouseout', hideCostBox);
