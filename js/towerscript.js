@@ -43,8 +43,8 @@ let levelNum = 0;
 let coinsNum = 10;
 // Tower stats
 let dmg = 1;
-let rng = 200;
-let atkspd = 750;
+let rng = 180;
+let atkspd = 650;
 let critdmg = 2;
 let critpercent = 0.02;
 let coinsperlvl = 5;
@@ -448,9 +448,9 @@ const upgradeRange = () => {
 const upgradeAttackSpeed = () => {
     if (coinsNum - atkspdUpgradeCost >= 0 && game) {
         setCoins(-atkspdUpgradeCost);
-        atkspdUpgradeCost += atkspdUpgradeCost * 0.7;
+        atkspdUpgradeCost += atkspdUpgradeCost * 1.2;
         atkspd -= atkspdUpgrade;
-        atkspdUpgradeCost == Math.floor(atkspdUpgradeCost * 0.7);
+        atkspdUpgradeCost == Math.floor(atkspdUpgradeCost * 1.2);
         attackSpeedTxt.textContent = `SPD: ${(1000 / atkspd).toFixed(2)}`;
         costText.textContent = `x ${Math.floor(atkspdUpgradeCost)}`;
         console.log("Upgraded Tower Attack Speed!");
