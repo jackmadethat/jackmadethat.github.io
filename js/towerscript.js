@@ -76,8 +76,8 @@ let basicHealth = 2;
 let strongHealth = 5;
 let bossHealth = 11;
 let game = true;
-let basicToSpawn = 5;
-let strongToSpawn = 1;
+let basicToSpawn = 2;
+let strongToSpawn = 0;
 let allEnemies = [];
 let projectiles = [];
 
