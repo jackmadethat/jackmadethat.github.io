@@ -335,7 +335,7 @@ const projectileHit = (projectile, x, y, enemies) => {
     enemies.forEach((enemy) => {
         const distance = Math.hypot(x - enemy.x, y - enemy.y)
         if (distance <  15) {
-            hitEnemy(enemy, dmg, 1);
+            hitEnemy(enemy, dmg, 2);
             destroyProjectile(projectile);
         }
     });
