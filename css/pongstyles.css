@@ -24,6 +24,17 @@
   border-radius: 50%;
 }
 
+#paddle {
+  width: 142px;
+  height: 97px;
+  max-width: 142px;
+  max-height: 97px;
+  background-color: var(--semi-white);
+  border: 2px solid var(--white);
+  border-radius: 10%;
+  background-image: url("https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/pong/paddle.png")
+}
+
 .top-text {
   margin-top: -20px;
   margin-bottom: 10px;
