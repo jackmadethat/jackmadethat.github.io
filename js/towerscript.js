@@ -43,7 +43,7 @@ let levelNum = 0;
 let coinsNum = 10;
 // Tower stats
 let dmg = 1;
-let rng = 180;
+let rng = 220;
 let atkspd = 650;
 let critdmg = 2;
 let critpercent = 0.02;
