@@ -83,7 +83,7 @@ const animate = () => {
 		depthMarker.style.marginLeft = `${bottomMarginLeft + (topMarginLeft - bottomMarginLeft) * (progress - 0.5) * 2}px`;
 		depthMarker.style.marginTop = `${bottomMarginTop + (topMarginTop - bottomMarginTop) * (progress - 0.5) * 2}px`;
 		depthMarker.style.width = `${bottomWidth + (topWidth - bottomWidth) * (progress - 0.5) * 2}px`;
-		depthMarker.style.height = `${topHeight + (bottomHeight + (topHeight - bottomHeight) * (progress - 0.5) * 2}px`;
+		depthMarker.style.height = `${bottomHeight + (topHeight - bottomHeight) * (progress - 0.5) * 2}px`;
 		ball.style.width = `${ballBottomWidth + (ballTopWidth - ballBottomWidth) * (progress - 0.5) * 2}px`;
 		ball.style.height = `${ballBottomHeight + (ballTopHeight - ballBottomHeight) * (progress - 0.5) * 2}px`;
     }
