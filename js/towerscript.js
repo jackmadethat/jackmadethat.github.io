@@ -65,7 +65,7 @@ let coinsPerLvlUpgradeCost = 10;
 // Game mechanics
 const levelTime = 7500;
 const enemySpawnDelay = 4500;
-const enemySpeed = 1.5;
+const enemySpeed = 1;
 const basicEnemies = [];
 const strongEnemies = [];
 const bossEnemies = [];
