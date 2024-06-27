@@ -50,7 +50,7 @@ let critpercent = 0.02;
 let coinsperlvl = 10;
 // Stat upgrades
 let dmgUpgrade = 1;
-let rngUpgrade = 5;
+let rngUpgrade = 15;
 let atkspdUpgrade = 25;
 let critChanceUpgrade = 0.02;
 let critDmgUpgrade = 0.2;
