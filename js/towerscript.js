@@ -87,7 +87,7 @@ let projectiles = [];
 
 const setCoins = (num) => {
     coinsNum += num;
-    coins.innerHTML = `<img draggable="false" class="coinImg-top" src="./img/tower/coin.png"/>${coinsNum}`;
+    coins.innerHTML = `<img draggable="false" class="coinImg-top" src="./img/tower/coin.png"/>${Math.floor(coinsNum)}`;
 }
 
 // -----
