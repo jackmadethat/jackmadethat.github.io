@@ -356,7 +356,7 @@ const getNearestEnemy = (x, y, enemies) => {
             nearestEnemy = enemy;
         }
         if ((Math.abs(x - enemy.x) < 2 || Math.abs(y - enemy.y) < 2)) {
-            hitEnemy(enemy, dmg, 1);
+            hitEnemy(enemy, dmg, 2);
             console.log("Enemy Destroyed!");
         }
     });
