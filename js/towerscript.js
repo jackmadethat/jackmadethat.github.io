@@ -43,11 +43,11 @@ let levelNum = 0;
 let coinsNum = 0;
 // Tower stats
 let dmg = 1;
-let rng = 220;
+let rng = 180;
 let atkspd = 650;
 let critdmg = 2;
 let critpercent = 0.02;
-let coinsperlvl = 10;
+let coinsperlvl = 7;
 // Stat upgrades
 let dmgUpgrade = 1;
 let rngUpgrade = 15;
@@ -65,16 +65,13 @@ let coinsPerLvlUpgradeCost = 10;
 // Game mechanics
 const levelTime = 7500;
 const enemySpawnDelay = 4500;
-const enemySpeed = 1;
-const basicEnemies = [];
-const strongEnemies = [];
-const bossEnemies = [];
+const enemySpeed = 1.2;
 const basicDamage = 1;
 const strongDamage = 2;
 const bossDamage = 11;
 let basicHealth = 1;
 let strongHealth = 3;
-let bossHealth = 11;
+let bossHealth = 1;
 let game = true;
 let basicToSpawn = 2;
 let strongToSpawn = 0;
@@ -257,6 +254,7 @@ const spawnWave = () => {
             basicHealth += 2;
             strongHealth += 4;
             bossHealth += 10;
+            enemySpeed += 0.3;
             level.textContent = `Level: ${levelNum}`;
         } else {
             // Spawn enemies
@@ -264,7 +262,7 @@ const spawnWave = () => {
             levelNum++;
             level.textContent = `Level: ${levelNum}`;
             basicToSpawn++;
-            // Increase number of strong enemies to spawn every second wave
+            // Increase number of strong enemies to spawn every third wave
             if (levelNum % 3 === 0) {
                 strongToSpawn++;
             }
