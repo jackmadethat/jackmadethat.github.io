@@ -40,7 +40,7 @@ const costText = document.getElementById('upgrade-cost');
 // Game status
 let healthNum = 10;
 let levelNum = 0;
-let coinsNum = 10;
+let coinsNum = 0;
 // Tower stats
 let dmg = 1;
 let rng = 220;
