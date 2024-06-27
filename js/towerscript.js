@@ -47,7 +47,7 @@ let rng = 220;
 let atkspd = 650;
 let critdmg = 2;
 let critpercent = 0.02;
-let coinsperlvl = 5;
+let coinsperlvl = 10;
 // Stat upgrades
 let dmgUpgrade = 1;
 let rngUpgrade = 5;
