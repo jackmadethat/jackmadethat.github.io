@@ -32,6 +32,19 @@ let width = 10;
 let height = 10;
 let x = 100;
 let y = 100;
+let topMarginLeft = 0;
+let topMarginTop = 0;
+let topWidth = 800;
+let topHeight = 600;
+let bottomMarginLeft = 266;
+let bottomMarginTop = 200;
+let bottomWidth = 266;
+let bottomHeight = 200;
+let ballTopWidth = 60;
+let ballTopHeight = 60;
+let ballBottomWidth = 15;
+let ballBottomHeight = 15;
+let duration = 4000;
 
 // -----
 // Setup paddle
@@ -50,20 +63,6 @@ court.addEventListener('mousemove', (event) => {
 // -----
 
 const animate = () => {
-  const topMarginLeft = 0;
-  const topMarginTop = 0;
-  const topWidth = 800;
-  const topHeight = 600;
-  const bottomMarginLeft = 266;
-  const bottomMarginTop = 200;
-  const bottomWidth = 266;
-  const bottomHeight = 200;
-  const ballTopWidth = 60;
-  const ballTopHeight = 60;
-  const ballBottomWidth = 15;
-  const ballBottomHeight = 15;
-  const duration = 4000;
-
   let currentTime = 0;
 
   const animateStep = () => {
