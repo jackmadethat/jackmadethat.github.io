@@ -87,8 +87,8 @@ const animate = () => {
 		ball.style.width = `${ballBottomWidth + (ballTopWidth - ballBottomWidth) * (progress - 0.5) * 2}px`;
 		ball.style.height = `${ballBottomHeight + (ballTopHeight - ballBottomHeight) * (progress - 0.5) * 2}px`;
     }
-    const ballOffsetX = ((ballTopWidth - ballWidth) / 2) + 370);
-    const ballOffsetY = ((ballTopHeight - ballHeight) / 2) + 270);
+    const ballOffsetX = ((ballTopWidth - ballWidth) / 2) + 370;
+    const ballOffsetY = ((ballTopHeight - ballHeight) / 2) + 270;
     ball.style.transform = `translate(${ballOffsetX}px, ${ballOffsetY}px)`;
 
     currentTime += 20; // increment time by 20ms
