@@ -68,28 +68,31 @@ const animate = () => {
 
   const animateStep = () => {
     const progress = currentTime / duration;
-    let marginLeft, marginTop, width, height, ballWidth, ballHeight;
+    let marginLeft, marginTop, width, height, ballWidth, ballHeight, ballOffsetX, ballOffsetY;
 
     if (progress < 0.5) {
-		// First half of the animation
+		// Ball goes down
 		depthMarker.style.marginLeft = `${topMarginLeft + (bottomMarginLeft - topMarginLeft) * progress * 2}px`;
 		depthMarker.style.marginTop = `${topMarginTop + (bottomMarginTop - topMarginTop) * progress * 2}px`;
 		depthMarker.style.width = `${topWidth + (bottomWidth - topWidth) * progress * 2}px`;
 		depthMarker.style.height = `${topHeight + (bottomHeight - topHeight) * progress * 2}px`;
 		ball.style.width = `${ballTopWidth + (ballBottomWidth - ballTopWidth) * progress * 2}px`;
 		ball.style.height = `${ballTopHeight + (ballBottomHeight - ballTopHeight) * progress * 2}px`;
+		ballOffsetX = ((ballTopWidth - ballWidth) / 2) + 370);
+		ballOffsetY = ((ballTopHeight - ballHeight) / 2) + 270);
+		ball.style.transform = `translate(${ballOffsetX}px, ${ballOffsetY}px)`;
     } else {
-		// Second half of the animation
+		// Ball comes up
 		depthMarker.style.marginLeft = `${bottomMarginLeft + (topMarginLeft - bottomMarginLeft) * (progress - 0.5) * 2}px`;
 		depthMarker.style.marginTop = `${bottomMarginTop + (topMarginTop - bottomMarginTop) * (progress - 0.5) * 2}px`;
 		depthMarker.style.width = `${bottomWidth + (topWidth - bottomWidth) * (progress - 0.5) * 2}px`;
 		depthMarker.style.height = `${bottomHeight + (topHeight - bottomHeight) * (progress - 0.5) * 2}px`;
 		ball.style.width = `${ballBottomWidth + (ballTopWidth - ballBottomWidth) * (progress - 0.5) * 2}px`;
 		ball.style.height = `${ballBottomHeight + (ballTopHeight - ballBottomHeight) * (progress - 0.5) * 2}px`;
+		ballOffsetX = ((ballBottomWidth - ballWidth) / 2) + 370);
+		ballOffsetY = ((ballBottomHeight - ballHeight) / 2) + 270);
+		ball.style.transform = `translate(${ballOffsetX}px, ${ballOffsetY}px)`;
     }
-    const ballOffsetX = ((ballTopWidth - ballWidth) / 2) + 370;
-    const ballOffsetY = ((ballTopHeight - ballHeight) / 2) + 270;
-    ball.style.transform = `translate(${ballOffsetX}px, ${ballOffsetY}px)`;
 
     currentTime += 20; // increment time by 20ms
 
