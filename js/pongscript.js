@@ -78,8 +78,8 @@ const animate = () => {
 		depthMarker.style.height = `${topHeight + (bottomHeight - topHeight) * progress * 2}px`;
 		ball.style.width = `${ballTopWidth + (ballBottomWidth - ballTopWidth) * progress * 2}px`;
 		ball.style.height = `${ballTopHeight + (ballBottomHeight - ballTopHeight) * progress * 2}px`;
-		ballOffsetX = ((ballTopWidth - ballWidth) / 2) + 370);
-		ballOffsetY = ((ballTopHeight - ballHeight) / 2) + 270);
+		ballOffsetX = ((ballTopWidth - ballWidth) / 2) + 370;
+		ballOffsetY = ((ballTopHeight - ballHeight) / 2) + 270;
 		ball.style.transform = `translate(${ballOffsetX}px, ${ballOffsetY}px)`;
     } else {
 		// Ball comes up
@@ -89,8 +89,8 @@ const animate = () => {
 		depthMarker.style.height = `${bottomHeight + (topHeight - bottomHeight) * (progress - 0.5) * 2}px`;
 		ball.style.width = `${ballBottomWidth + (ballTopWidth - ballBottomWidth) * (progress - 0.5) * 2}px`;
 		ball.style.height = `${ballBottomHeight + (ballTopHeight - ballBottomHeight) * (progress - 0.5) * 2}px`;
-		ballOffsetX = ((ballBottomWidth - ballWidth) / 2) + 370);
-		ballOffsetY = ((ballBottomHeight - ballHeight) / 2) + 270);
+		ballOffsetX = ((ballBottomWidth - ballWidth) / 2) + 370;
+		ballOffsetY = ((ballBottomHeight - ballHeight) / 2) + 270;
 		ball.style.transform = `translate(${ballOffsetX}px, ${ballOffsetY}px)`;
     }
 
