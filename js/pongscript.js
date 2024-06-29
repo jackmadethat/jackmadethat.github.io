@@ -29,7 +29,6 @@ const duration = 4000;
 let marginLeft, marginTop, width, height, ballWidth, ballHeight;
 let leftEdge, rightEdge, topEdge, bottomEdge;
 let hitFloor, hitCeiling = false;
-
 let lastHitEdge = null;
 let lastScale = 1;
 
