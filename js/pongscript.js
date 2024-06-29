@@ -25,7 +25,7 @@ let ballY = 300;
 let ballVx = 4;
 let ballVy = 4;
 let currentTime = 0;
-const duration = 4000;
+const duration = 4000; // Time in ms for a full bounce from floor to ceiling and back
 let marginLeft, marginTop, width, height, ballWidth, ballHeight;
 let leftEdge, rightEdge, topEdge, bottomEdge;
 let hitFloor, hitCeiling = false;
