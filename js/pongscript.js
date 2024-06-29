@@ -43,7 +43,16 @@ court.addEventListener('mousemove', (event) => {
     const paddleMaxX = court.offsetWidth - paddle.offsetWidth;
     const paddleMaxY = court.offsetHeight - paddle.offsetHeight;
     paddle.style.transform = `translate(${Math.min(Math.max(paddleX, 0), paddleMaxX)}px, ${Math.min(Math.max(paddleY, 0), paddleMaxY)}px)`;
-});
+}); // for desktop
+
+court.addEventListener('touchmove', (event) => {
+    const touch = event.touches[0];
+    const paddleX = touch.clientX - court.offsetLeft - paddle.offsetWidth / 2;
+    const paddleY = touch.clientY - court.offsetTop - paddle.offsetHeight / 2;
+    const paddleMaxX = court.offsetWidth - paddle.offsetWidth;
+    const paddleMaxY = court.offsetHeight - paddle.offsetHeight;
+    paddle.style.transform = `translate(${Math.min(Math.max(paddleX, 0), paddleMaxX)}px, ${Math.min(Math.max(paddleY, 0), paddleMaxY)}px)`;
+}); // for mobile
 
 floor.addEventListener('animationend', () => {
     floor.classList.remove('losePointAnim');
