@@ -28,8 +28,8 @@ let currentTime = 0;
 const duration = 4000;
 let marginLeft, marginTop, width, height, ballWidth, ballHeight;
 let leftEdge, rightEdge, topEdge, bottomEdge;
-let hitFloor = false;
-let hitCeiling = false;
+let hitFloor, hitCeiling = false;
+
 let lastHitEdge = null;
 let lastScale = 1;
 
