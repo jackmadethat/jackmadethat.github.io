@@ -22,23 +22,29 @@ let score = 0;
 let highestScore = 0;
 let ballX = 400;
 let ballY = 300;
-let ballVx = 4;
+let ballVx = 4; // Defaults until I figure out the maths
 let ballVy = 4;
+const velocity = Math.max(Math.abs(ballVx), Math.abs(ballVy));
 let currentTime = 0;
-const duration = 4000; // Time in ms for a full bounce from floor to ceiling and back
+let duration = 4000; // Time in ms for a full bounce from floor to ceiling and back
+const defaultDuration = 4000;
+const maxDuration = 8000;
+const minDuration = 2500;
 let marginLeft, marginTop, width, height, ballWidth, ballHeight;
 let leftEdge, rightEdge, topEdge, bottomEdge;
 let hitFloor, hitCeiling = false;
 let lastHitEdge = null;
 let lastScale = 1;
+let paddleX;
+let paddleY;
 
 // -----
 // Setup Events
 // -----
 
 court.addEventListener('mousemove', (event) => {
-    const paddleX = event.clientX - court.offsetLeft - paddle.offsetWidth / 2;
-    const paddleY = event.clientY - court.offsetTop - paddle.offsetHeight / 2;
+    paddleX = event.clientX - court.offsetLeft - paddle.offsetWidth / 2;
+    paddleY = event.clientY - court.offsetTop - paddle.offsetHeight / 2;
     const paddleMaxX = court.offsetWidth - paddle.offsetWidth;
     const paddleMaxY = court.offsetHeight - paddle.offsetHeight;
     paddle.style.transform = `translate(${Math.min(Math.max(paddleX, 0), paddleMaxX)}px, ${Math.min(Math.max(paddleY, 0), paddleMaxY)}px)`;
@@ -46,8 +52,8 @@ court.addEventListener('mousemove', (event) => {
 
 court.addEventListener('touchmove', (event) => {
     const touch = event.touches[0];
-    const paddleX = touch.clientX - court.offsetLeft - paddle.offsetWidth / 2;
-    const paddleY = touch.clientY - court.offsetTop - paddle.offsetHeight / 2;
+    paddleX = touch.clientX - court.offsetLeft - paddle.offsetWidth / 2;
+    paddleY = touch.clientY - court.offsetTop - paddle.offsetHeight / 2;
     const paddleMaxX = court.offsetWidth - paddle.offsetWidth;
     const paddleMaxY = court.offsetHeight - paddle.offsetHeight;
     paddle.style.transform = `translate(${Math.min(Math.max(paddleX, 0), paddleMaxX)}px, ${Math.min(Math.max(paddleY, 0), paddleMaxY)}px)`;
@@ -96,6 +102,17 @@ const ceilingHit = () => {
 
     if (checkCollision()) {
         console.log("Hit paddle!");
+        /* Physics maths, still WIP
+        const paddleCenterX = paddleX + paddle.offsetWidth / 2;
+        const paddleCenterY = paddleY + paddle.offsetHeight / 2;
+        const ballCenterX = ballX + ballWidth / 2;
+        const ballCenterY = ballY + ballHeight / 2;
+        const relativeX = (ballCenterX - paddleCenterX) / (paddle.offsetWidth / 2);
+        const relativeY = (ballCenterY - paddleCenterY) / (paddle.offsetHeight / 2);
+        duration = defaultDuration / (1 + Math.max(Math.abs(ballVx), Math.abs(ballVy)) / 5);
+        ballVx += relativeX * 5; // adjust the value 5 to your liking
+        ballVy += relativeY * 5; // adjust the value 5 to your liking
+        */
         paddle.classList.add('hitPaddleAnim');
         ball.classList.add('hitBallAnim');
     } else {
