@@ -50,6 +50,13 @@ court.addEventListener('mousemove', (event) => {
     paddle.style.transform = `translate(${Math.min(Math.max(paddleX, 0), paddleMaxX)}px, ${Math.min(Math.max(paddleY, 0), paddleMaxY)}px)`;
 }); // for desktop
 
+court.addEventListener('touchstart', (event) => {
+    const touch = event.touches[0];
+    const paddleX = touch.clientX - court.offsetLeft - paddle.offsetWidth / 2;
+    const paddleY = touch.clientY - court.offsetTop - paddle.offsetHeight / 2;
+    paddle.style.transform = `translate(${paddleX}px, ${paddleY}px)`;
+}); // for mobile
+
 court.addEventListener('touchmove', (event) => {
     const touch = event.touches[0];
     paddleX = touch.clientX - court.offsetLeft - paddle.offsetWidth / 2;
