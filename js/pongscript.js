@@ -62,6 +62,19 @@ court.addEventListener('mousemove', (event) => {
 // Handle depth
 // -----
 
+let hitFloor = false;
+let hitCeiling = false;
+
+const floorHit = () => {
+  console.log("Hit Floor");
+  hitFloor = false;
+}
+
+const ceilingHit = () => {
+  console.log("Hit Ceiling");
+  hitCeiling = false;
+}
+
 const animate = () => {
   const initialMarginLeft = 0;
   const initialMarginTop = 0;
@@ -157,9 +170,19 @@ const animate = () => {
     ball.style.transform = `translate(${ballX}px, ${ballY}px)`;
   
     currentTime += 20; // increment time by 20ms
-  
+
     if (currentTime >= duration) {
       currentTime = 0; // reset time
+    }
+
+    if (progress === 0.5 && !hitFloor) {
+      hitFloor = true;
+      floorHit(); // call function when animation reaches middle point
+    }
+  
+    if (progress >= 0.995 && !hitCeiling) {
+      hitCeiling = true;
+      ceilingHit(); // call function when animation restarts
     }
   
     requestAnimationFrame(animateStep);
