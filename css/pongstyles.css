@@ -13,31 +13,76 @@
   height: 600px;
   max-width: 800px;
   max-height: 600px;
-  box-shadow: rgba(0, 0, 0, 0.4) 20px 20px 120px 120px inset;
+  box-shadow: rgba(0, 0, 0, 0.3) 20px 20px 120px 120px inset;
   z-index: 3;
+  cursor: none;
+}
+
+.grid {
+  position: absolute;
+  border: 2px solid var(--semi-white);
+}
+
+.line {
+  position: absolute;
+  border: 1px solid var(--semi-white);
+  height: 0px;
+  width: 332px;
 }
 
 #floor {
-  position: absolute;
-  border: 2px solid var(--semi-white);
   margin-left: 266px;
   margin-top: 200px;
   width: 266px;
   height: 200px;
 }
 
-#grid1 {
-  position: absolute;
-  border: 2px solid var(--semi-white);
-  margin-left: 300px;
-  margin-top: 20px;
+.line1 {
+  margin-left: -34px;
+  margin-top: 100px;
+  rotate: 37deg;
+}
+
+.line2 {
+  margin-left: 500px;
+  margin-top: 100px;
+  rotate: -37deg;
+}
+
+.line3 {
+  margin-left: 500px;
+  margin-top: 500px;
+  rotate: 37deg;
+}
+
+.line4 {
+  margin-left: -32px;
+  margin-top: 500px;
+  rotate: -37deg;
+}
+
+.grid1 {
+  margin-left: 240px;
+  margin-top: 180px;
+  width: 320px;
+  height: 240px;
+}
+
+.grid2 {
+  margin-left: 180px;
+  margin-top: 135px;
+  width: 440px;
+  height: 330px;
+}
+
+.grid3 {
+  margin-left: 100px;
+  margin-top: 75px;
   width: 600px;
-  height: 400px;
+  height: 450px;
 }
 
 #depth-marker {
-  position: absolute;
-  border: 2px solid var(--semi-white);
   margin-left: 0px;
   margin-top: 0px;
   width: 800px;
@@ -90,6 +135,15 @@
 
 .losePointAnim {
   animation: losePoint 0.3s linear;
+}
+
+@keyframes hitPaddle {
+	0% { background-color: rgba(255, 255, 255, 1); }
+	100% { background-color: var(--semi-white); }
+}
+
+.hitPaddleAnim {
+  animation: hitPaddle 0.3s linear;
 }
 
 /* Template overrides */
