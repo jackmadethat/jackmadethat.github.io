@@ -63,46 +63,109 @@ court.addEventListener('mousemove', (event) => {
 // -----
 
 const animate = () => {
+  const initialMarginLeft = 0;
+  const initialMarginTop = 0;
+  const initialWidth = 800;
+  const initialHeight = 600;
+  const middleMarginLeft = 266;
+  const middleMarginTop = 200;
+  const middleWidth = 266;
+  const middleHeight = 200;
+  const finalMarginLeft = 0;
+  const finalMarginTop = 0;
+  const finalWidth = 800;
+  const finalHeight = 600;
+  const ballInitialWidth = 60;
+  const ballInitialHeight = 60;
+  const ballMiddleWidth = 15;
+  const ballMiddleHeight = 15;
+  const duration = 4000;
+  let lastHitEdge = null;
+  let lastScale = 1;
   let currentTime = 0;
 
   const animateStep = () => {
     const progress = currentTime / duration;
-    let marginLeft, marginTop, width, height, ballWidth, ballHeight, ballOffsetX, ballOffsetY;
-
+    let marginLeft, marginTop, width, height, ballWidth, ballHeight;
+    let leftEdge, rightEdge, topEdge, bottomEdge;
+  
     if (progress < 0.5) {
-		// Ball goes down
-		depthMarker.style.marginLeft = `${topMarginLeft + (bottomMarginLeft - topMarginLeft) * progress * 2}px`;
-		depthMarker.style.marginTop = `${topMarginTop + (bottomMarginTop - topMarginTop) * progress * 2}px`;
-		depthMarker.style.width = `${topWidth + (bottomWidth - topWidth) * progress * 2}px`;
-		depthMarker.style.height = `${topHeight + (bottomHeight - topHeight) * progress * 2}px`;
-		ball.style.width = `${ballTopWidth + (ballBottomWidth - ballTopWidth) * progress * 2}px`;
-		ball.style.height = `${ballTopHeight + (ballBottomHeight - ballTopHeight) * progress * 2}px`;
-		ballOffsetX = ((ballTopWidth - ballWidth) / 2) + 370;
-		ballOffsetY = ((ballTopHeight - ballHeight) / 2) + 270;
-		ball.style.transform = `translate(${ballOffsetX}px, ${ballOffsetY}px)`;
+      // First half of the animation
+      marginLeft = initialMarginLeft + (middleMarginLeft - initialMarginLeft) * progress * 2;
+      marginTop = initialMarginTop + (middleMarginTop - initialMarginTop) * progress * 2;
+      width = initialWidth + (middleWidth - initialWidth) * progress * 2;
+      height = initialHeight + (middleHeight - initialHeight) * progress * 2;
+      ballWidth = ballInitialWidth + (ballMiddleWidth - ballInitialWidth) * progress * 2;
+      ballHeight = ballInitialHeight + (ballMiddleHeight - ballInitialHeight) * progress * 2;
     } else {
-		// Ball comes up
-		depthMarker.style.marginLeft = `${bottomMarginLeft + (topMarginLeft - bottomMarginLeft) * (progress - 0.5) * 2}px`;
-		depthMarker.style.marginTop = `${bottomMarginTop + (topMarginTop - bottomMarginTop) * (progress - 0.5) * 2}px`;
-		depthMarker.style.width = `${bottomWidth + (topWidth - bottomWidth) * (progress - 0.5) * 2}px`;
-		depthMarker.style.height = `${bottomHeight + (topHeight - bottomHeight) * (progress - 0.5) * 2}px`;
-		ball.style.width = `${ballBottomWidth + (ballTopWidth - ballBottomWidth) * (progress - 0.5) * 2}px`;
-		ball.style.height = `${ballBottomHeight + (ballTopHeight - ballBottomHeight) * (progress - 0.5) * 2}px`;
-		ballOffsetX = ((ballBottomWidth - ballWidth) / 2) + 370;
-		ballOffsetY = ((ballBottomHeight - ballHeight) / 2) + 270;
-		ball.style.transform = `translate(${ballOffsetX}px, ${ballOffsetY}px)`;
+      // Second half of the animation
+      marginLeft = middleMarginLeft + (finalMarginLeft - middleMarginLeft) * (progress - 0.5) * 2;
+      marginTop = middleMarginTop + (finalMarginTop - middleMarginTop) * (progress - 0.5) * 2;
+      width = middleWidth + (finalWidth - middleWidth) * (progress - 0.5) * 2;
+      height = middleHeight + (finalHeight - middleHeight) * (progress - 0.5) * 2;
+      ballWidth = ballMiddleWidth + (ballInitialWidth - ballMiddleWidth) * (progress - 0.5) * 2;
+      ballHeight = ballMiddleHeight + (ballInitialHeight - ballMiddleHeight) * (progress - 0.5) * 2;
     }
-
+  
+    // Calculate edges
+    leftEdge = marginLeft;
+    rightEdge = marginLeft + width;
+    topEdge = marginTop;
+    bottomEdge = marginTop + height;
+  
+    depthMarker.style.marginLeft = `${marginLeft}px`;
+    depthMarker.style.marginTop = `${marginTop}px`;
+    depthMarker.style.width = `${width}px`;
+    depthMarker.style.height = `${height}px`;
+  
+    ball.style.width = `${ballWidth}px`;
+    ball.style.height = `${ballHeight}px`;
+  
+    const scale = (width / initialWidth) * 1.2;
+    if (scale !== lastScale) {
+      ballVx *= scale / lastScale;
+      ballVy *= scale / lastScale;
+      lastScale = scale;
+    }
+  
+    if (ballX <= leftEdge + 5) {
+      if (lastHitEdge !== 'left') {
+        ballVx = -ballVx; // reverse x direction
+        lastHitEdge = 'left';
+      }
+    } else if (ballX + 10 >= rightEdge - ballWidth) {
+      if (lastHitEdge !== 'right') {
+        ballVx = -ballVx; // reverse x direction
+        lastHitEdge = 'right';
+      }
+    }
+  
+    if (ballY <= topEdge + 5) {
+      if (lastHitEdge !== 'top') {
+        ballVy = -ballVy; // reverse y direction
+        lastHitEdge = 'top';
+      }
+    } else if (ballY + 10 >= bottomEdge - ballWidth) {
+      if (lastHitEdge !== 'bottom') {
+        ballVy = -ballVy; // reverse y direction
+        lastHitEdge = 'bottom';
+      }
+    }
+  
+    ballX += ballVx;
+    ballY += ballVy;
+    ball.style.transform = `translate(${ballX}px, ${ballY}px)`;
+  
     currentTime += 20; // increment time by 20ms
-
+  
     if (currentTime >= duration) {
       currentTime = 0; // reset time
     }
-
+  
     requestAnimationFrame(animateStep);
   };
 
-  animateStep();
+animateStep();
 };
 
 animate();
@@ -110,32 +173,23 @@ animate();
 // -----
 // Animate ball
 // -----
-/*
-const updateBallPosition = () => {
-  ballX += ballVx;
-  ballY += ballVy;
-}
-
-const updateBallDirection = () => {
-  if (ballX <= 0 || ballX + 10 >= (court.offsetWidth - 30)) {
-    ballVx = -ballVx; // reverse x direction
-  }
-  if (ballY <= 0 || ballY + 10 >= (court.offsetHeight - 30)) {
-    ballVy = -ballVy; // reverse y direction
-  }
-}
-
-const animateBall = () => {
-  updateBallPosition();
-  updateBallDirection();
-  ball.style.transform = `translate(${ballX}px, ${ballY}px)`;
-  requestAnimationFrame(animateBall);
-}
-
-animateBall();
-*/
 
 // -----
 // Handle collision
 // -----
 
+
+// -----
+// Render frame
+// -----
+
+const update = () => {
+const render = () => {
+
+}
+render();
+requestAnimationFrame(update);
+}
+
+// Start the game loop
+requestAnimationFrame(update);
