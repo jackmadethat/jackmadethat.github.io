@@ -143,7 +143,11 @@
 }
 
 .hitPaddleAnim {
-  animation: hitPaddle 0.3s linear;
+  animation: hitPaddle 0.5s linear;
+}
+
+.hitBallAnim {
+  animation: hitPaddle 0.2s linear;
 }
 
 /* Template overrides */

@@ -59,7 +59,7 @@ paddle.addEventListener('animationend', () => {
 });
 
 ball.addEventListener('animationend', () => {
-    ball.classList.remove('hitPaddleAnim');
+    ball.classList.remove('hitBallAnim');
 });
 
 // -----
@@ -70,7 +70,7 @@ const floorHit = () => {
     console.log("Hit Floor");
     hitFloor = false;
     floor.classList.add('scorePointAnim');
-    ball.classList.add('hitPaddleAnim');
+    ball.classList.add('hitBallAnim');
 }
 
 const ceilingHit = () => {
@@ -89,11 +89,11 @@ const ceilingHit = () => {
     if (checkCollision()) {
         console.log("Hit paddle!");
         paddle.classList.add('hitPaddleAnim');
-        ball.classList.add('hitPaddleAnim');
+        ball.classList.add('hitBallAnim');
     } else {
         console.log("Hit Ceiling");
         court.classList.add('losePointAnim');
-        ball.classList.add('hitPaddleAnim');
+        ball.classList.add('hitBallAnim');
     }
     hitCeiling = false;
 }
@@ -143,22 +143,26 @@ const update = () => {
             if (lastHitEdge !== 'left') {
                 ballVx = -ballVx; // reverse x direction
                 lastHitEdge = 'left';
+                ball.classList.add('hitBallAnim');
             }
         } else if (ballX + 10 >= rightEdge - ballWidth) {
             if (lastHitEdge !== 'right') {
                 ballVx = -ballVx; // reverse x direction
                 lastHitEdge = 'right';
+                ball.classList.add('hitBallAnim');
             }
         }
         if (ballY <= topEdge + 5) {
             if (lastHitEdge !== 'top') {
                 ballVy = -ballVy; // reverse y direction
                 lastHitEdge = 'top';
+                ball.classList.add('hitBallAnim');
             }
         } else if (ballY + 10 >= bottomEdge - ballWidth) {
             if (lastHitEdge !== 'bottom') {
                 ballVy = -ballVy; // reverse y direction
                 lastHitEdge = 'bottom';
+                ball.classList.add('hitBallAnim');
             }
         }
 
@@ -196,7 +200,7 @@ const update = () => {
     }
 
     render();
-    
+
     requestAnimationFrame(update);
 }
 
