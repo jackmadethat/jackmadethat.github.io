@@ -204,5 +204,8 @@ const update = () => {
     requestAnimationFrame(update);
 }
 
-// Start the game loop
+// -----
+// Start Game Loop
+// -----
+
 requestAnimationFrame(update);
