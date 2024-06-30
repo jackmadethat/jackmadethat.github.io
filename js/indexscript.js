@@ -9,6 +9,8 @@ JackMadeThat Home Page Javascript
 const diceBtn = document.getElementById('diceBtn');
 const tarotBtn = document.getElementById('tarotBtn');
 const ballBtn = document.getElementById('ballBtn');
+const towerBtn = document.getElementById('towerBtn');
+const pongBtn = document.getElementById('pongBtn');
 
 // -----
 // Pre-load images
@@ -26,6 +28,15 @@ const ballImgHover = new Image();
 ballImgHover.src = "https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/gamebuttons/ball_B.png";
 const ballImgDefault = new Image();
 ballImgDefault.src = "https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/gamebuttons/ball_W.png";
+const towerImgHover = new Image();
+towerImgHover.src = "https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/gamebuttons/tower_B.png";
+const towerImgDefault = new Image();
+towerImgDefault.src = "https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/gamebuttons/tower_W.png";
+const pongImgHover = new Image();
+pongImgHover.src = "https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/gamebuttons/pong_B.png";
+const pongImgDefault = new Image();
+pongImgDefault.src = "https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/gamebuttons/pong_W.png";
+
 
 // -----
 // Hover events
@@ -53,4 +64,20 @@ ballBtn.addEventListener('mouseover', () => {
 
 ballBtn.addEventListener('mouseout', () => {
   document.getElementById('ballImg').src = ballImgDefault.src;
+});
+
+towerBtn.addEventListener('mouseover', () => {
+  document.getElementById('towerImg').src = towerImgHover.src;
+});
+
+towerBtn.addEventListener('mouseout', () => {
+  document.getElementById('towerImg').src = towerImgDefault.src;
+});
+
+pongBtn.addEventListener('mouseover', () => {
+  document.getElementById('pongImg').src = pongImgHover.src;
+});
+
+pongBtn.addEventListener('mouseout', () => {
+  document.getElementById('pongImg').src = pongImgDefault.src;
 });
