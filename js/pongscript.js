@@ -22,8 +22,8 @@ let score = 0;
 let highestScore = 0;
 let ballX = 400;
 let ballY = 300;
-let ballVx = 4; // Defaults until I figure out the maths
-let ballVy = 4;
+let ballVx = 0; // Defaults until I figure out the maths
+let ballVy = 0;
 const velocity = Math.max(Math.abs(ballVx), Math.abs(ballVy));
 let currentTime = 0;
 let duration = 4000; // Time in ms for a full bounce from floor to ceiling and back
@@ -35,8 +35,13 @@ let leftEdge, rightEdge, topEdge, bottomEdge;
 let hitFloor, hitCeiling = false;
 let lastHitEdge = null;
 let lastScale = 1;
+
 let paddleX;
 let paddleY;
+let collisionOffsetX;
+let collisionOffsetY;
+let relativeCollisionPositionX = 0;
+let relativeCollisionPositionY = 0;
 
 // -----
 // Setup Events
@@ -108,18 +113,12 @@ const ceilingHit = () => {
     }
 
     if (checkCollision()) {
+        collisionOffsetX = (ball.getBoundingClientRect().x + ball.getBoundingClientRect().width / 2) - (paddle.getBoundingClientRect().x + paddle.getBoundingClientRect().width / 2);
+        collisionOffsetY = (ball.getBoundingClientRect().y + ball.getBoundingClientRect().height / 2) - (paddle.getBoundingClientRect().y + paddle.getBoundingClientRect().height / 2);
+        relativeCollisionPositionX = collisionOffsetX / (paddle.getBoundingClientRect().width / 2) * 2;
+        relativeCollisionPositionY = collisionOffsetY / (paddle.getBoundingClientRect().height / 2) * 2;
+
         console.log("Hit paddle!");
-        /* Physics maths, still WIP
-        const paddleCenterX = paddleX + paddle.offsetWidth / 2;
-        const paddleCenterY = paddleY + paddle.offsetHeight / 2;
-        const ballCenterX = ballX + ballWidth / 2;
-        const ballCenterY = ballY + ballHeight / 2;
-        const relativeX = (ballCenterX - paddleCenterX) / (paddle.offsetWidth / 2);
-        const relativeY = (ballCenterY - paddleCenterY) / (paddle.offsetHeight / 2);
-        duration = defaultDuration / (1 + Math.max(Math.abs(ballVx), Math.abs(ballVy)) / 5);
-        ballVx += relativeX * 5; // adjust the value 5 to your liking
-        ballVy += relativeY * 5; // adjust the value 5 to your liking
-        */
         paddle.classList.add('hitPaddleAnim');
         ball.classList.add('hitBallAnim');
     } else {
@@ -157,6 +156,10 @@ const update = () => {
             ballHeight = 15 + 45 * (progress - 0.5) * 2;
         }
 
+        const progressPerSecond = 1 / duration;
+        edgeClosureRateX = ((width - 266) * progressPerSecond) * 4;
+        edgeClosureRateY = ((height - 200) * progressPerSecond) * 4;
+
         // Calculate boundary
         leftEdge = marginLeft;
         rightEdge = marginLeft + width;
@@ -172,33 +175,45 @@ const update = () => {
         }
         // Detect if ball hits edges
         if (ballX <= leftEdge + 5) {
-            if (lastHitEdge !== 'left') {
-                ballVx = -ballVx; // reverse x direction
-                lastHitEdge = 'left';
-                ball.classList.add('hitBallAnim');
-            }
+            ballX = leftEdge + 5;
+            ballVx = -Math.abs(ballVx) + edgeClosureRateX; // move away from left edge
+            ballVy = ballVy + edgeClosureRateY; // add edgeClosureRateY to ballVy
+            lastHitEdge = 'left';
+            ball.classList.add('hitBallAnim');
         } else if (ballX + 10 >= rightEdge - ballWidth) {
-            if (lastHitEdge !== 'right') {
-                ballVx = -ballVx; // reverse x direction
-                lastHitEdge = 'right';
-                ball.classList.add('hitBallAnim');
-            }
+            ballX = rightEdge - ballWidth - 10;
+            ballVx = Math.abs(ballVx) + edgeClosureRateX; // move away from right edge
+            ballVy = ballVy + edgeClosureRateY; // add edgeClosureRateY to ballVy
+            lastHitEdge = 'right';
+            ball.classList.add('hitBallAnim');
         }
         if (ballY <= topEdge + 5) {
-            if (lastHitEdge !== 'top') {
-                ballVy = -ballVy; // reverse y direction
-                lastHitEdge = 'top';
-                ball.classList.add('hitBallAnim');
-            }
+            ballY = topEdge + 5;
+            ballVx = ballVx + edgeClosureRateX; // add edgeClosureRateX to ballVx
+            ballVy = -Math.abs(ballVy) + edgeClosureRateY; // move away from top edge
+            lastHitEdge = 'top';
+            ball.classList.add('hitBallAnim');
         } else if (ballY + 10 >= bottomEdge - ballWidth) {
-            if (lastHitEdge !== 'bottom') {
-                ballVy = -ballVy; // reverse y direction
-                lastHitEdge = 'bottom';
-                ball.classList.add('hitBallAnim');
-            }
+            ballY = bottomEdge - ballWidth - 10;
+            ballVx = ballVx + edgeClosureRateX; // add edgeClosureRateX to ballVx
+            ballVy = Math.abs(ballVy) + edgeClosureRateY; // move away from bottom edge
+            lastHitEdge = 'bottom';
+            ball.classList.add('hitBallAnim');
         }
 
         // Calculate ball movement
+
+        /*
+        const ballOffsetX = (width - ballWidth) / 2;
+        const ballOffsetY = (height - ballHeight) / 2;
+
+        ballX = marginLeft + ballOffsetX + ballVx;
+        ballY = marginTop + ballOffsetY + ballVy; 
+        */
+        
+        ballVx = relativeCollisionPositionX;
+        ballVy = relativeCollisionPositionY;
+        console.log(ballVx);
         ballX += ballVx;
         ballY += ballVy;
 
