@@ -136,9 +136,9 @@ const ceilingHit = () => {
 const update = () => {
     const animateStep = () => {
         const progress = currentTime / duration;
-		const progressPerSecond = 1 / duration;
-		const edgeClosureRateX;
-        const edgeClosureRateY;
+	const progressPerSecond = 1 / duration;
+	let edgeClosureRateX;
+        let edgeClosureRateY;
         
         // Animate ball bouncing from ceiling to floor and back
         if (progress < 0.5) {
