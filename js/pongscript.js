@@ -138,7 +138,13 @@ const ceilingHit = () => {
 const update = () => {
     const animateStep = () => {
         const progress = currentTime / duration;
+<<<<<<< HEAD
 	    const progressPerSecond = 1 / duration;
+=======
+	const progressPerSecond = 1 / duration;
+	let edgeClosureRateX;
+        let edgeClosureRateY;
+>>>>>>> 0118cd9b7e69e97f765f2bb50d01268f5655dfc5
         
         // Animate ball bouncing from ceiling to floor and back
         if (progress < 0.5) {
@@ -159,8 +165,13 @@ const update = () => {
             ballHeight = 15 + 45 * (progress - 0.5) * 2;
         }
 
+<<<<<<< HEAD
         edgeClosureRateX = ((width - 266) * progressPerSecond) * 8;
         edgeClosureRateY = ((height - 200) * progressPerSecond) * 8;
+=======
+        edgeClosureRateX = ((width - 266) * progressPerSecond) * 4;
+        edgeClosureRateY = ((height - 200) * progressPerSecond) * 4;
+>>>>>>> 0118cd9b7e69e97f765f2bb50d01268f5655dfc5
 
         // Calculate boundary
         leftEdge = marginLeft;
