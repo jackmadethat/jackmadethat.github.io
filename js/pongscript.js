@@ -35,13 +35,14 @@ let leftEdge, rightEdge, topEdge, bottomEdge;
 let hitFloor, hitCeiling = false;
 let lastHitEdge = null;
 let lastScale = 1;
-
 let paddleX;
 let paddleY;
 let collisionOffsetX;
 let collisionOffsetY;
 let relativeCollisionPositionX = 0;
 let relativeCollisionPositionY = 0;
+let edgeClosureRateX;
+let edgeClosureRateY;
 
 // -----
 // Setup Events
@@ -96,7 +97,7 @@ const floorHit = () => {
     console.log("Hit Floor");
     hitFloor = false;
     floor.classList.add('scorePointAnim');
-    ball.classList.add('hitBallAnim');
+    ball.classList.remove('hitBallAnim');
 }
 
 const ceilingHit = () => {
@@ -113,10 +114,11 @@ const ceilingHit = () => {
     }
 
     if (checkCollision()) {
+		// Detect collision position on paddle
         collisionOffsetX = (ball.getBoundingClientRect().x + ball.getBoundingClientRect().width / 2) - (paddle.getBoundingClientRect().x + paddle.getBoundingClientRect().width / 2);
         collisionOffsetY = (ball.getBoundingClientRect().y + ball.getBoundingClientRect().height / 2) - (paddle.getBoundingClientRect().y + paddle.getBoundingClientRect().height / 2);
-        relativeCollisionPositionX = collisionOffsetX / (paddle.getBoundingClientRect().width / 2) * 2;
-        relativeCollisionPositionY = collisionOffsetY / (paddle.getBoundingClientRect().height / 2) * 2;
+        relativeCollisionPositionX = collisionOffsetX / (paddle.getBoundingClientRect().width / 2) * 4;
+        relativeCollisionPositionY = collisionOffsetY / (paddle.getBoundingClientRect().height / 2) * 4;
 
         console.log("Hit paddle!");
         paddle.classList.add('hitPaddleAnim');
@@ -136,6 +138,7 @@ const ceilingHit = () => {
 const update = () => {
     const animateStep = () => {
         const progress = currentTime / duration;
+	    const progressPerSecond = 1 / duration;
         
         // Animate ball bouncing from ceiling to floor and back
         if (progress < 0.5) {
@@ -156,9 +159,8 @@ const update = () => {
             ballHeight = 15 + 45 * (progress - 0.5) * 2;
         }
 
-        const progressPerSecond = 1 / duration;
-        edgeClosureRateX = ((width - 266) * progressPerSecond) * 4;
-        edgeClosureRateY = ((height - 200) * progressPerSecond) * 4;
+        edgeClosureRateX = ((width - 266) * progressPerSecond) * 8;
+        edgeClosureRateY = ((height - 200) * progressPerSecond) * 8;
 
         // Calculate boundary
         leftEdge = marginLeft;
@@ -166,54 +168,53 @@ const update = () => {
         topEdge = marginTop;
         bottomEdge = marginTop + height;
 
-        // Calculate speed of ball based on 'depth'
-        const scale = (width / 800) * 1.2;
-        if (scale !== lastScale) {
-            ballVx *= scale / lastScale;
-            ballVy *= scale / lastScale;
-            lastScale = scale;
-        }
         // Detect if ball hits edges
         if (ballX <= leftEdge + 5) {
             ballX = leftEdge + 5;
-            ballVx = -Math.abs(ballVx) + edgeClosureRateX; // move away from left edge
-            ballVy = ballVy + edgeClosureRateY; // add edgeClosureRateY to ballVy
+            ballVx = -Math.abs(ballVx) * 3 + edgeClosureRateX; // magnify bounce off left wall
+            ballVy = ballVy + edgeClosureRateY;
+            relativeCollisionPositionX = -relativeCollisionPositionX;
+            relativeCollisionPositionY = relativeCollisionPositionY;
             lastHitEdge = 'left';
             ball.classList.add('hitBallAnim');
         } else if (ballX + 10 >= rightEdge - ballWidth) {
             ballX = rightEdge - ballWidth - 10;
-            ballVx = Math.abs(ballVx) + edgeClosureRateX; // move away from right edge
-            ballVy = ballVy + edgeClosureRateY; // add edgeClosureRateY to ballVy
+            ballVx = Math.abs(ballVx) * 2 + edgeClosureRateX; // magnify bounce off right wall
+            ballVy = ballVy + edgeClosureRateY;
+            relativeCollisionPositionX = -relativeCollisionPositionX;
+            relativeCollisionPositionY = relativeCollisionPositionY;
             lastHitEdge = 'right';
             ball.classList.add('hitBallAnim');
         }
         if (ballY <= topEdge + 5) {
             ballY = topEdge + 5;
-            ballVx = ballVx + edgeClosureRateX; // add edgeClosureRateX to ballVx
-            ballVy = -Math.abs(ballVy) + edgeClosureRateY; // move away from top edge
+            ballVx = ballVx + edgeClosureRateX;
+            ballVy = -Math.abs(ballVy) * 2 + edgeClosureRateY; // move away from top edge
+            relativeCollisionPositionX = relativeCollisionPositionX;
+            relativeCollisionPositionY = -relativeCollisionPositionY;
             lastHitEdge = 'top';
             ball.classList.add('hitBallAnim');
         } else if (ballY + 10 >= bottomEdge - ballWidth) {
             ballY = bottomEdge - ballWidth - 10;
-            ballVx = ballVx + edgeClosureRateX; // add edgeClosureRateX to ballVx
-            ballVy = Math.abs(ballVy) + edgeClosureRateY; // move away from bottom edge
+            ballVx = ballVx + edgeClosureRateX;
+            ballVy = Math.abs(ballVy) * 2 + edgeClosureRateY; // move away from bottom edge
+            relativeCollisionPositionX = relativeCollisionPositionX;
+            relativeCollisionPositionY = -relativeCollisionPositionY;
             lastHitEdge = 'bottom';
             ball.classList.add('hitBallAnim');
         }
-
+        // Calculate speed of ball based on 'depth'
+        const scale = (width / 800) * 1.5;
+        if (scale !== lastScale) {
+            relativeCollisionPositionX *= scale / lastScale;
+            relativeCollisionPositionY *= scale / lastScale;
+            lastScale = scale;
+            console.log(scale);
+        }
         // Calculate ball movement
-
-        /*
-        const ballOffsetX = (width - ballWidth) / 2;
-        const ballOffsetY = (height - ballHeight) / 2;
-
-        ballX = marginLeft + ballOffsetX + ballVx;
-        ballY = marginTop + ballOffsetY + ballVy; 
-        */
-        
         ballVx = relativeCollisionPositionX;
         ballVy = relativeCollisionPositionY;
-        console.log(ballVx);
+        
         ballX += ballVx;
         ballY += ballVy;
 
