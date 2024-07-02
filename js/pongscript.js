@@ -114,7 +114,7 @@ const ceilingHit = () => {
     }
 
     if (checkCollision()) {
-		// Detect collision position on paddle
+	// Detect collision position on paddle
         collisionOffsetX = (ball.getBoundingClientRect().x + ball.getBoundingClientRect().width / 2) - (paddle.getBoundingClientRect().x + paddle.getBoundingClientRect().width / 2);
         collisionOffsetY = (ball.getBoundingClientRect().y + ball.getBoundingClientRect().height / 2) - (paddle.getBoundingClientRect().y + paddle.getBoundingClientRect().height / 2);
         relativeCollisionPositionX = collisionOffsetX / (paddle.getBoundingClientRect().width / 2) * 4;
@@ -138,13 +138,9 @@ const ceilingHit = () => {
 const update = () => {
     const animateStep = () => {
         const progress = currentTime / duration;
-<<<<<<< HEAD
-	    const progressPerSecond = 1 / duration;
-=======
 	const progressPerSecond = 1 / duration;
 	let edgeClosureRateX;
         let edgeClosureRateY;
->>>>>>> 0118cd9b7e69e97f765f2bb50d01268f5655dfc5
         
         // Animate ball bouncing from ceiling to floor and back
         if (progress < 0.5) {
@@ -165,13 +161,8 @@ const update = () => {
             ballHeight = 15 + 45 * (progress - 0.5) * 2;
         }
 
-<<<<<<< HEAD
         edgeClosureRateX = ((width - 266) * progressPerSecond) * 8;
         edgeClosureRateY = ((height - 200) * progressPerSecond) * 8;
-=======
-        edgeClosureRateX = ((width - 266) * progressPerSecond) * 4;
-        edgeClosureRateY = ((height - 200) * progressPerSecond) * 4;
->>>>>>> 0118cd9b7e69e97f765f2bb50d01268f5655dfc5
 
         // Calculate boundary
         leftEdge = marginLeft;
