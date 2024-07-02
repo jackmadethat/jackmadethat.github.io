@@ -22,9 +22,6 @@ let score = 0;
 let highestScore = 0;
 let ballX = 400;
 let ballY = 300;
-let ballVx = 0; // Defaults until I figure out the maths
-let ballVy = 0;
-const velocity = Math.max(Math.abs(ballVx), Math.abs(ballVy));
 let currentTime = 0;
 let duration = 4000; // Time in ms for a full bounce from floor to ceiling and back
 const defaultDuration = 4000;
@@ -41,8 +38,7 @@ let collisionOffsetX;
 let collisionOffsetY;
 let relativeCollisionPositionX = 0;
 let relativeCollisionPositionY = 0;
-let edgeClosureRateX;
-let edgeClosureRateY;
+const maxSpeed = 6;
 
 // -----
 // Setup Events
@@ -138,9 +134,6 @@ const ceilingHit = () => {
 const update = () => {
     const animateStep = () => {
         const progress = currentTime / duration;
-	const progressPerSecond = 1 / duration;
-	let edgeClosureRateX;
-        let edgeClosureRateY;
         
         // Animate ball bouncing from ceiling to floor and back
         if (progress < 0.5) {
@@ -161,64 +154,63 @@ const update = () => {
             ballHeight = 15 + 45 * (progress - 0.5) * 2;
         }
 
-        edgeClosureRateX = ((width - 266) * progressPerSecond) * 8;
-        edgeClosureRateY = ((height - 200) * progressPerSecond) * 8;
-
         // Calculate boundary
         leftEdge = marginLeft;
         rightEdge = marginLeft + width;
         topEdge = marginTop;
-        bottomEdge = marginTop + height;
+        bottomEdge = marginTop + height;     
 
         // Detect if ball hits edges
         if (ballX <= leftEdge + 5) {
             ballX = leftEdge + 5;
-            ballVx = -Math.abs(ballVx) * 3 + edgeClosureRateX; // magnify bounce off left wall
-            ballVy = ballVy + edgeClosureRateY;
-            relativeCollisionPositionX = -relativeCollisionPositionX;
+            relativeCollisionPositionX = -relativeCollisionPositionX * 1.5;
             relativeCollisionPositionY = relativeCollisionPositionY;
+            if (Math.abs(relativeCollisionPositionX) > maxSpeed) {
+                relativeCollisionPositionX = Math.sign(relativeCollisionPositionX) * maxSpeed;
+            }
             lastHitEdge = 'left';
             ball.classList.add('hitBallAnim');
         } else if (ballX + 10 >= rightEdge - ballWidth) {
             ballX = rightEdge - ballWidth - 10;
-            ballVx = Math.abs(ballVx) * 2 + edgeClosureRateX; // magnify bounce off right wall
-            ballVy = ballVy + edgeClosureRateY;
-            relativeCollisionPositionX = -relativeCollisionPositionX;
+            relativeCollisionPositionX = -relativeCollisionPositionX * 1.5;
             relativeCollisionPositionY = relativeCollisionPositionY;
+            if (Math.abs(relativeCollisionPositionX) > maxSpeed) {
+                relativeCollisionPositionX = Math.sign(relativeCollisionPositionX) * maxSpeed;
+            }
             lastHitEdge = 'right';
             ball.classList.add('hitBallAnim');
         }
         if (ballY <= topEdge + 5) {
             ballY = topEdge + 5;
-            ballVx = ballVx + edgeClosureRateX;
-            ballVy = -Math.abs(ballVy) * 2 + edgeClosureRateY; // move away from top edge
             relativeCollisionPositionX = relativeCollisionPositionX;
-            relativeCollisionPositionY = -relativeCollisionPositionY;
+            relativeCollisionPositionY = -relativeCollisionPositionY * 1.5;
+            if (Math.abs(relativeCollisionPositionY) > maxSpeed) {
+                relativeCollisionPositionY = Math.sign(relativeCollisionPositionY) * maxSpeed;
+            }
             lastHitEdge = 'top';
             ball.classList.add('hitBallAnim');
         } else if (ballY + 10 >= bottomEdge - ballWidth) {
             ballY = bottomEdge - ballWidth - 10;
-            ballVx = ballVx + edgeClosureRateX;
-            ballVy = Math.abs(ballVy) * 2 + edgeClosureRateY; // move away from bottom edge
             relativeCollisionPositionX = relativeCollisionPositionX;
-            relativeCollisionPositionY = -relativeCollisionPositionY;
+            relativeCollisionPositionY = -relativeCollisionPositionY * 1.5;
+            if (Math.abs(relativeCollisionPositionY) > maxSpeed) {
+                relativeCollisionPositionY = Math.sign(relativeCollisionPositionY) * maxSpeed;
+            }
             lastHitEdge = 'bottom';
             ball.classList.add('hitBallAnim');
         }
+
         // Calculate speed of ball based on 'depth'
-        const scale = (width / 800) * 1.5;
+        let scale = (800 / width) ** 1.25 * 2.5;
         if (scale !== lastScale) {
-            relativeCollisionPositionX *= scale / lastScale;
-            relativeCollisionPositionY *= scale / lastScale;
+            relativeCollisionPositionX /= scale / lastScale;
+            relativeCollisionPositionY /= scale / lastScale;
             lastScale = scale;
-            console.log(scale);
         }
+
         // Calculate ball movement
-        ballVx = relativeCollisionPositionX;
-        ballVy = relativeCollisionPositionY;
-        
-        ballX += ballVx;
-        ballY += ballVy;
+        ballX += relativeCollisionPositionX;
+        ballY += relativeCollisionPositionY;
 
         // Detect if ball hits floor or ceiling
         if (progress === 0.5 && !hitFloor) {
