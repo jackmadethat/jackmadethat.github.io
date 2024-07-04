@@ -412,9 +412,9 @@ setInterval(generateProjectile, atkspd);
 const upgradeDamage = () => {
     if (coinsNum - dmgUpgradeCost >= 0 && game) {
         setCoins(-dmgUpgradeCost);
-        dmgUpgradeCost += dmgUpgradeCost * 0.8;
+        dmgUpgradeCost += dmgUpgradeCost/2;
         dmg += dmgUpgrade;
-        dmgUpgradeCost == Math.floor(dmgUpgrade * 0.8);
+        dmgUpgradeCost == Math.floor(dmgUpgradeCost/2);
         damageTxt.textContent = `DMG: ${dmg}`;
         costText.textContent = `x ${Math.floor(dmgUpgradeCost)}`;
         console.log("Upgraded Tower Damage!");
@@ -428,9 +428,9 @@ const upgradeDamage = () => {
 const upgradeRange = () => {
     if (coinsNum - rngUpgradeCost >= 0 && game) {
         setCoins(-rngUpgradeCost);
-        rngUpgradeCost += rngUpgradeCost * 1.1;
+        rngUpgradeCost += rngUpgradeCost/2;
         rng += rngUpgrade;
-        rngUpgradeCost == Math.floor(rngUpgradeCost * 1.1);
+        rngUpgradeCost == Math.floor(rngUpgradeCost/2);
         rangeTxt.textContent = `RNG: ${rng}`;
         costText.textContent = `x ${Math.floor(rngUpgradeCost)}`;
         rangeImg.style.width = `${rng + 50}px`;
@@ -446,9 +446,9 @@ const upgradeRange = () => {
 const upgradeAttackSpeed = () => {
     if (coinsNum - atkspdUpgradeCost >= 0 && game) {
         setCoins(-atkspdUpgradeCost);
-        atkspdUpgradeCost += atkspdUpgradeCost * 1.2;
+        atkspdUpgradeCost += atkspdUpgradeCost/2;
         atkspd -= atkspdUpgrade;
-        atkspdUpgradeCost == Math.floor(atkspdUpgradeCost * 1.2);
+        atkspdUpgradeCost == Math.floor(atkspdUpgradeCost/2);
         attackSpeedTxt.textContent = `SPD: ${(1000 / atkspd).toFixed(2)}`;
         costText.textContent = `x ${Math.floor(atkspdUpgradeCost)}`;
         console.log("Upgraded Tower Attack Speed!");
@@ -462,9 +462,9 @@ const upgradeAttackSpeed = () => {
 const upgradeCriticalChance = () => {
     if (coinsNum - critChanceUpgradeCost >= 0 && game) {
         setCoins(-critChanceUpgradeCost);
-        critChanceUpgradeCost += critChanceUpgradeCost * 0.7;
+        critChanceUpgradeCost += critChanceUpgradeCost/2;
         critpercent += critChanceUpgrade;
-        critChanceUpgradeCost == Math.floor(critChanceUpgradeCost * 0.7);
+        critChanceUpgradeCost == Math.floor(critChanceUpgradeCost/2);
         critChanceTxt.textContent = `CRT%: ${critpercent * 100}%`;
         costText.textContent = `x ${Math.floor(critChanceUpgradeCost)}`;
         console.log("Upgraded Tower Critical Chance!");
@@ -478,9 +478,9 @@ const upgradeCriticalChance = () => {
 const upgradeCriticalPercent = () => {
     if (coinsNum - critDmgUpgradeCost >= 0 && game) {
         setCoins(-critDmgUpgradeCost);
-        critDmgUpgradeCost += critDmgUpgradeCost * 1.2;
+        critDmgUpgradeCost += critDmgUpgradeCost/2;
         critdmg += critDmgUpgrade;
-        critDmgUpgradeCost == Math.floor(critDmgUpgradeCost * 0.7);
+        critDmgUpgradeCost == Math.floor(critDmgUpgradeCost/2);
         critDmgTxt.textContent = `CRT: ${(critdmg / dmg).toFixed(1)}x`;
         costText.textContent = `x ${Math.floor(critDmgUpgradeCost)}`;
         console.log("Upgraded Tower Critical Damage!");
@@ -495,8 +495,8 @@ const upgradeCoinsPerLvl = () => {
     if (coinsNum - coinsPerLvlUpgradeCost >= 0 && game) {
         setCoins(-coinsPerLvlUpgradeCost);
         coinsperlvl += coinsPerLvlUpgrade;
-        coinsPerLvlUpgradeCost += coinsPerLvlUpgradeCost * 0.7;
-        coinsPerLvlUpgradeCost == Math.floor(coinsPerLvlUpgradeCost * 1.2);
+        coinsPerLvlUpgradeCost += coinsPerLvlUpgradeCost/2;
+        coinsPerLvlUpgradeCost == Math.floor(coinsPerLvlUpgradeCost/2);
         costText.textContent = `x ${Math.floor(coinsPerLvlUpgradeCost)}`;
         coinsPerLvlTxt.innerHTML = `<img draggable="false" class="coinImg-bottom" src="./img/tower/coin.png"/>/lvl: ${coinsperlvl}`;
     }

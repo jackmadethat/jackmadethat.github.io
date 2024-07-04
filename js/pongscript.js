@@ -10,7 +10,8 @@ Play a game of 3D Pong!
 const court = document.getElementById('court');
 const ball = document.getElementById('ball');
 const paddle = document.getElementById('paddle');
-const scoreBox = document.getElementById('score');
+const playerScoreBox = document.getElementById('player-score');
+const opponentScoreBox = document.getElementById('opponent-score');
 const depthMarker = document.getElementById('depth-marker');
 const highScoreBox = document.getElementById('highest-score');
 
@@ -243,11 +244,11 @@ const update = () => {
 
     render();
 
-    requestAnimationFrame(update);
+    requestAnimationFrame(update, 1000 / 60);
 }
 
 // -----
 // Start Game Loop
 // -----
 
-requestAnimationFrame(update);
+requestAnimationFrame(update, 1000 / 60);
