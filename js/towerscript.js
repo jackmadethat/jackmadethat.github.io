@@ -38,7 +38,7 @@ const costText = document.getElementById('upgrade-cost');
 // -----
 
 // Game status
-let healthNum = 10;
+let healthNum = 20;
 let levelNum = 0;
 let coinsNum = 0;
 // Tower stats
@@ -63,8 +63,8 @@ let critChanceUpgradeCost = 10;
 let critDmgUpgradeCost = 10;
 let coinsPerLvlUpgradeCost = 10;
 // Game mechanics
-const levelTime = 7500;
-const enemySpawnDelay = 4500;
+const levelTime = 8500;
+const enemySpawnDelay = 5500;
 const enemySpeed = 1.2;
 const basicDamage = 1;
 const strongDamage = 2;
