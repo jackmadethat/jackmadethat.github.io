@@ -130,13 +130,14 @@ const startDrag = (event) => {
   cardX = currentlyDraggedCard.offsetLeft;
   cardY = currentlyDraggedCard.offsetTop;
   isDragging = true;
+  currentlyDraggedCard.style.setProperty('zoom', '1.2');
 }
 
 const stopDrag = () => {
   // Deselect card
   currentlyDraggedCard.classList.remove("dragging");
   currentlyDraggedCard.style.transition = 'transform 0.4s';
-  currentlyDraggedCard.style.transform = 'none';
+  currentlyDraggedCard.style.setProperty('zoom', '1');
   currentlyDraggedCard = null;
   isDragging = false;
 }
