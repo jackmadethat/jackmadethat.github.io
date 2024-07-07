@@ -71,6 +71,7 @@ p:last-of-type {
 
 .draggable {
   transition: transform 0.4s;
+  transform-origin: center;
 }
 
 .icon {
