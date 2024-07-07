@@ -8,7 +8,7 @@ Handle a digital arcana
 // -----
 
 let cards = document.querySelectorAll(".draggable");
-const backfaceImage = "https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/tarot/00_BackFace.png";
+const backfaceImage = tarot[78].image;
 const addButton = document.getElementById('add');
 const removeButton = document.getElementById('remove');
 const cardContainer = document.getElementById('cardbox');
@@ -51,7 +51,7 @@ addButton.addEventListener("click", () => {
     // Construct new card
     const newCard = document.createElement('img');
     newCard.setAttribute('draggable', 'false');
-    newCard.src = "https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/tarot/00_BackFace.png"
+    newCard.src = tarot[78].image;
     newCard.classList.add('card', `card0${numCards}`, 'draggable');
     // Add new card to cardbox
     const cardholder = document.createElement('div');
