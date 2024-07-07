@@ -78,6 +78,15 @@ p:last-of-type {
   z-index: 100;
 }
 
+.icon {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 20px;
+  height: 20px;
+  background-color: blue;
+}
+
 /* Template overrides */
 
 body {
