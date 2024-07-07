@@ -51,7 +51,7 @@ addButton.addEventListener("click", () => {
     // Construct new card
     const newCard = document.createElement('img');
     newCard.setAttribute('draggable', 'false');
-    newCard.src = tarot[78].image;
+    newCard.src = backfaceImage;
     newCard.classList.add('card', `card0${numCards}`, 'draggable');
     // Add new card to cardbox
     const cardholder = document.createElement('div');
