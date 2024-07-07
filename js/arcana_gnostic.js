@@ -478,6 +478,7 @@ tarot = [
         "number": 77,
     },
     {
+        // This entry needs to be the back face for the script to work correctly
         "image": "https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/tarot/gnostic/00_Backface.png",
         "name": "Back",
         "text": "Back Face",
