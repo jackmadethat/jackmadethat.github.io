@@ -82,8 +82,8 @@ p:last-of-type {
 
 body {
   background-color: #211e19;
-  background-image: var(--hexBG);
-  background-size: 256px;
+  background-image: url("https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/tarot/gnostic/LinePattern.png");
+  background-size: 156px;
 }
 
 .button-tile {
