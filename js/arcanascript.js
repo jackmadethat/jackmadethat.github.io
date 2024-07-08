@@ -103,7 +103,6 @@ const doubleClick = (event) => {
   } else {
     card.style.transition = "transform 0.4s"; 
     card.style.transform = `scaleX(0.01)`;
-
     setTimeout(() => {
       card.src = img.src;
       card.style.transform = `scaleX(1)`;
