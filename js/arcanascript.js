@@ -48,20 +48,25 @@ const setupInteractions = (card) => {
 addButton.addEventListener("click", () => {
   if (numCards <= 4) {
     numCards++;
+
     // Construct new card
     const newCard = document.createElement('img');
     newCard.setAttribute('draggable', 'false');
     newCard.src = backfaceImage;
     newCard.classList.add('card', `card0${numCards}`, 'draggable');
+
     // Add new card to cardbox
     const cardholder = document.createElement('div');
     cardholder.classList.add('cardholder');
     cardholder.appendChild(newCard);
     document.getElementById('cardbox').appendChild(cardholder);
+
     // Assign touch and click events
     setupInteractions(newCard);
+
     // Update card list
     cards = document.querySelectorAll(".draggable");
+
     console.log(numCards, cards);
   }
 });
@@ -69,12 +74,16 @@ addButton.addEventListener("click", () => {
 removeButton.addEventListener("click", () => {
   if (numCards > 0) {
     numCards--;
+
     // Find card to remove
     const cardholderToRemove = document.querySelectorAll(".cardholder")[numCards];
+
     // Remove card
     document.getElementById('cardbox').removeChild(cardholderToRemove);
+
     // Update card list
     cards = document.querySelectorAll(".draggable");
+
     console.log(numCards, cards);
   }
 });
@@ -93,21 +102,21 @@ const doubleClick = (event) => {
   img.src = newImage;
 
   if (card.classList.contains("flipped")) {
-    card.style.transition = "transform 0.4s";
+    card.style.transition = "transform 0.4s"; // transition duration
     card.style.transform = `scaleX(0.01)`;
     setTimeout(() => {
       card.src = backfaceImage;
       card.style.transform = `scaleX(1)`;
-    }, 400); // adjust the timeout duration to match the transition duration
+    }, 400); // adjust this value to match the transition duration
     card.classList.remove("flipped");
   } else {
-    card.style.transition = "transform 0.4s"; 
+    card.style.transition = "transform 0.4s"; // transition duration
     card.style.transform = `scaleX(0.01)`;
     setTimeout(() => {
       card.src = img.src;
       card.style.transform = `scaleX(1)`;
       card.classList.add("flipped");
-    }, 400);
+    }, 400); // adjust this value to match the transition duration
   }
 }
 
@@ -118,9 +127,11 @@ const doubleClick = (event) => {
 const startDrag = (event) => {
   // Select card
   currentlyDraggedCard = event.currentTarget;
-  const cardbox = document.getElementById('cardbox');
-  cardbox.appendChild(currentlyDraggedCard.parentNode);
   currentlyDraggedCard.classList.add("dragging");
+
+  // Bring card to the top of the stack
+  document.getElementById('cardbox').appendChild(currentlyDraggedCard.parentNode);;
+
   if (event.touches) {
     mouseX = event.touches[0].clientX;
     mouseY = event.touches[0].clientY;
@@ -130,6 +141,7 @@ const startDrag = (event) => {
   }
   cardX = currentlyDraggedCard.offsetLeft;
   cardY = currentlyDraggedCard.offsetTop;
+
   isDragging = true;
 }
 
@@ -139,16 +151,15 @@ const stopDrag = () => {
   currentlyDraggedCard.style.transition = 'transform 0.4s';
   currentlyDraggedCard.style.transform = 'none';
   currentlyDraggedCard = null;
+
   isDragging = false;
 }
 
 const moveCard = (clientX, clientY) => {
   // Move card
   if (isDragging && currentlyDraggedCard) {
-    const newX = cardX + (clientX - mouseX);
-    const newY = cardY + (clientY - mouseY);
-    currentlyDraggedCard.style.top = `${newY}px`;
-    currentlyDraggedCard.style.left = `${newX}px`;
+    currentlyDraggedCard.style.top = `${cardY + (clientY - mouseY)}px`;
+    currentlyDraggedCard.style.left = `${cardX + (clientX - mouseX)}px`;
   }
 }
 
@@ -175,7 +186,6 @@ const updateAnim = () => {
     }
   }
 
-  // Not sure if having listeners here is ideal, but it works
   document.addEventListener("mousemove", (event) => {
     pos = {x: event.pageX, y: event.pageY};
     top = pos.y + 'px';

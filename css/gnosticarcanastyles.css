@@ -9,11 +9,19 @@ img{
 }
 
 p {
-  margin-top: -10px;
+  margin-top: -15px;
 }
 
 p:last-of-type {
-  margin-bottom: 35px;
+  margin-bottom: 40px;
+}
+
+a:link {
+  color: var(--white);
+}
+
+a:visited {
+  color: var(--white);
 }
 
 .button-box {
@@ -71,11 +79,6 @@ p:last-of-type {
 
 .draggable {
   transition: transform 0.4s;
-}
-
-.dragging {
-  position: absolute;
-  z-index: 100;
 }
 
 .icon {
