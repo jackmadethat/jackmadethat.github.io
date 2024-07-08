@@ -118,6 +118,8 @@ const doubleClick = (event) => {
 const startDrag = (event) => {
   // Select card
   currentlyDraggedCard = event.currentTarget;
+  const cardbox = document.getElementById('cardbox');
+  cardbox.appendChild(currentlyDraggedCard.parentNode);
   currentlyDraggedCard.classList.add("dragging");
   if (event.touches) {
     mouseX = event.touches[0].clientX;
@@ -165,8 +167,8 @@ const updateAnim = () => {
       delta.x = pos.x - prevPos.x;
       delta.y = pos.y - prevPos.y;
       prevPos = pos;
-      rotateY = 'rotateY(' + Math.max(Math.min(delta.x * 1.4, 35), -35) + 'deg)';
-      rotateX = 'rotateX(' + (Math.max(Math.min(delta.y * 1.4, 35), -35) * -1) + 'deg)';
+      rotateY = 'rotateY(' + Math.max(Math.min(delta.x * 1.65, 35), -35) + 'deg)';
+      rotateX = 'rotateX(' + (Math.max(Math.min(delta.y * 1.65, 35), -35) * -1) + 'deg)';
       scale = 'scale(' + (isDragging ? 1.2 : 1) + ')';
       transform = [rotateY, rotateX, scale];
       currentlyDraggedCard.style.transform = transform.join(' ')
