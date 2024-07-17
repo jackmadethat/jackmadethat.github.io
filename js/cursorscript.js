@@ -14,7 +14,7 @@ const cursorImg = document.getElementById('cursorImg');
 // -----
 
 let index = 0;
-let interval = 100; // Time in milliseconds
+let interval = 150; // Time in milliseconds
 let lastTime = 0;
 let imgArray = [];
 
