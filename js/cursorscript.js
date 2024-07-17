@@ -35,13 +35,11 @@ document.addEventListener('mousemove', (e) => {
 // Hover Events
 // -----
 
-
+imgArray = move; // This sets the cursor type
 
 // -----
 // Animate Cursor
 // -----
-
-imgArray = teleport;
 
 const animate = (timestamp) => {
   if (timestamp - lastTime >= interval) {
