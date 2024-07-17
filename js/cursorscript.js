@@ -41,7 +41,7 @@ document.addEventListener('mousemove', (e) => {
 // Animate Cursor
 // -----
 
-imgArray = AirStrike;
+imgArray = teleport;
 
 const animate = (timestamp) => {
   if (timestamp - lastTime >= interval) {
