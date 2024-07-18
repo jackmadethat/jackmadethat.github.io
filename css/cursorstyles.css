@@ -17,6 +17,28 @@ h2 {
   position: absolute;
 }
 
+.boxGrid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px 10px;
+}
+
+.box {
+  width: 100%;
+  max-width: 200px;
+  height: 200px;
+  object-fit: cover;
+  color: #7DDA58;
+  border: 1px solid #7DDA5880;
+  border-radius: 5px;
+}
+
 /* Template overrides */
 
 body {

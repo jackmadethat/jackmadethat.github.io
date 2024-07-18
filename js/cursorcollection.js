@@ -2,6 +2,10 @@
 JackMadeThat Custom Cursor Arrays
 */
 
+const normalGrey = [
+  "https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/cursorset/Cursor_GRY.png",
+];
+
 const normals = [
   "https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/cursorset/Cursor_GRN.png", 
   "https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/cursorset/Cursor_RED.png",
@@ -281,3 +285,19 @@ const wait = [
   "https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/cursorset/Cursor_Wait_07.png", 
   "https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/cursorset/Cursor_Wait_08.png"
 ];
+
+// Pre-load images when page loads for smooth transitions
+
+const preloadImages = (imageArrays) => {
+  imageArrays.forEach((array) => {
+    array.forEach((src) => {
+      const img = new Image();
+      img.src = src;
+    });
+  });
+}
+
+window.addEventListener("load", () => {
+  const imageArrays = [airStrike, attack, capture, defend, findSite, load, move, patrol, pickUp, protect, reclaim, repair, teleport, tooFar, unload, wait, normalGrey, normals];
+  preloadImages(imageArrays);
+});
