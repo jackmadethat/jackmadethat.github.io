@@ -9,5 +9,15 @@ h2 {
   font-size: clamp(0.75rem, 2vw, 1.25rem);
 }
 
+#fighterDiv {
+  position: absolute;
+  width: 80;
+  height: 80;
+  margin-left: 50%;
+  margin-top: 100px;
+  left: -40px;
+  top: 0px;
+}
+
 /* Template overrides */
 
