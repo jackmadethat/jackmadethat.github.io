@@ -4,10 +4,6 @@ html {
   cursor: url('https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/cursorset/transparent.png'), none;
 }
 
-.center {
-  text-align: center;
-}
-
 h2 {
   color: #f5f6f7;
   font-size: clamp(0.75rem, 2vw, 1.25rem);

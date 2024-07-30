@@ -72,6 +72,10 @@ body {
     user-select: none;
 }
 
+.center {
+  text-align: center;
+}
+
 /* Button Syntax */
 /*
 <div class="button-container">

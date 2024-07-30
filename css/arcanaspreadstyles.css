@@ -1,0 +1,76 @@
+@import "JMTtemplate.css";
+
+img {
+	max-width: 150px;
+}
+
+.card {
+	background-color: var(--semi-white);
+	box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 30px 8px;
+	max-width: 150px;
+	transform: scaleX(1);
+	transition: none;
+	animation: shrinkGrow 0.8s forwards;
+}
+
+.card img {
+    transition: opacity 0.2s;
+}
+
+.card.animate img {
+    animation: changeImage 0.4s forwards;
+}
+
+@keyframes changeImage {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+    51% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes shrinkGrow {
+    0% {
+        transform: scaleX(1);
+    }
+    50% {
+        transform: scaleX(0.01);
+    }
+    100% {
+        transform: scaleX(1);
+    }
+}
+
+.cardGrid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  text-align: left;
+  gap: 16px;
+  max-width: 2000px;
+  margin: 0 auto;
+  padding: 20px 10px;
+}
+
+.icon {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 20px;
+  height: 20px;
+}
+
+/* Template overrides */
+
+body {
+  overflow: auto;
+}
