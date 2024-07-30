@@ -26,7 +26,7 @@ img {
     padding-left: 10px;
     padding-right: 10px;
     border: 1px solid var(--white);
-    background-color: var(--middle-blue);
+    background-color: #201e19;
 }
 
 #cardtitle {
@@ -104,4 +104,12 @@ img {
 
 body {
   overflow: auto;
+  background-color: #211e19;
+  background-image: url("https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/tarot/gnostic/LinePattern.png");
+  background-size: 156px;
 }
+
+.button-tile {
+    width: 130px;
+    margin-top: -25px;
+  }

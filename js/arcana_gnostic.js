@@ -491,3 +491,20 @@ tarot = [
         "number": 79,
     },
 ];
+
+// Pre-load images when page loads for smooth transitions
+
+const preloadImages = (imageArrays) => {
+    imageArrays.forEach((array) => {
+        array.forEach((src) => {
+            const img = new Image();
+            img.src = src;
+        });
+    });
+  }
+  
+window.addEventListener("load", () => {
+    const imageArrays = [tarot];
+    preloadImages(imageArrays);
+});
+  
