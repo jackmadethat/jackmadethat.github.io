@@ -1,42 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
-  
+
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/x-icon" href="./img/JMT_Icon.ico">
-    <link rel="stylesheet" type="text/css" href="./css/dicestyles.css" />
-    
+    <link rel="stylesheet" type="text/css" href="./css/reactstyles.css" />
+	
+    <title>Jack Made That :: React Sandbox</title>
+	
+	<!-- React -->
     <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <!-- Babel Script -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-
-    <title>Jack Made That :: React App</title>
-    
+	<!--
+		This sets us up for single-page React scripting for sandbox 
+		and testing purposes. Not ideal for production as this is 
+		compiled in the browser using babel, which is inefficient.
+		Consider setting up a framework like Next or Remix and make
+		sure to install Git, GitHub and Node.js.
+		
+		Further reading:
+		https://react.dev/learn/start-a-new-react-project
+		https://react.dev/learn/add-react-to-an-existing-project
+    -->
+	
   </head>
   
   <body>
-
-    <div id="center">
-
-      <div id="app"></div>
-
-      <script type="text/jsx">
-        const app = document.getElementById('app');
-        const header = document.createElement('h1');
-        const text = 'Develop. Preview. Ship.';
-        const headerContent = document.createTextNode(text);
-        header.appendChild(headerContent);
-        app.appendChild(header);
-      </script>
-
-    </div>
-
-    <!--
-      https://react.dev/learn/start-a-new-react-project
-      https://react.dev/learn/add-react-to-an-existing-project
-    -->
-
+  
+    <div id="app"></div>
+	
+    <script type="text/jsx">
+		{/* We basically put all of our content in one div, captured as a variable like normal JS */}
+		const domNode = document.getElementById('app');
+		
+		{/* Make components like this for easy re-use */}
+		function Header({ title }) {
+			// console.log(title);
+			// return <h1>{`This is ${title}!`}</h1>; template literal example
+			return <h1>{title ? `This is ${title}` : 'Default title'}</h1>; // template literal in a ternary operation
+		}
+		
+		function HomePage() {
+			const names = ['Michael', 'Gabriel', 'Azrael', 'Raphael'];
+			const [likes, setLikes] = React.useState(0);
+			
+			{/* Make functions like normal JS, this one is nested in the HomePage app */}
+			function handleClick() {
+				console.log("increment like count");
+				setLikes(likes + 1);
+			}
+			
+			{/* The return is what's sent for rendering */}
+			return (
+				<div>
+					{/* Nest the header */}
+					{/* Playing with different props */}
+					<Header title="React!" />
+					<Header title="a different title!" />
+					<Header />
+					
+					<ul>
+						{/* Use curly braces to drift between JavaScript and JSX */}
+						{names.map((name) => (
+							<li key={name}>{name}</li>
+						))}
+					</ul>
+					
+					{/* Here's how we can call functions with button clicks */}
+					<button onClick={handleClick}>Like ({likes})</button>
+				</div>
+			);
+		}
+	  
+		ReactDOM.createRoot(domNode).render(<HomePage />);
+    </script>
+	
   </body>
-
+  
 </html>
