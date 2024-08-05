@@ -36,6 +36,27 @@ const run = [
 	"https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/fighterchar/Fighter_Run_02.png"
 ];
 
+const guard = [
+	"https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/fighterchar/Fighter_Guard_01.png",
+	"https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/fighterchar/Fighter_Guard_01.png",  
+	"https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/fighterchar/Fighter_Guard_02.png",
+	"https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/fighterchar/Fighter_Guard_02.png"
+];
+
+const preloadImages = (imageArrays) => {
+	imageArrays.forEach((array) => {
+		array.forEach((src) => {
+			const img = new Image();
+			img.src = src;
+		});
+	});	
+}
+  
+window.addEventListener("load", () => {
+	const imageArrays = [idle, walk, run, guard];
+	preloadImages(imageArrays);
+});
+
 // -----
 // Variables
 // -----
@@ -45,8 +66,8 @@ let playerY = 0;
 const keys = {};
 
 let isMoving = false;
-const speed = 2;
-const sprintSpeed = 5;
+const speed = 1;
+const sprintSpeed = 2;
 let currentSpeed = speed;
 let isShiftDown = false;
 
@@ -55,29 +76,33 @@ let lastTime = 0;
 let imgArray = idle;
 let index = 0;
 
+let isControlDown = false;
+
 // -----
 // Move Character
 // -----
 
 const update = (timestamp) => {
 
-	// Keypress functionality
 	if (isShiftDown) {
 		currentSpeed = sprintSpeed;
-		if (keys.ArrowUp || keys.w || keys.W ||
-			keys.ArrowDown || keys.s || keys.S ||
-			keys.ArrowLeft || keys.a || keys.A ||
-			keys.ArrowRight || keys.d || keys.D) {
+		if (keys.arrowup || keys.w || keys.W ||
+			keys.arrowdown || keys.s || keys.S ||
+			keys.arrowleft || keys.a || keys.A ||
+			keys.arrowright || keys.d || keys.D) {
 			imgArray = run; // Set imgArray to run when Shift is down and moving
 		} else {
 			imgArray = idle; // Set imgArray to idle when Shift is down but not moving
 		}
+	} else if (isControlDown) {
+		imgArray = guard; // Set imgArray to guard when Control is down
+		currentSpeed = 0; // Prevent movement when guarding
 	} else {
 		currentSpeed = speed;
-		if (keys.ArrowUp || keys.w || keys.W ||
-			keys.ArrowDown || keys.s || keys.S ||
-			keys.ArrowLeft || keys.a || keys.A ||
-			keys.ArrowRight || keys.d || keys.D) {
+		if (keys.arrowup || keys.w || keys.W ||
+			keys.arrowdown || keys.s || keys.S ||
+			keys.arrowleft || keys.a || keys.A ||
+			keys.arrowright || keys.d || keys.D) {
 			imgArray = walk; // Set imgArray to walk when moving without Shift
 			isMoving = true;
 		} else {
@@ -86,18 +111,41 @@ const update = (timestamp) => {
 		}
 	}
 
-	if (keys.ArrowUp || keys.w || keys.W) playerY -= currentSpeed;
+	if (!isControlDown) {
+		if (keys.arrowup || keys.w || keys.W) playerY -= currentSpeed / 2;
+		if (keys.arrowdown || keys.s || keys.S) playerY += currentSpeed / 2;
+		if (keys.arrowleft || keys.a || keys.A) {
+			playerX -= currentSpeed;
+			fighter.style.transform = 'scaleX(-1)';
+		}
+		if (keys.arrowright || keys.d || keys.D) {
+			playerX += currentSpeed;
+			fighter.style.transform = 'scaleX(1)';
+		}
+	}
 
-	if (keys.ArrowDown || keys.s || keys.S) playerY += currentSpeed;
+	if (keys.arrowup || keys.w || keys.W) {
+		playerY -= currentSpeed;
+	}
 
-	if (keys.ArrowLeft || keys.a || keys.A) {
+	if (keys.arrowdown || keys.s || keys.S) {
+		playerY += currentSpeed;
+	}
+
+	if (keys.arrowleft || keys.a || keys.A) {
 		playerX -= currentSpeed;
 		fighter.style.transform = 'scaleX(-1)';
 	}
 
-	if (keys.ArrowRight || keys.d || keys.D) {
+	if (keys.arrowright || keys.d || keys.D) {
 		playerX += currentSpeed;
 		fighter.style.transform = 'scaleX(1)';
+	}
+
+	if ((keys.arrowleft || keys.a || keys.A) && (keys.arrowright || keys.d || keys.D)) {
+		imgArray = idle;
+	} else if ((keys.arrowup || keys.w || keys.W) && (keys.arrowdown || keys.s || keys.S)) {
+		imgArray = idle;
 	}
 
 	// Animate sprites
@@ -116,7 +164,7 @@ const update = (timestamp) => {
 
 	// Update frame
 	requestAnimationFrame(update);
-	console.log(keys);
+	console.log(currentSpeed);
 }
 
 // -----
@@ -124,17 +172,32 @@ const update = (timestamp) => {
 // -----
 
 document.addEventListener('keydown', (event) => {
-	keys[event.key.toLowerCase()] = true;
+  keys[event.key.toLowerCase()] = true;
 
-	isShiftDown = event.getModifierState('Shift');
+  isShiftDown = event.getModifierState('Shift');
+  isControlDown = event.getModifierState('Control');
+
+  if (isControlDown) {
+    switch (event.key) {
+      case 'a':
+      case 's':
+      case 'd':
+      case 'w':
+        event.preventDefault();
+        break;
+    }
+  }
 });
   
 document.addEventListener('keyup', (event) => {
-	keys[event.key.toLowerCase()] = false;
+  keys[event.key.toLowerCase()] = false;
 
-	if (event.key === 'Shift') {
-		isShiftDown = false;
-	}
+  if (event.key === 'Shift') {
+    isShiftDown = false;
+  }
+  if (event.key === 'Control') {
+    isControlDown = false;
+  }
 });
   
 // -----
