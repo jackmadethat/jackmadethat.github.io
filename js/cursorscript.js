@@ -102,4 +102,4 @@ const animate = (timestamp) => {
   requestAnimationFrame(animate);
 }
 
-requestAnimationFrame(animate);
+animate();
