@@ -7,7 +7,8 @@ JackMadeThat Beat 'em Up Script
 // -----
 
 const fighter = document.getElementById('fighterDiv');
-const fighterImg = document.getElementById('fighterImg');
+const playArea = document.getElementById('playArea');
+let playAreaRect = playArea.getBoundingClientRect();
 
 // -----
 // Fighter Sprites
@@ -63,8 +64,8 @@ window.addEventListener("load", () => {
 // Variables
 // -----
 
-let playerX = 0;
-let playerY = 0;
+let playerX = 600;
+let playerY = 400;
 const keys = {};
 
 let isMoving = false;
@@ -85,6 +86,7 @@ let isControlDown = false;
 // -----
 
 const update = (timestamp) => {
+	playAreaRect = playArea.getBoundingClientRect();
 
 	// Set states like running, guarding, etc
 	if (isShiftDown) {
@@ -161,13 +163,19 @@ const update = (timestamp) => {
 		lastTime = timestamp;
 	}
 
+	// Boundary check
+	if (playerX < playAreaRect.left) playerX = playAreaRect.left;
+	if (playerX + fighter.offsetWidth > playAreaRect.right) playerX = playAreaRect.right - fighter.offsetWidth;
+	if (playerY < 230) playerY = 230; // Manually set Y values
+	if (playerY > 590) playerY = 590;
+
 	// Set the player position
-	fighter.style.top = `${playerY / 1.5}px`;
+	fighter.style.top = `${playerY / 1.5 + 80}px`;
 	fighter.style.left = `${playerX}px`;
 
 	// Update frame
 	requestAnimationFrame(update);
-	console.log(keys);
+	console.log(playAreaRect.top, playerY);
 }
 
 // -----
