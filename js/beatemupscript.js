@@ -162,7 +162,7 @@ const update = (timestamp) => {
 	}
 
 	// Set the player position
-	fighter.style.top = `${playerY}px`;
+	fighter.style.top = `${playerY / 1.5}px`;
 	fighter.style.left = `${playerX}px`;
 
 	// Update frame
