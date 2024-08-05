@@ -17,7 +17,7 @@
   z-index: 3;
   cursor: none;
   background-color: var(--main-blue);
-  background-image: url("https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/pong/courtBG_Transparent.png")
+  background-image: url("https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/pong/courtBG_Transparent.png");
 }
 
 .grid {
