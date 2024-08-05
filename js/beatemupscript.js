@@ -39,7 +39,9 @@ const run = [
 const guard = [
 	"https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/fighterchar/Fighter_Guard_01.png",
 	"https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/fighterchar/Fighter_Guard_01.png",  
+	"https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/fighterchar/Fighter_Guard_01.png", 
 	"https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/fighterchar/Fighter_Guard_02.png",
+	"https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/fighterchar/Fighter_Guard_02.png", 
 	"https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/fighterchar/Fighter_Guard_02.png"
 ];
 
@@ -84,6 +86,7 @@ let isControlDown = false;
 
 const update = (timestamp) => {
 
+	// Set states like running, guarding, etc
 	if (isShiftDown) {
 		currentSpeed = sprintSpeed;
 		if (keys.arrowup || keys.w || keys.W ||
@@ -111,6 +114,7 @@ const update = (timestamp) => {
 		}
 	}
 
+	// Guarding
 	if (!isControlDown) {
 		if (keys.arrowup || keys.w || keys.W) playerY -= currentSpeed / 2;
 		if (keys.arrowdown || keys.s || keys.S) playerY += currentSpeed / 2;
@@ -124,24 +128,23 @@ const update = (timestamp) => {
 		}
 	}
 
+	// Directional movement
 	if (keys.arrowup || keys.w || keys.W) {
 		playerY -= currentSpeed;
 	}
-
 	if (keys.arrowdown || keys.s || keys.S) {
 		playerY += currentSpeed;
 	}
-
 	if (keys.arrowleft || keys.a || keys.A) {
 		playerX -= currentSpeed;
 		fighter.style.transform = 'scaleX(-1)';
 	}
-
 	if (keys.arrowright || keys.d || keys.D) {
 		playerX += currentSpeed;
 		fighter.style.transform = 'scaleX(1)';
 	}
 
+	// Set to idle if opposite directions are pushed
 	if ((keys.arrowleft || keys.a || keys.A) && (keys.arrowright || keys.d || keys.D)) {
 		imgArray = idle;
 	} else if ((keys.arrowup || keys.w || keys.W) && (keys.arrowdown || keys.s || keys.S)) {
@@ -164,7 +167,7 @@ const update = (timestamp) => {
 
 	// Update frame
 	requestAnimationFrame(update);
-	console.log(currentSpeed);
+	console.log(keys);
 }
 
 // -----
@@ -172,32 +175,32 @@ const update = (timestamp) => {
 // -----
 
 document.addEventListener('keydown', (event) => {
-  keys[event.key.toLowerCase()] = true;
+	keys[event.key.toLowerCase()] = true;
 
-  isShiftDown = event.getModifierState('Shift');
-  isControlDown = event.getModifierState('Control');
+	isShiftDown = event.getModifierState('Shift');
+	isControlDown = event.getModifierState('Control');
 
-  if (isControlDown) {
-    switch (event.key) {
-      case 'a':
-      case 's':
-      case 'd':
-      case 'w':
-        event.preventDefault();
-        break;
-    }
-  }
+	if (isControlDown) {
+		switch (event.key) {
+			case 'a':
+			case 's':
+			case 'd':
+			case 'w':
+			event.preventDefault();
+			break;
+		}
+	}
 });
   
 document.addEventListener('keyup', (event) => {
-  keys[event.key.toLowerCase()] = false;
+	keys[event.key.toLowerCase()] = false;
 
-  if (event.key === 'Shift') {
-    isShiftDown = false;
-  }
-  if (event.key === 'Control') {
-    isControlDown = false;
-  }
+	if (event.key === 'Shift') {
+		isShiftDown = false;
+	}
+	if (event.key === 'Control') {
+		isControlDown = false;
+	}
 });
   
 // -----
