@@ -11,6 +11,7 @@ const tarotBtn = document.getElementById('tarotBtn');
 const ballBtn = document.getElementById('ballBtn');
 const towerBtn = document.getElementById('towerBtn');
 const pongBtn = document.getElementById('pongBtn');
+const beatemupBtn = document.getElementById('beatemupBtn');
 
 // -----
 // Pre-load images
@@ -36,6 +37,10 @@ const pongImgHover = new Image();
 pongImgHover.src = "https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/gamebuttons/pong_B.png";
 const pongImgDefault = new Image();
 pongImgDefault.src = "https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/gamebuttons/pong_W.png";
+const beatemupImgHover = new Image();
+beatemupImgHover.src = "https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/gamebuttons/beatemup_B.png";
+const beatemupImgDefault = new Image();
+beatemupImgDefault.src = "https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/gamebuttons/beatemup_W.png";
 
 
 // -----
@@ -80,4 +85,12 @@ pongBtn.addEventListener('mouseover', () => {
 
 pongBtn.addEventListener('mouseout', () => {
   document.getElementById('pongImg').src = pongImgDefault.src;
+});
+
+beatemupBtn.addEventListener('mouseover', () => {
+  document.getElementById('beatemupImg').src = beatemupImgHover.src;
+});
+
+beatemupBtn.addEventListener('mouseout', () => {
+  document.getElementById('beatemupImg').src = beatemupImgDefault.src;
 });
