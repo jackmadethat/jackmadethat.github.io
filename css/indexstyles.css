@@ -9,10 +9,10 @@
   background-image: url("https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/main/img/sig.png");
 }
 
-#projects {
-  display: grid;
-  justify-content: center;
-  grid-template-columns: 1fr 1fr 1fr;
+.projects {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
 }
 
 h2 {
@@ -133,14 +133,6 @@ h2 {
 }
 
 /* Template overrides */
-
-.button-container:first-of-type {
-  margin-top: 10px;
-}
-
-.button-container:last-of-type {
-  margin-bottom: -20px;
-}
 
 body {
   overflow: auto;

@@ -58,13 +58,6 @@ body {
     transition: all 0.1s ease;
 }
 
-.button-container {
-    display: flex;
-    justify-content: center;
-    padding: 30px;
-    margin-bottom: -50px;
-}
-
 .tile {
     text-decoration: none;
     color: #fff;
@@ -74,6 +67,17 @@ body {
 
 .center {
   text-align: center;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.button-container:first-of-type {
+    margin-top: 35px;
 }
 
 /* Button Syntax */
