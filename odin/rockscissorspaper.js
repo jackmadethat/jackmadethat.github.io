@@ -5,30 +5,17 @@ let numTurns = 0;
 let score = "";
 
 const startGame = () => {
-    if (gameState) {
-        gameState = false;
-        document.getElementById("startGame").innerText = "Start Game";
-        document.getElementById("playerButtons").style.display = "none";
-        document.getElementById("computerChoice").innerText = "";
-        document.getElementById("playerChoice").innerText = "";
-        document.getElementById("turn").innerText = "";
-        document.getElementById("score").innerText = "";
-        document.getElementById("result").innerText = "";
-        numTurns = 0;
-        console.log(gameState);
-    } else {
-        gameState = true;
-        document.getElementById("startGame").innerText = "Reset";
-        document.getElementById("playerButtons").style.display = "block";
-        document.getElementById("computerChoice").innerText = "Awaiting Choice";
-        document.getElementById("playerChoice").innerText = "";
-        document.getElementById("turn").innerText = "";
-        document.getElementById("score").innerText = "";
-        document.getElementById("result").innerText = "";
-        numTurns = 0;
-        numTurns = 0;
-        console.log(gameState);
-    }
+  gameState = true;
+  document.getElementById("playerButtons").style.display = "block";
+  document.getElementById("computerChoice").innerText = "Awaiting Choice";
+  document.getElementById("playerChoice").innerText = "";
+  document.getElementById("turn").innerText = "";
+  document.getElementById("score").innerText = "";
+  document.getElementById("result").innerText = "";
+  document.getElementById("startGame").innerText = "Reset";
+  numTurns = 0;
+  numTurns = 0;
+  console.log(gameState);
 }
 
 const getComputerChoice = () => {
@@ -60,7 +47,8 @@ const compareChoices = (player, computer) => {
   if (numTurns >= 4) {
     gameState = false;
     document.getElementById("turn").innerText = "Game Over!";
-    document.getElementById("startGame").innerText = "Reset";
+    let scoreText = document.getElementById("score").innerText;
+    document.getElementById("score").innerText = scoreText.slice (0, -2);
     console.log(gameState);
   } else {
     numTurns++;
