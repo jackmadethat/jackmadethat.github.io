@@ -4,12 +4,31 @@
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="icon" type="image/x-icon" href="./img/JMT_Icon.ico">
-      <link rel="stylesheet" type="text/css" href="./css/odinstyles.css" />
+      <link rel="stylesheet" type="text/css" href="./rockscissorspaperstyles.css" />
   	
       <title>Rock Scissors Paper</title>
   </head>
   <body>
-      <h1>Rock Scissors Paper</h1>
-      <a href="./index.html">Back</a>  
+    <h1>Rock Scissors Paper</h1>
+
+    <button id="startGame" onClick="startGame();">Start Game</button>
+
+    <div id="playerButtons">
+      <button id="chooseRock" onClick="makeChoice('Rock');">Rock</button>
+      <button id="choosePaper" onClick="makeChoice('Paper');">Paper</button>
+      <button id="schooseScissors" onClick="makeChoice('Scissors');">Scissors</button>
+    </div>
+
+    <div id="playerChoice"></div>
+    <div id="computerChoice"></div>
+    <div id="result"></div>
+    <div id="score"></div>
+    <div id="turn"></div>
+
+    <div>
+      <a href="./index.html">Back</a> 
+    </div> 
+
+    <script src="rockscissorspaper.js"></script>
   </body>
 </html>
