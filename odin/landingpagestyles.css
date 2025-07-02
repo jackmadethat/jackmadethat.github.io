@@ -1,0 +1,55 @@
+* {
+    border: 2px solid red;
+    font-family: 'Roboto';
+
+    --darkbg: #1F2937;
+    --heromaintext: #F9FaF8;
+    --herosecondtext: #E5E7EB;
+    --buttoncolor: #3882F6;
+}
+
+#container {
+    max-width: 800px;
+    margin: auto;
+}
+
+#section-one {
+    display: flex;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.header-link {
+    padding-left: 20px;
+}
+
+.push {
+    margin-left: auto;
+}
+
+#section-two {
+    display: flex;
+}
+
+#header-left {
+    flex: 1;
+}
+
+#header-right {
+    flex: 1;
+}
+
+#header-img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+#section-three {
+    text-align: center;
+}
+
+#box-container {
+    display: flex;
+}
