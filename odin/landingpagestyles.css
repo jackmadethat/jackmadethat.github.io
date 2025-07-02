@@ -1,5 +1,5 @@
 * {
-    border: 2px solid red;
+    /* border: 1px solid red; */
     font-family: 'Roboto';
 
     --darkbg: #1F2937;
@@ -8,35 +8,72 @@
     --buttoncolor: #3882F6;
 }
 
-#container {
-    max-width: 800px;
-    margin: auto;
+html, body {
+    margin: 0;
+    padding: 0;
 }
 
 #section-one {
     display: flex;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    padding: 10px 15%;
+    background-color: var(--darkbg);
+    color: var(--heromaintext);
+}
+
+#section-two {
+    display: flex;
+    padding: 30px 15% 50px 15%;
+    background-color: var(--darkbg);
+    color: var(--heromaintext);
+}
+
+#section-three {
+    text-align: center;
+    padding: 30px 15% 50px 15%;
+}
+
+#section-four {
+    padding: 30px 15% 50px 15%;
+    background-color: var(--herosecondtext);
+}
+
+#section-five {
+    padding: 60px 15%;
+}
+
+#section-six {
+    padding: 10px 15%;
+}
+
+#header-logo {
+    font-weight: bold;
+    font-size: 24px;
 }
 
 .header-link {
-    padding-left: 20px;
+    padding-top: 2px;
+    padding-left: 30px;
+    font-size: 12px;
 }
 
 .push {
     margin-left: auto;
 }
 
-#section-two {
-    display: flex;
-}
-
 #header-left {
     flex: 1;
+    margin-right: 10px;
+}
+
+#header-left>h1 {
+    font-weight: 900;
+    font-size: 48px;
 }
 
 #header-right {
     flex: 1;
+    margin-left: 10px;
+    background-color: #ffffff50;
 }
 
 #header-img {
@@ -46,10 +83,64 @@
     height: 100%;
 }
 
-#section-three {
-    text-align: center;
-}
-
 #box-container {
     display: flex;
+    align-items: stretch;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.box {
+    margin: 10px;
+}
+
+.box>p {
+    margin-top: 0px;
+}
+
+.square {
+    height: 160px;
+    max-width: 160px;
+    border: 3px solid var(--buttoncolor);
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+#quote {
+    margin: 50px 15% 50px 15%;
+}
+
+.calltoaction-box {
+    display: flex;
+    background-color: var(--buttoncolor);
+    border-radius: 10px;
+    color: var(--heromaintext);
+}
+
+.calltoaction {
+    display: flex;
+    flex: 2;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 70px;
+}
+
+.calltoaction>h3 {
+    margin: 0px;
+}
+
+.calltoaction>p {
+    margin: 0px;
+}
+
+.calltoaction-button {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 0;
+}
+
+#footer {
+    text-align: center;
 }
