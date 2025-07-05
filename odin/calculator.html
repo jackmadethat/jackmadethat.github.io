@@ -9,33 +9,36 @@
     <title>Calculator</title>
   </head>
   <body>
-    <script src="./etchasketchscript.js" defer></script>
+    <script src="./calculatorscript.js" defer></script>
     <h1>Calculator</h1>
     <div id="container">
-      <div id="textDisplay">TEXT DISPLAY</div>
+      <div id="textDisplay"></div>
       <div id="topRow">
         <button id="seven" onClick="enterDigit(7)">7</button>
         <button id="eight" onClick="enterDigit(8)">8</button>
         <button id="nine" onClick="enterDigit(9)">9</button>
-        <button id="add" onClick="operation('add')">+</button>
+        <button id="add" onClick="func('add')">+</button>
       </div>
       <div id="middleRow">
         <button id="four" onClick="enterDigit(4)">4</button>
         <button id="five" onClick="enterDigit(5)">5</button>
         <button id="six" onClick="enterDigit(6)">6</button>
-        <button id="subtract" onClick="operation('subtract')">-</button>
+        <button id="subtract" onClick="func('subtract')">-</button>
       </div>
       <div id="bottomRow"></div>
         <button id="one" onClick="enterDigit(1)">1</button>
         <button id="two" onClick="enterDigit(2)">2</button>
         <button id="three" onClick="enterDigit(3)">3</button>
-        <button id="multiply" onClick="operation('multiply')">x</button>
+        <button id="multiply" onClick="func('multiply')">x</button>
       </div>
       <div id="realBottomRow"></div>
         <button id="zero" onClick="enterDigit(0)">0</button>
         <button id="dot" onClick="enterDigit('.')">.</button>
-        <button id="clear" onClick="operation('clear')">C</button>
-        <button id="divide" onClick="operation('divide')">/</button>
+        <button id="clear" onClick="func('clear')">C</button>
+        <button id="divide" onClick="func('divide')">/</button>
+      </div>
+      <div id="actualRealBottomRow">
+        <button id="equals" onClick="func('equals')">=</button>
       </div>
     </div>
   </body>
