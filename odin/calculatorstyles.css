@@ -8,6 +8,10 @@ h1 {
     text-align: center;
 }
 
+button {
+    height: 30px;
+}
+
 #container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
