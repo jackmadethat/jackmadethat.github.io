@@ -8,7 +8,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Gowun+Dodum&display=swap" rel="stylesheet">
   
     <title>Sign-up Form</title>
   </head>
@@ -18,9 +18,50 @@
         <h2 id="mainTitle">&#9816; Shambala</h2>
       </div>
       <div id="right-side">
-        <div id="section-1">text</div>
-        <div id="section-2">text</div>
-        <div id="section-3">text</div>
+        <div id="section-1">
+          <p>Join a vibrant community of seekers and mystical pathworkers, the followers of an ancient tradition, and those that strive to manifest their deepest desires. <br /><br />This is where the <em>loftiest dreams</em> become the <em>truest reality</em>.</p>
+        </div>
+        <div id="section-2">
+          <form id="signupform">
+            <div class="formcolumn">
+              <div>
+                <h3>Let's Do This!</h3>
+                <label for="firstname">FIRST NAME</label><br />
+                <input type="text" id="firstname" name="firstname" required>
+              </div>
+              <div>
+                <label for="email">EMAIL</label><br />
+                <input type="email" id="email" name="email" required>
+              </div>
+              <div>
+                <label for="password">PASSWORD</label><br />
+                <input type="password" id="password" class="pw" name="password" required>
+              </div>
+            </div>
+            <div class="formcolumn">
+              <div>
+                <h3>&nbsp;</h3>
+                <label for="lastname">LAST NAME</label><br />
+                <input type="text" id="lastname" name="lastname" required>
+              </div>
+              <div>
+                <label for="phoneno">PHONE NUMBER</label><br />
+                <input type="tel" id="phoneno" name="phoneno" required>
+              </div>
+              <div>
+                <label for="confirmpw">CONFIRM PASSWORD</label><br />
+                <input type="password" id="confirmpw" class="pw" name="confirmpw" required>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div id="section-3">
+          <div>
+            <button type="submit" id="createBtn">Create Account</button>
+            <p>Already have an account? <span id="logIn">Log in</span></p>
+            <a href="./index.html">Back</a>
+          </div>
+        </div>
       </div>
     </div>
   </body>

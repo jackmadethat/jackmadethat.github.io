@@ -1,6 +1,3 @@
-* {
-}
-
 body {
     margin: 0;
     padding: 0;
@@ -9,9 +6,10 @@ body {
 
 #container {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 0.8fr 1.2fr;
     grid-template-rows: 1fr;
     height: 100vh;
+    min-height: 800px;
 }
 
 #mainTitle {
@@ -36,17 +34,83 @@ body {
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 0.75fr 1fr;
+    font-family: "Gowun Dodum", serif;
 }
 
 #section-1 {
     background-color: rgb(238, 238, 238);
+    display: flex;
+}
+
+#section-1 p {
+    font-size: 1.2em;
+    margin-left: 5%;
+    display: inline-block;
+    align-self: flex-end;
+    padding-bottom: 15px;
 }
 
 #section-2 {
     box-shadow: 0px 5px 60px rgba(0, 0, 0, 0.15);
     z-index: 2;
+    max-height: 600px;
+    padding-bottom: 15px;
+}
+
+#section-2 h3 {
+    margin-left: 5%;
+}
+
+#signupform {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    margin-left: 5%;
+    height: 100%;
+}
+
+label {
+    font-weight: 700;
+    font-size: 0.75em;
+    font-style: normal;
+    color: rgb(91, 92, 105);
+}
+
+input {
+    border-radius: 7px;
+    border: 2px solid #00000046;
+    padding: 5px;
+}
+
+.pw {
+    border: 2px solid #ff000046;
+}
+
+.formcolumn {
+    height: 100%;
+    display: grid;
+    justify-content: space-between;
 }
 
 #section-3 {
     background-color: rgb(238, 238, 238);
+    padding-top: 25px;
+}
+
+#section-3 div {
+    margin-left: 5%;
+}
+
+#createBtn {
+    background-color: #807d9b;
+    color: #ffffff;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 10px;
+    font-weight: 900;
+}
+
+#logIn {
+    color: #4839ca;
+    font-weight: 900;
 }
