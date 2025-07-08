@@ -1,0 +1,52 @@
+* {
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    min-width: 400px;
+}
+
+#container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    height: 100vh;
+}
+
+#mainTitle {
+    font-family: "Cinzel Decorative", serif;
+    font-weight: 700;
+    font-size: 2.5em;
+    font-style: normal;
+    color: white;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.2);
+    margin: 40% auto auto auto;
+    padding: 50px 0;
+}
+
+#left-side {
+    background-image: url("./images/bg-mountains.png");
+    background-size: cover;
+    z-index: 3;
+}
+
+#right-side {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 0.75fr 1fr;
+}
+
+#section-1 {
+    background-color: rgb(238, 238, 238);
+}
+
+#section-2 {
+    box-shadow: 0px 5px 60px rgba(0, 0, 0, 0.15);
+    z-index: 2;
+}
+
+#section-3 {
+    background-color: rgb(238, 238, 238);
+}
