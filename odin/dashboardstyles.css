@@ -28,6 +28,23 @@ body {
     min-width: 240px;
     color: white;
     z-index: 3;
+
+    ul {
+        list-style: none;
+        font-weight: 800;
+        margin-left: -15px;
+        margin-top: 45px;
+    }
+
+    li {
+        margin-top: 10px;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        svg {
+            margin-right: 20px;
+        }
+    }
 }
 
 #header { 
@@ -35,7 +52,8 @@ body {
     min-height: 120px;
     display: grid;
     grid-template-columns: 0.65fr 0.35fr;
-    box-shadow: -9px 2px 5px 5px rgba(0,0,0,0.1);
+    box-shadow: -10px 2px 5px 5px rgba(0,0,0,0.1);
+    padding-top: 20px;
     z-index: 2;
 }
 
@@ -46,8 +64,9 @@ body {
     background-color: rgb(231, 231, 231);
 }
 
-#board { 
-
+#board h2 { 
+    padding-left: 15px;
+    margin-bottom: 0px;
 }
 
 #projectGrid {
@@ -75,7 +94,7 @@ body {
 }
 
 #headerLeft {
-
+    padding-left: 25px;
 }
 
 #headerRight {
