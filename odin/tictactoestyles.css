@@ -1,0 +1,14 @@
+table {
+    border: 1px solid black;
+}
+
+td {
+    border: 1px solid black;
+    width: 15px;
+    height: 15px;
+    text-align: center;
+}
+
+td:hover {
+    background-color: lightblue;
+}
