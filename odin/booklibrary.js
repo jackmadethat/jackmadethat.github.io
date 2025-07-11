@@ -1,4 +1,5 @@
 let bookList = document.getElementById("bookList");
+let bookArray = [];
 
 function Book(title, author, pages, read, id) {
   if (!new.target) {
@@ -14,21 +15,55 @@ function Book(title, author, pages, read, id) {
   };
 }
 
+const showForm = (toggle) => {
+  toggle ? 
+  (document.getElementById("addBookForm").style.display = "block", document.getElementById("addBookBtn").style.display = "none") : 
+  (document.getElementById("addBookForm").style.display = "none",  document.getElementById("addBookBtn").style.display = "block");
+}
+
+const removeBook = (id) => {
+  for (let i = 0; i < bookArray.length; i++) {
+    if (bookArray[i].id == id) {
+      bookArray.splice(i, 1);
+      break;
+    }
+  }
+
+  document.getElementById('bookList').innerHTML = "";
+  
+  for (let j = 0; j < bookArray.length; j++) {
+    const bookListItem = document.createElement('li');
+    bookListItem.innerHTML = bookArray[j].showInfo();
+    let deleteButton = document.createElement('button');
+    deleteButton.innerText = "Remove";
+    deleteButton.addEventListener('click', function() {
+      removeBook(bookArray[j].id);
+    });
+    bookListItem.appendChild(deleteButton);
+    document.getElementById('bookList').appendChild(bookListItem);
+  }
+}
+
 document.getElementById("addBookForm").addEventListener("submit", function(event) {
   event.preventDefault();
-  const title = this.title.value;
-  const author = this.author.value;
-  const noPages = this.no_pages.value;
-  const hasBeenRead = this.has_been_read_0.checked;
-  const bookListItem = document.createElement('li');
-  bookListItem.innerHTML = `
-    <span>Title: ${title}</span>
-    <span>Author: ${author}</span>
-    <span>Pages: ${noPages}</span>
-    <span>Read: ${hasBeenRead ? 'Yes' : 'No'}</span>
-  `;
-  document.getElementById('bookList').appendChild(bookListItem);
+
+  let newBook = new Book(this.title.value, this.author.value, this.no_pages.value, this.has_been_read_0.checked, crypto.randomUUID());
+
+  bookArray.push(newBook);
+  document.getElementById('bookList').innerHTML = "";
+
+  for (let i = 0; i < bookArray.length; i++) {
+    const bookListItem = document.createElement('li');
+    bookListItem.innerHTML = bookArray[i].showInfo();
+    let deleteButton =  document.createElement('button');
+    deleteButton.innerText="Remove";
+    deleteButton.setAttribute("onClick", `removeBook('${bookArray[i].id}')`);
+    bookListItem.appendChild(deleteButton);
+    document.getElementById('bookList').appendChild(bookListItem);
+  }
+
   this.reset();
+  showForm(false);
 });
 
 // const theHobbit = new Book("The Hobbit", "J.R.R Tolkien", "295", false, crypto.randomUUID());
