@@ -1,3 +1,5 @@
+let bookList = document.getElementById("bookList");
+
 function Book(title, author, pages, read, id) {
   if (!new.target) {
     throw Error("You must use the 'new' operator to call this constructor");
@@ -12,6 +14,22 @@ function Book(title, author, pages, read, id) {
   };
 }
 
-const theHobbit = new Book("The Hobbit", "J.R.R Tolkien", "295", false, crypto.randomUUID());
+document.getElementById("addBookForm").addEventListener("submit", function(event) {
+  event.preventDefault();
+  const title = this.title.value;
+  const author = this.author.value;
+  const noPages = this.no_pages.value;
+  const hasBeenRead = this.has_been_read_0.checked;
+  const bookListItem = document.createElement('li');
+  bookListItem.innerHTML = `
+    <span>Title: ${title}</span>
+    <span>Author: ${author}</span>
+    <span>Pages: ${noPages}</span>
+    <span>Read: ${hasBeenRead ? 'Yes' : 'No'}</span>
+  `;
+  document.getElementById('bookList').appendChild(bookListItem);
+  this.reset();
+});
 
-console.log(theHobbit.showInfo());
+// const theHobbit = new Book("The Hobbit", "J.R.R Tolkien", "295", false, crypto.randomUUID());
+// console.log(theHobbit.showInfo());

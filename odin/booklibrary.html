@@ -12,7 +12,31 @@
     <script src="./booklibrary.js" defer></script>
     <h1>Book Library</h1>
     <h2>Book List</h2>
-    
+    <div id="bookListDiv">
+      <ul id="bookList">
+
+      </ul>
+    </div>
+    <form id="addBookForm">
+      <div>
+        <label for="title">Title</label>
+        <input type="text" id="title" name="title" required>
+      </div>
+      <div>
+        <label for="author">Author</label>
+        <input type="text" id="author" name="author" required>
+      </div>
+      <div>
+        <label for="no_pages">No. Pages</label>
+        <input type="number" id="no_pages" name="no_pages" required>
+      </div>
+      <div>
+        <label for="has_been_read">Has Been Read?</label>
+        <input type="checkbox" id="has_been_read_0" name="has_been_read" value="option1">
+      </div>
+      <button type="submit">Submit</button>
+      <button type="reset">Reset</button>
+    </form>
     <a href="./index.html">Back</a>
   </body>
 </html>
