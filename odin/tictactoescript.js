@@ -5,11 +5,14 @@ let gameBoard = {
 }
 
 let game = true; // true if game is active
-
 let turn = true; // X is true, O is false
 
+const reset = () => {
+  location.reload();
+}
+
 const selectSquare = (r, n) => {
-  if (gameBoard[r][n] == "") {
+  if (gameBoard[r][n] == "" && game) {
     turn ? gameBoard[r][n] = "x" : gameBoard[r][n] = "o";
     turn = !turn;
     renderBoard();
@@ -19,9 +22,47 @@ const selectSquare = (r, n) => {
 
 const checkForWin = () => {
   if (gameBoard.top[0] != "" && gameBoard.top[0] == gameBoard.middle[0] && gameBoard.middle[0] == gameBoard.bottom[0]) {
-    console.log("WINRAR!");
+    document.getElementById("playerPrompt").innerText = (turn ? "O" : "X") + " Wins!";
+    document.getElementById("topLeft").style.backgroundColor = "red";
+    document.getElementById("middleLeft").style.backgroundColor = "red";
+    document.getElementById("bottomLeft").style.backgroundColor = "red";
+    game = false;
   } else if (gameBoard.top[1] != "" && gameBoard.top[1] == gameBoard.middle[1] && gameBoard.middle[1] == gameBoard.bottom[1]) {
-
+    document.getElementById("playerPrompt").innerText = (turn ? "O" : "X") + " Wins!";
+    document.getElementById("topMiddle").style.backgroundColor = "red";
+    document.getElementById("middleMiddle").style.backgroundColor = "red";
+    document.getElementById("bottomMiddle").style.backgroundColor = "red";
+    game = false;
+  } else if (gameBoard.top[2] != "" && gameBoard.top[2] == gameBoard.middle[2] && gameBoard.middle[2] == gameBoard.bottom[2]) {
+    document.getElementById("playerPrompt").innerText = (turn ? "O" : "X") + " Wins!";
+    document.getElementById("topRight").style.backgroundColor = "red";
+    document.getElementById("middleRight").style.backgroundColor = "red";
+    document.getElementById("bottomRight").style.backgroundColor = "red";
+    game = false;
+  } else if (gameBoard.top[0] != "" && gameBoard.middle[1] == gameBoard.top[0] && gameBoard.middle[1] == gameBoard.bottom[2]) {
+    document.getElementById("playerPrompt").innerText = (turn ? "O" : "X") + " Wins!";
+    document.getElementById("topLeft").style.backgroundColor = "red";
+    document.getElementById("middleMiddle").style.backgroundColor = "red";
+    document.getElementById("bottomRight").style.backgroundColor = "red";
+    game = false;
+  } else if (gameBoard.top[2] != "" && gameBoard.top[2] == gameBoard.middle[1] && gameBoard.middle[1] == gameBoard.bottom[0]) {
+    document.getElementById("playerPrompt").innerText = (turn ? "O" : "X") + " Wins!";
+    document.getElementById("topRight").style.backgroundColor = "red";
+    document.getElementById("middleMiddle").style.backgroundColor = "red";
+    document.getElementById("bottomLeft").style.backgroundColor = "red";
+    game = false;
+  } else if (gameBoard.top[0] != "" && gameBoard.top[0] == gameBoard.top[1] && gameBoard.top[1] == gameBoard.top[2]) {
+    document.getElementById("playerPrompt").innerText = (turn ? "O" : "X") + " Wins!";
+    document.getElementById("topRow").style.backgroundColor = "red";
+    game = false;
+  } else if (gameBoard.middle[0] != "" && gameBoard.middle[0] == gameBoard.middle[1] && gameBoard.middle[1] == gameBoard.middle[2]) {
+    document.getElementById("playerPrompt").innerText = (turn ? "O" : "X") + " Wins!";
+    document.getElementById("middleRow").style.backgroundColor = "red";
+    game = false;
+  } else if (gameBoard.bottom[0] != "" && gameBoard.bottom[0] == gameBoard.bottom[1] && gameBoard.bottom[1] == gameBoard.bottom[2]) {
+    document.getElementById("playerPrompt").innerText = (turn ? "O" : "X") + " Wins!";
+    document.getElementById("bottomRow").style.backgroundColor = "red";
+    game = false;
   }
 }
 
