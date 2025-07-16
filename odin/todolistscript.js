@@ -15,23 +15,7 @@ function Project(name, toDos) {
   this.toDos = toDos;
 };
 
-const projects = [];
-
-/*
-const dailyTasks = new Project("Daily Tasks", []);
-const weeklyTasks = new Project("Weekly Tasks", []);
-
-projects.push(dailyTasks);
-projects.push(weeklyTasks);
-
-const dailyShower = new ToDo("Shower", new Date(2025, 6, 20).toDateString(), "Active", "Urgent", "Gotta shower every day!");
-const waterGarden = new ToDo("Water Garden", new Date(2025, 6, 24).toDateString(), "Active", "Urgent", "Water the plants");
-
-dailyTasks.toDos.push(dailyShower);
-dailyTasks.toDos.push(waterGarden);
-
-listProjects();
-*/
+const projects = localStorage.getItem("projects");
 
 const setupNewProject = () => {
   document.getElementById("addNewProjectBtn").style.display = "none";
@@ -107,9 +91,6 @@ const addNewToDo = (projectName) => {
     for (let i = 0; i < projects.length; i++) {
       if (projects[i].name == projectName) {
         projects[i].toDos.push(newToDo);
-      } else {
-        // console.log(projectName);
-        // console.log(projects[i].name);
       }
     }
     makingNewToDo = false;
@@ -175,7 +156,6 @@ const listProjects = () => {
   }
   projectsStorage = JSON.stringify(projects);
   localStorage.setItem("projects", projectsStorage);
-  console.log(localStorage.getItem("projects"));
 }
 
 listProjects();
