@@ -15,7 +15,7 @@ function Project(name, toDos) {
   this.toDos = toDos;
 };
 
-const projects = JSON.parse(localStorage.getItem("projects"));
+const projects = JSON.parse(localStorage.getItem("projects")) || [];
 
 const setupNewProject = () => {
   document.getElementById("addNewProjectBtn").style.display = "none";
