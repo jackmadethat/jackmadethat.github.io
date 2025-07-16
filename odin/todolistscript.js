@@ -118,13 +118,27 @@ const addNewToDo = (projectName) => {
 }
 
 const deleteProject = (toDelete) => {
-  console.log(toDelete);
+  for (let i = 0; i < projects.length; i++) {
+    if (projects[i].name == toDelete) {
+      projects.splice(i, 1);
+    }
+  }
   makingNewToDo = false;
   listProjects();
 }
 
-const deleteToDo = (toDelete) => {
+const deleteToDo = (project, toDelete) => {
+  console.log(project);
   console.log(toDelete);
+  for (let i = 0; i < projects.length; i++) {
+    if (projects[i].name == project) {
+      for (let j = 0; j < projects[i].toDos.length; j++) {
+        if (projects[i].toDos[j].toDoTitle == toDelete) {
+          projects[i].toDos.splice(j, 1);
+        }
+      }
+    }
+  }
   makingNewToDo = false;
   listProjects();
 }
@@ -154,7 +168,7 @@ const listProjects = () => {
             <td>${projects[j].toDos[i].toDoPriority}</td>
             <td>${projects[j].toDos[i].toDoNote}</td>
             <td><input type="checkbox" /></td>
-            <td><button onclick="deleteToDo('${projects[j].toDos[i].toDoTitle}')">Delete</button></td>
+            <td><button onclick="deleteToDo('${projects[j].name}', '${projects[j].toDos[i].toDoTitle}')">Delete</button></td>
           </tr>
         </table>
       `);
