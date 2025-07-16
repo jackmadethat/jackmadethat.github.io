@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="./img/JMT_Icon.ico">
+    <link rel="stylesheet" type="text/css" href="./todoliststyles.css" />
+  
+    <title>To-Do List</title>
+  </head>
+  <body>
+    <script src="./todolistscript.js" defer></script>
+    <h1>To-Do List</h1>
+    <div id="container">
+
+    </div>
+    <br />
+    <button id="addNewProjectBtn" onclick="setupNewProject()">Add New Project</button>
+    <form id="addNewProjectForm">
+      <div>
+        <label for="name">Name:</label>
+        <input type="text" id="newProjectName" name="name" required />
+      </div>
+      <button type="button" id="addNewProjectBtn" onclick="addNewProject()">Add</button>
+      <button type="button" id="cancelNewProjectBtn" onclick="cancelNewProject()">Cancel</button>
+    </form>
+    <br />
+    <a href="./index.html">Back</a>
+  </body>
+</html>
