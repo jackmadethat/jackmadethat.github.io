@@ -128,8 +128,6 @@ const deleteProject = (toDelete) => {
 }
 
 const deleteToDo = (project, toDelete) => {
-  console.log(project);
-  console.log(toDelete);
   for (let i = 0; i < projects.length; i++) {
     if (projects[i].name == project) {
       for (let j = 0; j < projects[i].toDos.length; j++) {
