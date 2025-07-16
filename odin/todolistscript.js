@@ -123,6 +123,8 @@ const deleteToDo = (project, toDelete) => {
 }
 
 const listProjects = () => {
+  projectsStorage = JSON.stringify(projects);
+  localStorage.setItem("projects", projectsStorage);
   container.innerHTML = "";
   for (let j = 0; j < projects.length; j++) {
     container.insertAdjacentHTML("beforeend", `
@@ -154,8 +156,6 @@ const listProjects = () => {
     }
     container.insertAdjacentHTML("beforeend", `<div id="${projects[j].name}"></div><button type="button" onclick="setupNewToDo('${projects[j].name}')">Add New To-Do</button><button onclick="deleteProject('${projects[j].name}')">Delete Project</button>`);
   }
-  projectsStorage = JSON.stringify(projects);
-  localStorage.setItem("projects", projectsStorage);
 }
 
 listProjects();
