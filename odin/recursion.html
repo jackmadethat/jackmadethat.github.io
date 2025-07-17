@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="./img/JMT_Icon.ico">
+    <link rel="stylesheet" type="text/css" href="./recursionstyles.css" />
+  
+    <title>Recursion</title>
+  </head>
+  <body>
+    <script src="./recursionscript.js" defer></script>
+    <h1>Recursion</h1>
+    <form onkeypress="return event.keyCode != 13;">
+      <div>
+        <label for="enter_location">Enter a Number: </label>
+        <input type="text" id="enter_num" name="enter_num" required>
+        <button type="button" onclick="getNumR()">Generate Fibonacci Series (Recursive)</button>
+        <button type="button" onclick="getNumI()">Generate Fibonacci Series (Iterative)</button>
+      </div>
+    </form>
+    <br />
+    <div id="container">
+
+    </div>
+    <br />
+    <a href="./index.html">Back</a>
+  </body>
+</html>
