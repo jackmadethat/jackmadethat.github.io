@@ -11,6 +11,13 @@
   <body>
     <script src="./weatherscript.js" defer></script>
     <h1>Weather</h1>
+    <form onkeypress="return event.keyCode != 13;">
+      <div>
+        <label for="enter_location">Enter a City: </label>
+        <input type="text" id="enter_location" name="enter_location" required>
+        <button type="button" onclick="getWeather()">Submit</button>
+      </div>
+    </form>
     <div id="container">
 
     </div>
