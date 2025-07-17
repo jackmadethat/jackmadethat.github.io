@@ -1,8 +1,25 @@
 const container1 = document.getElementById("container1");
 const container2 = document.getElementById("container2");
 
-const generateNumbers = () => {
+const numberSet = [];
 
+const generateNumbers = () => {
+  num = document.getElementById("enter_num").value;
+
+  for (let i = num; i > 0; i--) {
+    numberSet.push(Math.floor(Math.random() * 100) + 1);
+  }
+  container1.innerHTML = "";
+  container2.innerHTML = "";
+  container1.innerHTML = `${numberSet}`;
+}
+
+const sortNumbers = () => {
+  if (numberSet.length === 0) {
+    container1.innerHTML = "Generate some numbers first!";
+  } else {
+    container2.innerHTML = `${mergeSort(numberSet)}`;
+  }
 }
 
 // Call this to sort array
@@ -28,7 +45,3 @@ const merge = (left, right) => {
 
   return result.concat(left.slice(i)).concat(right.slice(j));
 }
-
-// Test
-const numbers = [64, 34, 25, 12, 22, 11, 90];
-container1.innerText = `${mergeSort(numbers)}`;
