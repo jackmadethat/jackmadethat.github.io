@@ -25,7 +25,7 @@ body {
 }
 
 #left-side {
-    background-image: url("./images/bg-mountains.png");
+    background-image: url("../images/bg-mountains.png");
     background-size: cover;
     z-index: 3;
 }
