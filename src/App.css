@@ -1,0 +1,111 @@
+#root {
+  margin: 0 0;
+  width: 100%;
+}
+
+.topBar {
+  font-family: 'Kode Mono';
+  font-weight: 80;
+  font-size: 0.8em;
+  background-color: #000000d2;
+  height: 25px;
+  box-shadow: 0px 5px 20px 10px rgba(0, 0, 0, 0.25);
+  border-bottom: 1px solid #242424;
+  padding: 0 1em;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.leftSideTop {
+  text-align: left;
+  margin: auto 0;
+  text-wrap: nowrap;
+}
+
+#menu {
+  max-width: 50px;
+}
+
+#menu:hover {
+  cursor: pointer;
+}
+
+#menu:hover #menuContent {
+  display: block;
+}
+
+#menuContent {
+  display: none;
+  position: absolute;
+  background-color: #e6e6e6;
+  min-width: 10em;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 10;
+}
+
+#menuContent a {
+  color: black;
+  display: block;
+  padding: 0.7em;
+  text-decoration: none;
+}
+
+#menuContent a:hover {
+  color: white;
+  background-color: rgb(80, 80, 80);
+}
+
+.rightSideTop {
+  text-align: right;
+  margin: auto 0;
+  text-wrap: nowrap;
+}
+
+.container {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.logo {
+  padding: 1.5em;
+  margin-top: 50px;
+  will-change: filter;
+  transition: filter 500ms;
+}
+
+.logo:hover {
+  filter: drop-shadow(0 0 2em #ffffffaa);
+}
+
+.card {
+  padding: 2em;
+}
+
+.footer {
+  color: #ffffff38;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.socmed-container {
+  display: flex;
+  justify-content: center;
+  height: 48px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.socmed-box {
+  height: 100%;
+  width: 48px;
+  margin-left: 5px;
+  margin-right: 5px;
+  transition: all 1.5s ease;
+}
+
+.socmed-box:hover {
+  transform: scale(1.2); 
+  transition: all 0.2s ease;
+}
