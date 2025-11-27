@@ -12,7 +12,7 @@ createRoot(document.getElementById('root')).render(
     <BrowserRouter>
       <Nav />
       <Routes>
-        <Route path="/jackreact" element={<App />} />
+        <Route path="/" element={<App />} />
       </Routes>
       <Footer />
     </BrowserRouter>

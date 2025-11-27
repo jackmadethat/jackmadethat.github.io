@@ -66,6 +66,9 @@
 .container {
   margin: 0 auto;
   text-align: center;
+  h2 {
+    margin-top: 60px;
+  }
 }
 
 .logo {
@@ -108,4 +111,47 @@
 .socmed-box:hover {
   transform: scale(1.2); 
   transition: all 0.2s ease;
+}
+
+.buttonBox {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 15px;
+  margin-bottom: 65px;
+  display: grid;
+  max-width: 450px;
+}
+
+.mainBtn {
+  display: block;
+  text-align: center;
+  font-family: "Kode Mono", sans-serif;
+  letter-spacing: 2px;
+  color: #dddddd;
+  text-shadow: 2px 2px 2px #000000;
+  padding: 0.7em 1.7em;
+  margin: 10px;
+  width: 350px;
+  font-size: 18px;
+  border-radius: 25px;
+  background: #5050501c;
+  cursor: pointer;
+  border: 1px solid #000000cb;
+  box-shadow: 10px 10px 15px #0000003a, -10px -10px 15px #0000003a;
+}
+
+.mainBtn:active {
+  color: #666;
+  box-shadow: inset 4px 4px 12px #00000077, inset -4px -4px 12px #00000077;
+}
+
+.title {
+  cursor: pointer;
+  text-decoration: underline;
+  transition: all 0.3s;
+}
+
+.active {
+  text-shadow: rgba(255, 255, 255, 0.719) 0px 0px 24px, 2px 2px 2px #000000;
 }

@@ -13,12 +13,12 @@ const Nav = () => {
           <div id="menuBtn">&#9746; Menu</div>
           <div id="menuContent">
             <a href="#">About</a>
-            <a href="#">Graphics Portfolio</a>
-            <a href="#">Coding Portfolio</a>
+            <a href="#">Blog</a>
+            <a href="#">Art & Graphics</a>
+            <a href="#">Coding/Game Dev</a>
           </div>
         </div>
       </p>
-      
       <p className="rightSideTop" style={{ fontFamily: 'Kode Mono' }}><MoonPhase date={date} /> | <Zodiac date={date} /> | {region}</p>
     </div>
   )
