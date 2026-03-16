@@ -45,7 +45,7 @@ const App = () => {
                   Personal channel featuring portfolio pieces and teaching Unreal Engine.
                 </CardItem>
                 <CardItem translateZ={100} className="card-image">
-                  <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e" />
+                  <img src="https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/refs/heads/main/src/assets/UnderscoreBranding.png" />
                 </CardItem>
                 <div className="card-footer">
                     <CardItem translateZ={20} className="signup-btn">
@@ -64,7 +64,7 @@ const App = () => {
                   Online vehicle configurator using Unity and WebGL, similar to Forza or Need for Speed.
                 </CardItem>
                 <CardItem translateZ={100} className="card-image">
-                  <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e" />
+                  <img src="https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/refs/heads/main/src/assets/VehicleConfig.PNG" />
                 </CardItem>
                 <div className="card-footer">
                   <CardItem translateZ={20} className="signup-btn">
@@ -83,7 +83,7 @@ const App = () => {
                   Top-down tank game prototype made with Unity and WebGL.
                 </CardItem>
                 <CardItem translateZ={100} className="card-image">
-                  <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e" />
+                  <img src="https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/refs/heads/main/src/assets/TankGame.PNG" />
                 </CardItem>
                 <div className="card-footer">
                   <CardItem translateZ={20} className="signup-btn">
@@ -102,7 +102,7 @@ const App = () => {
                   Third-person flight game prototype made with Unity and WebGL.
                 </CardItem>
                 <CardItem translateZ={100} className="card-image">
-                  <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e" />
+                  <img src="https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/refs/heads/main/src/assets/PlaneGame.PNG" />
                 </CardItem>
                 <div className="card-footer">
                   <CardItem translateZ={20} className="signup-btn">
