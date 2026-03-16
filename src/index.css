@@ -13,10 +13,12 @@
 
 a {
   font-weight: 500;
-  text-decoration: inherit;
+  text-decoration: none;
+  color: #dddddd;
 }
-a:hover {
-  color: #acacac;
+
+a:active {
+  color: #dddddd;
 }
 
 body {
