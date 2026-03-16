@@ -21,6 +21,7 @@ const App = () => {
       <h1><span className="bigBracket">&#091;</span> Jack Made That <span className="bigBracket">&#093;</span></h1>
       <h2 className="subtitle">3D Artist, Game Designer & Full Stack Web Developer</h2>
 
+      {/* 
       <div className="contact">
         <div className="socmed-container">
             <div className="socmed-box"><a href="https://www.youtube.com/c/underscore00" target="_blank"><img draggable="false" alt="YouTube" src="https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/refs/heads/main/backup/img/socmed/socmed_youtube.png"/></a></div>
@@ -31,6 +32,7 @@ const App = () => {
             <div className="socmed-box"><a href="mailto:jack.beven@gmx.com" target="_blank"><img draggable="false" alt="E-Mail" src="https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/refs/heads/main/backup/img/socmed/socmed_mail.png"/></a></div>
         </div>
       </div>
+      */}
       
       <h2><span className={visible_Coding ? "title" : "title active"} onClick={() => toggleCoding()}>Coding</span> / <span className={visible_Coding ? "title active" : "title"} onClick={() => toggleGameDev()}>Game Dev</span></h2>
       <div className="buttonBox">
