@@ -87,7 +87,7 @@ const App = () => {
                 </CardItem>
                 <div className="card-footer">
                   <CardItem translateZ={20} className="signup-btn">
-                    <a href="https://jackmadethat.github.io/tankgame" target="_blank">View Project</a>
+                    <a href="https://jackmadethat.github.io/TankGame" target="_blank">View Project</a>
                   </CardItem>
                 </div>
               </CardBody>
@@ -123,7 +123,7 @@ const App = () => {
                   Functional, intuitive speed reading tool, compatible with PDF and EPUB files.
                 </CardItem>
                 <CardItem translateZ={100} className="card-image">
-                  <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e" />
+                  <img src="https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/refs/heads/main/src/assets/RapidReader.PNG" />
                 </CardItem>
                 <div className="card-footer">
                     <CardItem translateZ={20} className="signup-btn">
@@ -142,7 +142,7 @@ const App = () => {
                   Stylish workout companion featuring various programs, trackers and interval timer.
                 </CardItem>
                 <CardItem translateZ={100} className="card-image">
-                  <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e" />
+                  <img src="https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/refs/heads/main/src/assets/Protocol.PNG" />
                 </CardItem>
                 <div className="card-footer">
                   <CardItem translateZ={20} className="signup-btn">
@@ -161,7 +161,7 @@ const App = () => {
                   Rulebook and companion for a tabletop war game including score tracker and dice roller.
                 </CardItem>
                 <CardItem translateZ={100} className="card-image">
-                  <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e" />
+                  <img src="https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/refs/heads/main/src/assets/KillTeam.PNG" />
                 </CardItem>
                 <div className="card-footer">
                   <CardItem translateZ={20} className="signup-btn">
@@ -180,7 +180,7 @@ const App = () => {
                   An engaging single player, dungeon-crawling, roguelike card game.
                 </CardItem>
                 <CardItem translateZ={100} className="card-image">
-                  <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e" />
+                  <img src="https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/refs/heads/main/src/assets/Scoundrel.PNG" />
                 </CardItem>
                 <div className="card-footer">
                   <CardItem translateZ={20} className="signup-btn">
@@ -199,7 +199,7 @@ const App = () => {
                   A fitness tracker with user accounts, persistent stats, and visual data.
                 </CardItem>
                 <CardItem translateZ={100} className="card-image">
-                  <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e" />
+                  <img src="https://raw.githubusercontent.com/jackmadethat/jackmadethat.github.io/refs/heads/main/src/assets/Animus.PNG" />
                 </CardItem>
                 <div className="card-footer">
                   <CardItem translateZ={20} className="signup-btn">
